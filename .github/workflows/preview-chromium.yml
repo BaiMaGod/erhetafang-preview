@@ -1,0 +1,128 @@
+name: Free GitHub Pages preview - Chromium QA
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# The public preview repository keeps only deployable static assets.
+# Pages should use "Deploy from a branch" -> main -> /(root).
+# This workflow validates the published H5 without billing private-repo CI minutes.
+permissions:
+  contents: read
+
+concurrency:
+  group: public-preview-qa-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  chromium:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout preview distribution
+        uses: actions/checkout@v4
+      - name: Validate deployable entry
+        run: |
+          test -s index.html
+          test "$(wc -c < index.html)" -gt 10000
+          ! grep -q '{{JS}}\|{{CSS}}' index.html
+          grep -q 'id="game"' index.html
+          grep -q 'id="start"' index.html
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install headless Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Serve GitHub Pages static directory
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/preview-http.log 2>&1 &
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:8765/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/preview-http.log
+          exit 1
+      - name: Chromium mobile and desktop gameplay smoke
+        run: |
+          mkdir -p test-output
+          node <<'NODE'
+          'use strict';
+          const assert = require('node:assert/strict');
+          const fs = require('node:fs');
+          const { chromium } = require('playwright');
+          (async () => {
+            const browser = await chromium.launch({ headless: true, args: ['--disable-dev-shm-usage'] });
+            const checks = [];
+            try {
+              for (const [name, width, height, mobile] of [
+                ['mobile', 390, 844, true],
+                ['short-phone', 360, 640, true],
+                ['desktop', 1280, 800, false]
+              ]) {
+                const context = await browser.newContext({
+                  viewport: { width, height },
+                  deviceScaleFactor: mobile ? 2 : 1,
+                  isMobile: mobile, hasTouch: mobile
+                });
+                const page = await context.newPage();
+                const errors = [];
+                page.on('pageerror', e => errors.push(String(e)));
+                page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
+                page.on('response', r => { if (r.status() >= 400) errors.push('HTTP '+r.status()+' '+r.url()); });
+                await page.goto('http://127.0.0.1:8765/?debug=1&test=1', { waitUntil: 'load' });
+                const start = page.locator('#start');
+                await start.waitFor({state:'visible'});
+                await page.screenshot({ path: 'test-output/' + name + '-home.png', fullPage: true });
+                await start.click();
+                await page.waitForTimeout(400);
+                const result = await page.evaluate(() => {
+                  const canvas = document.getElementById('game');
+                  if (!canvas || !canvas.width || !canvas.height) return {empty:true};
+                  const ctx = canvas.getContext('2d');
+                  if (!ctx) return {empty:true};
+                  const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+                  let opaque = 0, changes = 0, previous = null;
+                  const stride = Math.max(4, Math.floor(pixels.length / 1600 / 4) * 4);
+                  for (let i=0; i<pixels.length; i+=stride) {
+                    if (pixels[i+3] > 0) opaque++;
+                    const v = pixels[i] + pixels[i+1] + pixels[i+2];
+                    if (previous !== null && Math.abs(v-previous)>20) changes++;
+                    previous = v;
+                  }
+                  return {
+                    empty:false, opaque, changes, width:canvas.width, height:canvas.height,
+                    status: window.__TD?.snapshot()?.status,
+                    menuHidden: document.getElementById('menu').classList.contains('hidden')
+                  };
+                });
+                assert(!result.empty, name + ': canvas missing or not ready');
+                assert(result.opaque > 50 && result.changes > 20, name + ': no actual canvas artwork '+JSON.stringify(result));
+                assert.equal(result.status, 'playing', name + ': game did not start');
+                assert(result.menuHidden, name + ': home overlay did not close');
+                await page.screenshot({ path: 'test-output/' + name + '-battle.png', fullPage: true });
+                assert.deepEqual(errors, [], name + ': browser errors');
+                checks.push({name, result, errors});
+                await context.close();
+              }
+              fs.writeFileSync('test-output/report.json', JSON.stringify({success:true,checks},null,2));
+              console.log('PREVIEW_CHROMIUM_OK', JSON.stringify(checks));
+            } finally {
+              await browser.close();
+            }
+          })().catch(error => {
+            fs.writeFileSync('test-output/error.txt', String(error.stack||error));
+            console.error(error);
+            process.exitCode = 1;
+          });
+          NODE
+      - name: Upload Chromium screenshots and report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: erhetafang-preview-chromium
+          path: test-output/
+          if-no-files-found: warn
