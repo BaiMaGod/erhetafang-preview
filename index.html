@@ -146,7 +146,7 @@
     pickupTime: .18, mergeTime: .3, chainTime: .18,
     bossTime: 200, phaseMin: 4, phaseTransition: .8,
     // 开局将全部零件投入同一堆，不再依赖时间解锁或批次补给。
-    pileCounts: [32, 20, 16, 18, 24, 10], pileLayers: 6, pileColumns: 5,
+    pileCounts: [32, 20, 16, 18, 24, 10], pileLayerCounts: [30, 24, 22, 18, 14, 12], pileLayers: 6,
     weapons: [
       { id: 'gun', name: '机枪', short: '机枪', color: '#ffce6e', damage: 10, interval: .25, speed: 1200,
         rate: [1, 1, 1.5, 1.75, 2], spin: [0, 0, 3, 2, 1.5], burst: [24, 28, 32, 36, 40], radius: [180, 200, 220, 240, 260] },
@@ -213,29 +213,55 @@
       this.stats.highest = Math.max(this.stats.highest, level); return item;
     }
     makePile() {
-      // 六类零件按全局总配额只洗牌一次，所有120件同时存在于同一堆。
+      // 所有120件零件开局混入同一堆，不使用分批和时间补给。
       const bag = [];
       C.pileCounts.forEach((count, i) => { for (let n = 0; n < count; n++) bag.push(C.weapons[i].id); });
       for (let i = bag.length - 1; i > 0; i--) {
         const j = Math.floor(this.layoutRandom() * (i + 1));
         [bag[i], bag[j]] = [bag[j], bag[i]];
       }
-      const perLayer = Math.ceil(bag.length / C.pileLayers);
-      this.pile = bag.map((kind, i) => {
-        const layer = Math.floor(i / perLayer), index = i % perLayer;
-        const col = index % C.pileColumns, row = Math.floor(index / C.pileColumns);
-        // 同层随机错位、层间叠压，保证屏幕内留有可辨认的点击区域。
-        return { id: ++this.id, kind, layer,
-          x: .124 + col * .188 + (layer % 3 - 1) * .008 + (this.layoutRandom() - .5) * .025,
-          y: .183 + row * .218 + (layer % 4 - 1.5) * .006 + (this.layoutRandom() - .5) * .028,
-          w: .165, h: .17, removed: false };
-      });
-      this.pileById = new Map(this.pile.map(p => [p.id, p]));
-      // 遮挡几何不会变化：预计算被哪些上层卡片覆盖，降低移动端逐帧开销。
-      for (const piece of this.pile) {
-        piece.coveredBy = this.pile.filter(other => other.layer > piece.layer &&
+      if (C.pileLayerCounts.length !== C.pileLayers || C.pileLayerCounts.reduce((a, b) => a + b, 0) !== bag.length)
+        throw new Error('零件配额与层数不匹配');
+
+      // 类《羊了个羊》的错位主堆与两侧散堆，底层宽大，顶层稀疏。
+      const pieces = [];
+      let cursor = 0;
+      for (let layer = 0; layer < C.pileLayers; layer++) {
+        const count = C.pileLayerCounts[layer], t = layer / (C.pileLayers - 1);
+        const side = Math.round(count * .14);
+        const regions = [
+          { name: 'center', count: count - side * 2, cols: 5, rows: 5 },
+          { name: 'left', count: side, cols: 2, rows: 4 },
+          { name: 'right', count: side, cols: 2, rows: 4 }
+        ];
+        const offsetX = (this.layoutRandom() - .5) * .03;
+        const offsetY = (this.layoutRandom() - .5) * .032;
+        for (const region of regions) {
+          const cells = Array.from({ length: region.cols * region.rows }, (_, i) => ({ col: i % region.cols, row: Math.floor(i / region.cols) }));
+          for (let i = cells.length - 1; i > 0; i--) {
+            const j = Math.floor(this.layoutRandom() * (i + 1));
+            [cells[i], cells[j]] = [cells[j], cells[i]];
+          }
+          for (const { col, row } of cells.slice(0, region.count)) {
+            const wing = region.name !== 'center';
+            const baseX = wing ? (region.name === 'left' ? .112 : .765) + col * .112
+              : .172 + .048 * t + col * (.65 - .125 * t) / 4 + (row % 2 ? .024 : -.015);
+            const baseY = .16 + .065 * t + row * (.67 - .13 * t) / (region.rows - 1);
+            const x = TD.clamp(baseX + offsetX + (this.layoutRandom() - .5) * (wing ? .04 : .055), .095, .905);
+            const y = TD.clamp(baseY + offsetY + (this.layoutRandom() - .5) * (wing ? .055 : .07), .105, .895);
+            pieces.push({ id: ++this.id, kind: bag[cursor++], layer, region: region.name, x, y, w: .165, h: .17, removed: false });
+          }
+        }
+      }
+      this.pile = pieces;
+      this.pileById = new Map(pieces.map(p => [p.id, p]));
+      // 同一层后放的卡也压在前卡之上，遮挡关系与渲染和点击的z序一致。
+      // 生成时预计算依赖图，避免每帧进行120×120次遮挡几何计算。
+      for (const piece of pieces) {
+        piece.coveredBy = pieces.filter(other => other !== piece &&
+          (other.layer > piece.layer || (other.layer === piece.layer && other.id > piece.id)) &&
           Math.max(0, Math.min(other.x + other.w / 2, piece.x + piece.w / 2) - Math.max(other.x - other.w / 2, piece.x - piece.w / 2)) *
-          Math.max(0, Math.min(other.y + other.h / 2, piece.y + piece.h / 2) - Math.max(other.y - other.h / 2, piece.y - piece.h / 2)) > piece.w * piece.h * .18
+          Math.max(0, Math.min(other.y + other.h / 2, piece.y + piece.h / 2) - Math.max(other.y - other.h / 2, piece.y - piece.h / 2)) > piece.w * piece.h * .21
         ).map(other => other.id);
       }
       this.record('pileReady', { total: bag.length });
