@@ -256,12 +256,13 @@
       this.pile = pieces;
       this.pileById = new Map(pieces.map(p => [p.id, p]));
       // 同一层后放的卡也压在前卡之上，遮挡关系与渲染和点击的z序一致。
+      // 只要卡片矩形有正面积交叠（哪怕只压住一角），整张卡都被锁住；边缘相接不算覆盖。
       // 生成时预计算依赖图，避免每帧进行120×120次遮挡几何计算。
       for (const piece of pieces) {
         piece.coveredBy = pieces.filter(other => other !== piece &&
           (other.layer > piece.layer || (other.layer === piece.layer && other.id > piece.id)) &&
           Math.max(0, Math.min(other.x + other.w / 2, piece.x + piece.w / 2) - Math.max(other.x - other.w / 2, piece.x - piece.w / 2)) *
-          Math.max(0, Math.min(other.y + other.h / 2, piece.y + piece.h / 2) - Math.max(other.y - other.h / 2, piece.y - piece.h / 2)) > piece.w * piece.h * .21
+          Math.max(0, Math.min(other.y + other.h / 2, piece.y + piece.h / 2) - Math.max(other.y - other.h / 2, piece.y - piece.h / 2)) > 0
         ).map(other => other.id);
       }
       this.record('pileReady', { total: bag.length });
