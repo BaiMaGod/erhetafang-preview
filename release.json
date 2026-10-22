@@ -1,0 +1,12 @@
+{
+  "sourceCommit": "776ef9bc73d57564a43c78c6448be3cb29d6cbba",
+  "version": "1.3",
+  "engine": "Canvas 2D",
+  "browserSmokePassed": true,
+  "sha256": "da11a3a997d9a5389cb2d12549556416792cf45124a955b3525763f103b21542",
+  "browserEvidence": {
+    "runId": 39700508627,
+    "artifactId": 12392648921
+  },
+  "builtAt": "2026-10-22T00:40:05Z"
+}

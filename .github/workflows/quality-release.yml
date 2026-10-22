@@ -5,7 +5,8 @@ on:
     paths: ['release-source.json', '.github/workflows/quality-release.yml']
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
+  pages: write
 concurrency:
   group: stable-quality-release
   cancel-in-progress: false
@@ -17,7 +18,7 @@ jobs:
       - name: Checkout public release configuration
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.PREVIEW_SOURCE_SYNC_TOKEN }}
+          token: ${{ github.token }}
           path: preview
       - name: Read reviewed source commit
         id: source
@@ -102,3 +103,7 @@ jobs:
           if git -C preview diff --cached --quiet; then exit 0; fi
           git -C preview commit -m "deploy: verified V1.3 stable build ${SOURCE_SHA} [preview-sync]"
           git -C preview push origin HEAD:main
+      - name: Request Pages build after verified artifact commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api --method POST "repos/${{ github.repository }}/pages/builds"

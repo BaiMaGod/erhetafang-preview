@@ -2,11 +2,13 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#101222">
   <meta name="description" content="二合塔防：取零件，自动二合，拖拽武器自爆。六种武器，一道会被摧毁的防线。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%278%27 fill=%27%23ffd384%27/%3E%3Ctext x=%2716%27 y=%2724%27 font-size=%2724%27 text-anchor=%27middle%27%3EⅡ%3C/text%3E%3C/svg%3E">
   <title>二合塔防 · 综合试炼</title>
   <style>*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#0c0e18;color:#f3f3fb;font-family:Inter,"PingFang SC","Microsoft YaHei",system-ui,sans-serif}body{display:flex;align-items:center;justify-content:center;min-height:100dvh;background:radial-gradient(ellipse at 50% 30%,#232139 0,#0b0d16 70%);overscroll-behavior:none}button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}button:focus-visible{outline:2px solid #ffd384;outline-offset:4px}button:disabled{opacity:.45;cursor:default}.game-shell{width:100%;max-width:460px;height:100dvh;max-height:980px;min-height:0;background:#131526;position:relative;overflow:hidden;box-shadow:0 24px 100px #0008;display:flex;flex-direction:column;user-select:none;-webkit-user-select:none}.hud{flex:0 0 auto;padding:14px 22px 0;padding-top:max(14px,env(safe-area-inset-top));background:#141624;z-index:2}.topline{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.brand{display:flex;gap:9px;align-items:center}.brand-mark{display:grid;place-items:center;background:#ffd282;color:#272133;width:29px;height:32px;border-radius:8px;transform:rotate(-7deg);font-weight:900;font-size:22px}.brand b{display:block;font-size:14px;letter-spacing:2px}.edition{display:block;color:#8a8d9e;font-size:9px;letter-spacing:1px;margin-top:3px}.hud-actions{display:flex;gap:8px}.icon-button{width:32px;height:32px;border:1px solid #ffffff14;border-radius:9px;background:#202235;color:#abaebf;font-size:18px;display:grid;place-items:center}.icon-button.active{color:#ffd282}.metrics{display:flex;align-items:center;gap:25px;padding-bottom:13px}.metric-label{color:#85899d;font-size:10px;display:block;margin-bottom:4px;letter-spacing:1px}.metric b{font-size:20px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1}.metric b span{font-size:11px;color:#62667c;margin-left:2px}.core-metric{flex:1}.core-value{display:flex;align-items:baseline;gap:4px;position:relative}.core-value>b{color:#a4e7c5;font-size:21px;font-variant-numeric:tabular-nums}.core-value>span{font-size:10px;color:#6c7185}.core-track{height:3px;width:50px;background:#2c3540;margin-left:4px;align-self:center;border-radius:3px;overflow:hidden}.core-track i{display:block;height:100%;width:100%;background:#92ddba;transition:width .15s}.time-metric{width:56px;text-align:right}.time-metric b{font-size:17px}.progress-track{height:2px;background:#ffffff08;margin:0 -22px}.progress-track i{height:100%;display:block;width:0;background:linear-gradient(90deg,#ac95dd,#ffd282);transition:width .3s}.playfield{position:relative;flex:1;min-height:0;overflow:hidden;background:#151827}canvas{display:block;width:100%;height:100%;touch-action:none}.battle-caption{position:absolute;top:13px;left:22px;right:22px;display:flex;justify-content:space-between;font-size:10px;color:#a6abbd;letter-spacing:1px;pointer-events:none}.battle-state{font-size:9px;color:#757c91}.battle-state i,.small-dot{display:inline-block;width:4px;height:4px;background:#a0deb9;border-radius:50%;margin-right:5px;vertical-align:middle}.board-caption{position:absolute;left:17px;right:17px;display:flex;align-items:center;justify-content:space-between;color:#c3c4d4;font-size:10px;height:22px;pointer-events:none}.board-caption small{font-size:9px;color:#868aa1;margin-left:7px;letter-spacing:.2px}.board-caption .small-dot{background:#ffd282}.recover{font-size:10px;padding:4px 8px;background:#a6cba618;border:1px solid #9ed8ad45;border-radius:6px;color:#b1e7c0;pointer-events:auto}.pile-caption{position:absolute;left:22px;right:22px;display:flex;align-items:center;justify-content:space-between;pointer-events:none}.pile-caption b{font-size:12px;letter-spacing:2px}.pile-caption div>span{font-size:9px;color:#e6c796;margin-left:10px;font-variant-numeric:tabular-nums}.pile-caption>span{font-size:10px;color:#868a9f}.operation-hint{position:absolute;bottom:max(17px,env(safe-area-inset-bottom));left:0;right:0;text-align:center;color:#82879c;font-size:10px;letter-spacing:.3px;pointer-events:none}.toast{position:absolute;top:35%;left:50%;transform:translate(-50%,4px);white-space:nowrap;padding:10px 16px;background:#292b40ee;color:#f5dba7;border:1px solid #ffda9f2a;border-radius:9px;font-size:11px;opacity:0;transition:opacity .15s,transform .15s;pointer-events:none;z-index:9;box-shadow:0 8px 20px #0005}.toast.visible{opacity:1;transform:translate(-50%,0)}.pile-empty{position:absolute;left:0;right:0;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px;pointer-events:none}.pile-empty-icon{font-size:28px;color:#ffd282;background:#ffd2820a;border:1px dashed #ffd2823a;width:50px;height:50px;border-radius:14px;display:grid;place-items:center}.pile-empty>b{font-size:13px;font-weight:500;color:#cacbdb}.pile-empty>span:last-child{color:#8d92a6;font-size:11px}.boss-hud{position:absolute;top:37px;left:55px;right:55px;pointer-events:none}.boss-hud>div:first-child{display:flex;justify-content:space-between;font-size:9px;color:#f2a0ad;margin-bottom:6px;letter-spacing:1px}.boss-hud b{font-weight:600}.boss-hud span{color:#bc8e9e}.boss-track{height:5px;background:#552c43;border-radius:3px;position:relative;overflow:hidden}.boss-track:after{content:"";position:absolute;left:35%;width:35%;top:0;bottom:0;border-left:1px solid #d99da56a;border-right:1px solid #d99da56a}.boss-track i{display:block;background:linear-gradient(90deg,#ed6593,#ffba96);height:100%;width:100%;transition:width .12s}.drag-caption{position:absolute;top:7%;left:30px;right:30px;text-align:center;pointer-events:none;display:flex;flex-direction:column;gap:8px;z-index:5;text-shadow:0 2px 12px #000}.drag-caption b{font-size:14px;color:#ffd384;letter-spacing:1px}.drag-caption>span{font-size:11px;color:#fff}.drag-caption small{font-size:9px;color:#a7a9bf}.screen-overlay{position:absolute;inset:0;z-index:20;background:#111320ea;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;padding:28px}.menu-content{width:100%;max-width:330px;position:relative;padding-bottom:8px}.eyebrow{font-size:8px;letter-spacing:3px;color:#a2a0bb;display:block}.title-lockup{position:relative;margin-top:20px;display:flex;align-items:baseline;gap:11px;white-space:nowrap}.title-lockup>span{font-size:59px;letter-spacing:-2px;font-weight:350;color:#f6efff}.title-lockup>strong{font-size:59px;letter-spacing:-2px;color:#ffd384;font-weight:800}.title-lockup>i{position:absolute;bottom:-7px;left:4px;width:31px;height:3px;background:#ffd384;transform:skewX(-25deg)}.tagline{color:#9e9fb4;font-size:11px;margin:23px 0 0;letter-spacing:.5px}.menu-art{display:flex;align-items:center;justify-content:center;gap:11px;height:110px;position:relative}.menu-art:before{content:"";position:absolute;width:150px;height:100px;background:#ffda8033;filter:blur(45px);border-radius:50%;right:10px}.art-part{width:46px;height:46px;display:grid;place-items:center;border:1px solid #e9c58b66;background:#3f3445;color:#ffd384;border-radius:13px;font-size:24px;font-weight:900;box-shadow:0 5px 0 #262331;transform:rotate(-9deg)}.art-part:nth-of-type(3){transform:rotate(8deg)}.art-plus,.art-arrow{color:#73778d;font-size:16px}.art-turret{position:relative;font-size:38px;font-weight:900;color:#ffe2a3;display:grid;place-items:center;width:65px;height:65px;background:linear-gradient(135deg,#5e4852,#332b40);border:2px solid #ffd384;box-shadow:0 0 22px #ffd38424,0 7px 0 #262331;border-radius:18px;transform:rotate(-5deg)}.art-turret b{position:absolute;font-size:8px;letter-spacing:1px;bottom:-19px;right:15px;color:#ffd384}.instructions{margin:18px 0 28px;display:flex;flex-direction:column;gap:18px}.instructions>div{display:flex;align-items:center;gap:14px}.instructions>div>span{font-size:10px;color:#8c8199;border:1px solid #ffffff12;border-radius:50%;width:27px;height:27px;display:grid;place-items:center}.instructions p{margin:0;display:flex;flex-direction:column;gap:6px}.instructions b{font-weight:600;font-size:12px;letter-spacing:.6px}.instructions small{font-size:9px;color:#81869d}.primary{display:flex;align-items:center;justify-content:space-between;width:100%;height:51px;border-radius:12px;border:0;background:#ffd384;color:#282133;font-weight:700;font-size:13px;padding:0 22px;box-shadow:0 5px 0 #aa825437;transition:transform .15s}.primary:active{transform:translateY(2px)}.primary span{font-size:21px;font-weight:400}.menu-foot{font-size:9px;color:#777a8f;text-align:center;margin-top:19px;letter-spacing:.8px}.build-label{position:absolute;bottom:20px;font-size:8px;color:#454b61;letter-spacing:1.5px}.dialog{width:100%;max-width:305px;text-align:center}.dialog .eyebrow{color:#b2a0c3}.dialog h1{font-size:28px;letter-spacing:2px;margin:20px 0 14px;font-weight:600}.dialog>p{font-size:12px;color:#9d9fb5;margin:0 0 32px;line-height:1.8}.secondary{margin-top:13px;width:100%;height:46px;background:#292b3f;border:1px solid #ffffff0e;border-radius:11px;font-size:12px;color:#cdcede}.text-button{background:transparent;border:0;color:#a4a3ba;font-size:11px;margin-top:24px;padding:4px 16px}.dialog p.subtle{font-size:9px;margin:32px 0 0;color:#606780}.result-emblem{margin:20px auto 0;border-radius:50%;border:1px solid #ffd38445;width:76px;height:76px;display:grid;place-items:center;font-size:40px;color:#ffd384;background:#ffd38408;box-shadow:0 0 45px #ffd38412}.result-stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#ffffff0c;border:1px solid #ffffff0c;border-radius:12px;overflow:hidden;margin-bottom:25px}.result-stats>div{background:#1c1e30;padding:14px 8px;display:flex;flex-direction:column;gap:5px}.result-stats b{font-size:19px;color:#e4d4ed;font-variant-numeric:tabular-nums}.result-stats span{font-size:9px;color:#888ba2}.result-dialog h1{margin-top:18px}.result-dialog>p{margin-bottom:23px}.guide-dialog{max-width:335px}.guide-dialog h1{margin:13px 0 20px}#weapon-guide{display:flex;flex-direction:column;gap:13px;text-align:left;margin-bottom:23px}.guide-row{display:flex;align-items:center;gap:13px}.guide-symbol{border-radius:10px;background:#ffffff05;width:35px;height:35px;display:grid;place-items:center;font-size:19px;border:1px solid #ffffff11;flex:0 0 auto}.guide-row b{font-size:12px;letter-spacing:.6px}.guide-row p{font-size:9px;color:#999caf;margin:4px 0 0;line-height:1.6}.guide-row span{font-size:9px;color:#bdb7ce}.hidden{display:none!important}.danger{color:#ff7c8c!important}.debug-label{position:absolute;left:10px;bottom:4px;color:#8b779e;font-size:8px;pointer-events:none}.core-hit .hud{animation:coreflash .25s}@keyframes coreflash{50%{background:#4b2437}}@media(min-width:600px){.game-shell{height:min(94dvh,940px);min-height:620px;border:1px solid #ffffff0d;border-radius:22px}}@media(max-height:700px){.hud{padding-top:10px}.topline{margin-bottom:9px}.metrics{padding-bottom:10px}.screen-overlay{padding:20px 28px}.title-lockup>span,.title-lockup>strong{font-size:47px}.title-lockup{margin-top:13px}.menu-art{height:81px}.instructions{gap:13px;margin:13px 0 19px}.tagline{margin-top:20px}.build-label{bottom:9px}.instructions small{font-size:8px}.dialog h1{margin:15px 0 10px}.dialog>p{margin-bottom:20px}.result-emblem{width:53px;height:53px;font-size:29px}.result-stats>div{padding:10px}.guide-row{gap:9px}#weapon-guide{gap:9px}.guide-dialog h1{font-size:23px}.guide-row p{font-size:8px}.guide-symbol{width:29px;height:29px}.guide-dialog .primary{height:42px}}@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
 
 /* 品质升级：不依赖图片占位，也不改变 Canvas 坐标或战斗判定。 */
 .game-shell{isolation:isolate;border-left:1px solid #ffffff0e;border-right:1px solid #ffffff0e}
@@ -84,13 +86,36 @@
   .primary,.core-track i{transition:none}
 }
 @keyframes quality-fade{0%{opacity:1;transform:translate(-50%,-50%)}100%{opacity:0;transform:translate(-50%,-75%)}}
+
+/* V1.3 机械防线：手机可读性与教学反馈。 */
+:root{color-scheme:dark}.game-shell{background:#162b38}.hud{background:linear-gradient(180deg,#284452,#152937)}
+.metric-label{color:#b5c9ce;font-size:11px}.edition{color:#a3bec7}.icon-button{width:36px;height:36px;background:#314a58;border-color:#7497a333;color:#d3e5e7}.icon-button.active{color:#ffe0a0}
+.battle-caption{font-size:11px;color:#d0e0df}.battle-state{font-size:10px;color:#b2cac8}.board-caption small{color:#c2d0d2;font-size:10px}
+.pile-caption b{font-size:13px}.pile-caption>span{font-size:11px;color:#beced2}.pile-caption div>span{font-size:10px;color:#e9d9b7}
+.operation-hint{font-size:11px;color:#bdcdd0;bottom:max(12px,env(safe-area-inset-bottom));letter-spacing:0}
+.screen-overlay{background:linear-gradient(160deg,#102532f7,#1c2838f2)}.dialog{background:linear-gradient(150deg,#2d4655,#192b39);border-color:#9eb9c938}
+.dialog>p{font-size:13px;color:#c1d1d4}.dialog h1{font-size:27px}.text-button{color:#d4e2e4;min-height:36px;margin-top:14px}.menu-content>.text-button{display:block;margin:8px auto 0}
+.instructions small{font-size:11px;color:#b5c6cd;line-height:1.5}.instructions b{font-size:13px}.tagline{font-size:13px;color:#ccdadb}.menu-foot{font-size:11px;color:#a8c0c5}
+.guide-dialog{max-height:100%;padding-right:17px;scrollbar-width:thin;scrollbar-color:#8aa4ae #1a2b38;scrollbar-gutter:stable}
+.guide-dialog::-webkit-scrollbar,.screen-overlay::-webkit-scrollbar{width:5px}.guide-dialog::-webkit-scrollbar-thumb,.screen-overlay::-webkit-scrollbar-thumb{background:#799aa7;border-radius:4px}
+.guide-row{align-items:flex-start;border-bottom:1px solid #aac2cb16;padding-bottom:12px}.guide-row:last-child{border:0}.guide-row b{font-size:14px}.guide-row b small{display:block;color:#adc4c9;font-weight:400;font-size:11px;margin-top:3px}
+.guide-row p,.guide-row span{font-size:11px;line-height:1.6;color:#d2dfe0}.guide-symbol{width:38px;height:38px;background:#152d3d;font-size:23px}
+.result-stats{grid-template-columns:repeat(3,1fr)}.result-stats>div{background:#1e3443;padding:12px 5px}.result-stats span{font-size:10px;color:#adc4cb}.result-stats b{font-size:18px;color:#fff0c2}
+.dialog>.result-review{font-size:12px;line-height:1.7;text-align:left;background:#102835;padding:12px;border-radius:10px;margin-bottom:18px;color:#d3e5df}
+.tutorial-panel{position:absolute;z-index:9;top:43px;left:18px;right:18px;padding:12px 14px;border-radius:14px;border:1px solid #ffe0a26b;background:#142c3cee;box-shadow:0 6px 20px #06121955;pointer-events:none}
+.tutorial-panel>div{display:flex;justify-content:space-between;align-items:center;color:#f2cf8a;font-size:11px}.tutorial-panel button{pointer-events:auto;border:0;background:transparent;color:#d5e0df;padding:5px 0 5px 15px;font-size:12px}
+.tutorial-panel b{display:block;font-size:16px;margin-top:4px;color:#fff0bd}.tutorial-panel p{font-size:12px;line-height:1.5;margin:7px 0 0;color:#d1e3e4}
+.slots-full .operation-hint{color:#ffe0a2}.toast{max-width:calc(100% - 26px);white-space:normal;text-align:center;background:#26444fee;font-size:12px;border-color:#f0d39466;color:#fff0c2;top:34%}
+.perf{position:absolute;z-index:30;left:5px;bottom:0;font:8px monospace;color:#b5d5cb;max-width:100%;overflow:hidden;white-space:nowrap;pointer-events:none;background:#10202bd9}
+@media(max-height:690px){.hud{padding-top:max(7px,env(safe-area-inset-top))}.brand-mark{width:24px;height:26px}.brand b{font-size:12px}.topline{margin-bottom:4px}.icon-button{width:31px;height:31px}.metric-label{font-size:10px;margin-bottom:2px}.metrics{padding-bottom:7px}.instructions small{font-size:10px}.dialog>p{font-size:12px}.guide-row p,.guide-row span{font-size:11px}.guide-row{padding-bottom:9px}.guide-row b{font-size:13px}.guide-row b small{font-size:10px}.guide-symbol{width:30px;height:30px;font-size:20px}.tutorial-panel{top:36px;left:12px;right:12px;padding:8px 12px}.tutorial-panel b{font-size:14px}.tutorial-panel p{font-size:11px;margin:4px 0 0}.result-dialog .result-emblem{margin-top:0}.result-dialog .result-stats{margin-bottom:12px}.result-dialog .result-stats>div{padding:8px 3px}.result-dialog>.result-review{padding:8px;margin-bottom:10px}.operation-hint{font-size:10px;bottom:10px}.pile-caption{left:15px;right:15px}.board-caption small{font-size:9px}}
+@media(prefers-reduced-motion:reduce){.tutorial-panel{box-shadow:none}}
 </style>
 </head>
 <body>
   <main class="game-shell" id="game-shell">
     <header class="hud">
       <div class="topline">
-        <div class="brand"><span class="brand-mark">Ⅱ</span><div><b>二合塔防</b><span class="edition">综合试炼 · 01</span></div></div>
+        <div class="brand"><span class="brand-mark">Ⅱ</span><div><b>二合塔防</b><span class="edition" id="edition">综合试炼 · 01</span></div></div>
         <div class="hud-actions"><button id="sound" class="icon-button" aria-label="开启音效" title="音效">♪</button><button id="pause" class="icon-button" aria-label="暂停" title="暂停">Ⅱ</button></div>
       </div>
       <div class="metrics">
@@ -105,8 +130,9 @@
       <div class="battle-caption"><span id="wave-label">前哨接敌</span><span id="battle-state" class="battle-state"><i></i> 自动开火</span></div>
       <div class="boss-hud hidden" id="boss-hud"><div><b>攻城巨兽</b><span id="boss-phase">阶段 1 / 3</span></div><div class="boss-track"><i id="boss-fill"></i></div></div>
       <div class="board-caption" id="board-caption"><span><i class="small-dot"></i> 防线 <small>长按武器 · 拖拽自爆</small></span><button id="recover" class="recover hidden">＋ 补槽</button></div>
-      <div class="pile-caption" id="pile-caption"><div><b>零件堆</b><span id="pile-total">共 120 件</span></div><span id="pile-count">剩余 120 件</span></div>
+      <div class="pile-caption" id="pile-caption"><div><b>零件堆</b><span id="pile-total">全部开局入堆</span></div><span id="pile-count"></span></div>
       <div class="pile-empty hidden" id="pile-empty"><span class="pile-empty-icon">✓</span><b>零件全部取完</b><span>继续守线，善用现有武器</span></div>
+      <div id="tutorial-panel" class="tutorial-panel hidden"><div><span id="tutorial-step">操作练习 1/4</span><button id="tutorial-skip">跳过</button></div><b id="tutorial-title"></b><p id="tutorial-detail"></p></div><output id="perf" class="perf hidden"></output>
       <div class="operation-hint" id="operation-hint">点击表面零件，两个相同对象自动合成</div>
       <div class="toast" id="toast" role="status"></div>
       <div class="drag-caption hidden" id="drag-caption"><b id="drag-title"></b><span id="drag-detail">移入战斗区，松手自爆</span><small>战斗速度 50% · 移回防线取消</small></div>
@@ -118,35 +144,38 @@
           <div class="menu-art" aria-hidden="true"><span class="art-part">Ⅱ</span><span class="art-plus">＋</span><span class="art-part">Ⅱ</span><span class="art-arrow">↗</span><span class="art-turret">Ⅱ<b>LV.1</b></span></div>
           <div class="instructions"><div><span>01</span><p><b>点零件，自动二合</b><small>相同类型、相同等级，后者飞向前者</small></p></div><div><span>02</span><p><b>长按武器，拖拽自爆</b><small>松手引爆，牺牲火力换取救场与空间</small></p></div></div>
           <button class="primary" id="start">开始试炼 <span>↗</span></button>
-          <p class="menu-foot">六种武器 · 九格防线 · 三阶段 Boss</p>
+          <button class="text-button" id="learn-home">练习取件与自爆</button><p class="menu-foot" id="best-record">六种武器 · 九格防线 · 三阶段 Boss</p>
         </div>
-        <span class="build-label">MVP PROTOTYPE · V1.2</span>
+        <span class="build-label">V1.3 · 机械防线</span>
       </div>
       <div class="screen-overlay hidden" id="pause-screen">
-        <div class="dialog"><span class="eyebrow">TIME OUT</span><h1>战斗暂停</h1><p>一口气，再继续。</p><button id="resume" class="primary">继续战斗 <span>↗</span></button><button id="restart-pause" class="secondary">重新开始</button><button id="guide" class="text-button">查看六种武器</button><p class="subtle">切换窗口时会自动暂停</p></div>
+        <div class="dialog"><span class="eyebrow">TIME OUT</span><h1>战斗暂停</h1><p>一口气，再继续。</p><button id="resume" class="primary">继续战斗 <span>↗</span></button><button id="restart-pause" class="secondary">重新开始</button><button id="guide" class="text-button">查看六种武器</button><button id="learn-pause" class="text-button">重看操作教学</button><p class="subtle">切换窗口时会自动暂停</p></div>
       </div>
       <div class="screen-overlay hidden" id="guide-screen">
         <div class="dialog guide-dialog"><span class="eyebrow">ARSENAL</span><h1>六种火力</h1><div id="weapon-guide"></div><button id="guide-back" class="primary">返回 <span>↗</span></button></div>
       </div>
       <div class="screen-overlay hidden" id="ad-screen">
-        <div class="dialog"><span class="eyebrow">REINFORCEMENT</span><h1 id="ad-title">补充空槽</h1><p id="ad-text">广告服务尚未接入。</p><button id="ad-success" class="primary hidden">模拟广告成功</button><button id="ad-cancel" class="secondary">返回战斗</button></div>
+        <div class="dialog"><span class="eyebrow">REINFORCEMENT</span><h1 id="ad-title">补充空槽</h1><p id="ad-text">广告服务尚未接入。</p><button id="ad-watch" class="primary">观看广告补充空槽</button><button id="ad-success" class="primary hidden">模拟广告成功</button><button id="ad-cancel" class="secondary">返回战斗</button></div>
       </div>
+      <div class="screen-overlay hidden" id="tutorial-complete"><div class="dialog"><span class="eyebrow">训练完成</span><h1>准备好守线了</h1><p>取件、二合、自动攻击和自爆已经掌握。完整试炼中还要留意槽位耐久。</p><button id="tutorial-enter" class="primary">进入综合试炼 <span>↗</span></button><button id="tutorial-again" class="text-button">再练一次</button></div></div>
       <div class="screen-overlay hidden" id="result-screen">
-        <div class="dialog result-dialog"><span class="eyebrow" id="result-eyebrow">VICTORY</span><div class="result-emblem" id="result-emblem">✦</div><h1 id="result-title">防线守住了</h1><p id="result-subtitle">攻城巨兽已被击败。</p><div class="result-stats" id="result-stats"></div><button class="primary" id="retry">再战一次 <span>↗</span></button><button class="text-button" id="home">返回主界面</button></div>
+        <div class="dialog result-dialog"><span class="eyebrow" id="result-eyebrow">VICTORY</span><div class="result-emblem" id="result-emblem">✦</div><h1 id="result-title">防线守住了</h1><p id="result-subtitle">攻城巨兽已被击败。</p><div class="result-stats" id="result-stats"></div><p id="result-review" class="result-review"></p><button class="primary" id="retry">再战一次 <span>↗</span></button><button class="text-button" id="home">返回主界面</button></div>
       </div>
     </div>
   </main>
-  <script>/* 二合塔防 · V1.2 首轮配置。所有时间为战斗秒，长度为战斗单位。 */
+  <script>/* 二合塔防 · V1.3 机械防线配置。所有时间为战斗秒，长度为战斗单位。 */
 (function (root) {
   'use strict';
   const TD = root.TD = root.TD || {};
   TD.CONFIG = {
+    version: '1.3',
     step: 1 / 60, width: 900, defenseY: 1000, coreY: 1120,
     slotHP: 100, coreHP: 100, dragSpeed: .5, seed: 21007,
     pickupTime: .18, mergeTime: .3, chainTime: .18,
-    bossTime: 200, phaseMin: 4, phaseTransition: .8,
+    bossTime: 190, phaseMin: 10, phaseTransition: .8,
     // 开局将全部零件投入同一堆，不再依赖时间解锁或批次补给。
-    pileCounts: [32, 20, 16, 18, 24, 10], pileLayerCounts: [30, 24, 22, 18, 14, 12], pileLayers: 6,
+    pileCounts: [64, 40, 32, 36, 48, 20], pileLayerCounts: [30, 30, 28, 28, 26, 24, 22, 20, 18, 14], pileLayers: 10,
+    pressure: [[60, 1.4], [110, 2.2], [150, 3], [180, 3.5]],
     weapons: [
       { id: 'gun', name: '机枪', short: '机枪', color: '#ffce6e', damage: 10, interval: .25, speed: 1200,
         rate: [1, 1, 1.5, 1.75, 2], spin: [0, 0, 3, 2, 1.5], burst: [24, 28, 32, 36, 40], radius: [180, 200, 220, 240, 260] },
@@ -168,7 +197,7 @@
       armor: { name: '重甲怪', hp: 320, speed: .55, armor: .5, slot: 12, core: 9, control: 0, knock: 0, radius: 27, color: '#aeb6d6' },
       charge: { name: '冲锋怪', hp: 160, speed: 1, armor: .1, slot: 8, core: 7, control: 0, knock: .2, radius: 24, color: '#ff7669' },
       giant: { name: '巨兽', hp: 800, speed: .4, armor: .35, slot: 18, adjacent: 6, core: 12, control: .4, knock: .5, radius: 38, color: '#b097d6' },
-      boss: { name: '攻城巨兽', hp: 4500, speed: .25, armor: .45, slot: 30, adjacent: 10, core: 20, control: .7, knock: .85, radius: 65, color: '#f57c86' }
+      boss: { name: '攻城巨兽', hp: 36000, speed: .25, armor: .45, slot: 30, adjacent: 10, core: 20, control: .7, knock: .85, radius: 65, color: '#f57c86' }
     }
   };
   TD.weapon = id => TD.CONFIG.weapons.find(w => w.id === id);
@@ -177,6 +206,7 @@
   TD.distance = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
   TD.rng = seed => { let s = seed >>> 0; return () => { s += 0x6D2B79F5; let t = s; t = Math.imul(t ^ t >>> 15, t | 1); t ^= t + Math.imul(t ^ t >>> 7, t | 61); return ((t ^ t >>> 14) >>> 0) / 4294967296; }; };
 })(globalThis);
+
 
 
 /* 纯逻辑引擎：固定步、独立随机流、伤害统一结算。可在浏览器或 Node 中运行。 */
@@ -189,7 +219,8 @@
 
   class Game {
     constructor(seed = C.seed) { this.gameId = 0; this.reset(seed); }
-    reset(seed = this.seed) {
+    reset(seed = this.seed, mode = 'trial') {
+      this.mode = mode;
       this.seed = seed; this.gameId++; this.time = 0; this.status = 'ready'; this.paused = false;
       this.id = 0; this.age = 0; this.random = TD.rng(seed ^ 0xBCC472); this.layoutRandom = TD.rng(seed);
       this.core = C.coreHP; this.slots = Array.from({ length: 9 }, (_, i) => ({ index: i, generation: 1, hp: C.slotHP, active: true, item: null }));
@@ -197,8 +228,8 @@
       this.damageQueue = []; this.events = []; this.log = []; this.drag = null; this.boss = null;
       this.pile = []; this.pileById = new Map(); this.dotClock = .25;
       this.adRequest = null; this.adCount = 0; this.rewards = new Set(); this.waveIndex = 0;
-      this.stats = { picks: 0, merges: 0, firstMerge: null, highest: 0, explosions: 0, lostSlots: 0, kills: 0, controlSeconds: 0, enemySeconds: 0, blockedSeconds: 0, coreDamage: 0 };
-      this.makePile(); this.waves = this.makeWaves(); this.waveCursor = 0;
+      this.stats = { picks: 0, merges: 0, firstMerge: null, highest: 0, explosions: 0, lostSlots: 0, kills: 0, controlSeconds: 0, enemySeconds: 0, blockedSeconds: 0, coreDamage: 0, lastPick: null, lastMerge: null, lastExplosion: null, coreSources: {} };
+      this.makePile(); this.waves = this.mode === 'tutorial' ? [] : this.makeWaves(); this.waveCursor = 0;
       this.emit('reset');
     }
     start() { if (this.status === 'ready') { this.status = 'playing'; this.emit('start'); } }
@@ -213,8 +244,12 @@
       this.stats.highest = Math.max(this.stats.highest, level); return item;
     }
     makePile() {
-      // 所有120件零件开局混入同一堆，不使用分批和时间补给。
+      // 所有零件零件开局混入同一堆，不使用分批和时间补给。
       const bag = [];
+      if (this.mode === 'tutorial') {
+        this.pile = [0, 1].map((i) => ({ id: ++this.id, kind: 'gun', layer: 0, region: 'center', x: .34 + i * .32, y: .45, w: .21, h: .26, removed: false, coveredBy: [] }));
+        this.pileById = new Map(this.pile.map(p => [p.id, p])); this.record('pileReady', { total: 2 }); return;
+      }
       C.pileCounts.forEach((count, i) => { for (let n = 0; n < count; n++) bag.push(C.weapons[i].id); });
       for (let i = bag.length - 1; i > 0; i--) {
         const j = Math.floor(this.layoutRandom() * (i + 1));
@@ -257,7 +292,7 @@
       this.pileById = new Map(pieces.map(p => [p.id, p]));
       // 同一层后放的卡也压在前卡之上，遮挡关系与渲染和点击的z序一致。
       // 只要卡片矩形有正面积交叠（哪怕只压住一角），整张卡都被锁住；边缘相接不算覆盖。
-      // 生成时预计算依赖图，避免每帧进行120×120次遮挡几何计算。
+      // 生成时预计算依赖图，避免每帧进行全量两两遮挡几何计算。
       for (const piece of pieces) {
         piece.coveredBy = pieces.filter(other => other !== piece &&
           (other.layer > piece.layer || (other.layer === piece.layer && other.id > piece.id)) &&
@@ -267,20 +302,21 @@
       }
       this.record('pileReady', { total: bag.length });
     }
+    isBlocked(piece) { return piece.coveredBy.some(id => { const p = this.pileById.get(id); return p && !p.removed; }); }
     blockers(piece) {
       return piece.coveredBy.map(id => this.pileById.get(id)).filter(other => other && !other.removed);
     }
-    accessible() { return this.pile.filter(p => !p.removed && !this.blockers(p).length); }
+    accessible() { return this.pile.filter(p => !p.removed && !this.isBlocked(p)); }
     pick(id) {
       if (this.status !== 'playing' || this.paused || this.drag) return false;
       const piece = this.pile.find(p => p.id === id && !p.removed);
-      if (!piece || this.blockers(piece).length) { this.emit('hint', { text: '先取走上层零件' }); return false; }
+      if (!piece || this.blockers(piece).length) { this.emit('hint', { text: '先取走上层零件', piece: piece?.id, blockers: piece ? this.blockers(piece).map(p => p.id) : [] }); return false; }
       const slot = this.slots.find(s => s.active && !s.item);
       if (!slot) { this.emit('hint', { text: '槽位已满 · 长按武器拖到战场自爆' }); return false; }
       piece.removed = true;
       const item = this.makeItem(piece.kind); item.busyUntil = this.time + C.pickupTime;
       item.flight = { from: { x: piece.x, y: piece.y }, start: this.time, end: item.busyUntil };
-      slot.item = item; this.stats.picks++; this.record('pick', { kind: piece.kind, slot: slot.index, id: item.id }); return true;
+      slot.item = item; this.stats.picks++; this.stats.lastPick = this.time; this.record('pick', { kind: piece.kind, slot: slot.index, id: item.id }); return true;
     }
     tryMerges() {
       const candidates = this.slots.filter(s => s.active && s.item && s.item.busyUntil <= this.time + EPS && s.item.level < 5 && (!this.drag || this.drag.item.id !== s.item.id))
@@ -298,7 +334,7 @@
         item.busyUntil = this.time + duration; item.justMerged = true;
         item.merge = { from: newer.index, to: older.index, start: this.time, end: item.busyUntil, level: a.level };
         older.item = item; newer.item = null;
-        this.stats.merges++; if (this.stats.firstMerge === null) this.stats.firstMerge = this.time;
+        this.stats.merges++; this.stats.lastMerge = this.time; if (this.stats.firstMerge === null) this.stats.firstMerge = this.time;
         this.record('merge', { kind: item.kind, level, from: newer.index, to: older.index });
       }
       for (const slot of this.slots) if (slot.item?.justMerged && slot.item.busyUntil <= this.time + EPS) slot.item.justMerged = false;
@@ -358,7 +394,7 @@
       [142, 150, 158, 166].forEach(t => add(t, 'normal', 2, 'dual'));
       [172, 178, 184, 190, 196].forEach(t => { add(t, 'swarm', 6, 'cluster'); add(t, 'normal', 2, 'dual'); });
       [180, 192].forEach(t => add(t, 'armor'));
-      add(C.bossTime, 'boss'); [202, 210].forEach(t => add(t, 'normal', 4, 'column'));
+      add(C.bossTime, 'boss'); [C.bossTime + 5, C.bossTime + 15, C.bossTime + 25].forEach(t => { add(t, 'normal', 4, 'column'); add(t, 'fast', 2, 'dual'); });
       return waves.sort((a, b) => a.t - b.t || a.order - b.order);
     }
     spawn(kind, x = 450, y = 0) {
@@ -375,7 +411,11 @@
         if (wave.formation === 'alternate') x = wave.order % 2 ? 650 : 250;
         if (wave.formation === 'column') { x = i % 2 ? 600 : 300; y -= Math.floor(i / 2) * 70; }
         if (wave.formation === 'cluster') { const a = this.random() * Math.PI * 2, r = Math.sqrt(this.random()) * 90; x += Math.cos(a) * r; y += Math.sin(a) * r; }
-        this.spawn(wave.kind, x, y);
+        const enemy = this.spawn(wave.kind, x, y);
+        if (wave.kind !== 'boss' && this.mode !== 'tutorial') {
+          const strength = (C.pressure || []).filter(([time]) => this.time >= time).at(-1)?.[1] || 1;
+          enemy.hp = enemy.maxHP = enemy.maxHP * strength;
+        }
       }
     }
     director() {
@@ -413,7 +453,7 @@
     }
     queueDamage(enemy, raw, pen = 0, color = '#fff') { this.damageQueue.push({ type: 'enemy', enemy, raw, pen, color }); }
     queueSlot(index, amount, generation = this.slots[index]?.generation) { this.damageQueue.push({ type: 'slot', index, amount, generation }); }
-    queueCore(amount) { this.damageQueue.push({ type: 'core', amount }); }
+    queueCore(amount, source = 'unknown') { this.damageQueue.push({ type: 'core', amount, source }); }
     effect(type, point, color, duration, extra = {}) { this.effects.push({ type, ...point, color, start: this.time, end: this.time + duration, ...extra }); }
     chain(start, count, range, enemies = this.targets()) {
       const result = [start], unused = enemies.filter(e => e.id !== start.id);
@@ -558,7 +598,7 @@
     }
     explode(item, point) {
       const w = TD.weapon(item.kind), n = item.level - 1, m = TD.mul(item.level), id = ++this.id;
-      this.stats.explosions++; this.record('explode', { kind: item.kind, level: item.level, x: Math.round(point.x), y: Math.round(point.y) });
+      this.stats.explosions++; this.stats.lastExplosion = this.time; this.record('explode', { kind: item.kind, level: item.level, x: Math.round(point.x), y: Math.round(point.y) });
       this.emit('blast', { kind: item.kind });
       if (item.kind === 'gun') {
         this.bursts.push({ id, ...point, kind: 'gun', level: item.level, count: w.burst[n], sent: 0, nextAt: this.time, start: this.time, end: this.time + 1.5, radius: w.radius[n] });
@@ -654,7 +694,7 @@
       if ((enemy.state === 'slot' || enemy.state === 'core') && this.time + EPS >= enemy.attackAt) {
         enemy.attackAt = this.time + 1; // 解控只执行一次到期攻击，不补算被冻结期间的积压。
         const factor = enemy.kind === 'boss' ? [1, 1.25, 1.5][enemy.phase - 1] : 1;
-        if (enemy.state === 'core') this.queueCore(def.core * factor);
+        if (enemy.state === 'core') this.queueCore(def.core * factor, enemy.kind);
         else {
           this.queueSlot(enemy.slot, def.slot * factor);
           if (def.adjacent) { this.queueSlot(enemy.slot - 1, def.adjacent * factor); this.queueSlot(enemy.slot + 1, def.adjacent * factor); }
@@ -675,7 +715,7 @@
           const slot = this.slots[damage.index]; if (!slot?.active || slot.generation !== damage.generation) continue;
           slot.hp = Math.max(0, slot.hp - damage.amount); slot.hitAt = this.time; if (!slot.hp) this.destroySlot(damage.index, damage.generation);
         } else {
-          const amount = Math.min(this.core, damage.amount); this.core = Math.max(0, this.core - damage.amount); this.stats.coreDamage += amount;
+          const amount = Math.min(this.core, damage.amount); this.core = Math.max(0, this.core - damage.amount); this.stats.coreDamage += amount; this.stats.coreSources[damage.source || 'unknown'] = (this.stats.coreSources[damage.source || 'unknown'] || 0) + amount;
           this.emit('coreHit', { amount: damage.amount });
         }
       }
@@ -734,6 +774,74 @@
 })(globalThis);
 
 
+
+/* 浏览器时钟、性能采样与平台奖励边界；不改变战斗规则。 */
+(function (root) {
+  'use strict';
+  const TD = root.TD;
+  class FrameClock {
+    constructor(step = 1 / 60) { this.step = step; this.reset(); }
+    reset() { this.accumulator = 0; this.clampedSeconds = 0; }
+    advance(elapsed, speed, update, running) {
+      if (!running()) { this.accumulator = 0; return 0; }
+      const dt = Math.max(0, elapsed), accepted = Math.min(.5, dt);
+      this.clampedSeconds += dt - accepted;
+      this.accumulator += accepted * speed;
+      let count = 0;
+      while (this.accumulator + 1e-9 >= this.step && count < 40 && running()) {
+        update(); this.accumulator -= this.step; count++;
+      }
+      if (!running()) this.accumulator = 0;
+      return count;
+    }
+  }
+  class PerformanceMonitor {
+    constructor() { this.reset(); }
+    reset() { this.samples = []; this.pendingInput = null; this.inputs = []; }
+    input(now) { this.pendingInput = now; }
+    sample(interval, logic, draw, hud, total, now) {
+      this.samples.push({ interval, logic, draw, hud, total });
+      if (this.samples.length > 600) this.samples.shift();
+      if (this.pendingInput !== null) { this.inputs.push(Math.max(0, now - this.pendingInput)); this.pendingInput = null; if (this.inputs.length > 100) this.inputs.shift(); }
+    }
+    report() {
+      const a = this.samples;
+      const quantile = (values, q) => { if (!values.length) return 0; values = [...values].sort((a, b) => a - b); return +values[Math.min(values.length - 1, Math.floor(values.length * q))].toFixed(2); };
+      const mean = key => a.length ? a.reduce((sum, s) => sum + s[key], 0) / a.length : 0;
+      return { frames: a.length, fps: a.length ? +(1000 / mean('interval')).toFixed(1) : 0,
+        p95FrameMs: quantile(a.map(s => s.interval), .95), p99FrameMs: quantile(a.map(s => s.interval), .99),
+        p95WorkMs: quantile(a.map(s => s.total), .95), p95LogicMs: quantile(a.map(s => s.logic), .95),
+        p95DrawMs: quantile(a.map(s => s.draw), .95), p95HudMs: quantile(a.map(s => s.hud), .95),
+        slowFrames: a.filter(s => s.interval > 50).length, p95InputMs: quantile(this.inputs, .95) };
+    }
+  }
+  function debrief(game) {
+    const s = game.stats;
+    if (s.picks < 2) return '先取两件相同零件，合成第一座武器。';
+    if (!s.explosions && s.blockedSeconds > 5) return '满槽后长按完整武器，拖到敌群中自爆腾位。';
+    if (s.lostSlots >= 2) return '防线缺口会让敌人直击核心，优先清理靠近缺口的敌人。';
+    if (s.coreDamage > 0) return '敌人已经突破防线；保留控制武器，并用自爆处理贴近核心的敌人。';
+    if (game.status === 'won') return `本局完成 ${s.merges} 次合成，守住 ${game.slots.filter(s => s.active).length} 格防线。试试保留高阶火力，再选择自爆时机。`;
+    return '保留高阶武器持续输出，用低阶武器自爆清理拥挤槽位。';
+  }
+  class RewardBridge {
+    constructor(provider = () => root.TDPlatform) { this.provider = provider; this.pending = false; }
+    available() { return typeof this.provider()?.showRewardedVideo === 'function'; }
+    async show() {
+      if (this.pending || !this.available()) return false;
+      this.pending = true;
+      let timer;
+      try {
+        const result = await Promise.race([this.provider().showRewardedVideo({ placement: 'restore-slot' }), new Promise(resolve => { timer = setTimeout(() => resolve({ completed: false }), 60000); })]);
+        return result?.completed === true;
+      } catch (_) { return false; }
+      finally { clearTimeout(timer); this.pending = false; }
+    }
+  }
+  TD.FrameClock = FrameClock; TD.PerformanceMonitor = PerformanceMonitor; TD.debrief = debrief; TD.RewardBridge = RewardBridge;
+})(globalThis);
+
+
 (function (root) {
   'use strict';
   const TD = root.TD, C = TD.CONFIG, TAU = Math.PI * 2;
@@ -743,17 +851,19 @@
       const rect = this.canvas.getBoundingClientRect(); this.w = rect.width; this.h = rect.height;
       const dpr = Math.min(2, root.devicePixelRatio || 1); this.canvas.width = Math.round(this.w * dpr); this.canvas.height = Math.round(this.h * dpr);
       this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0); this.scaleX = this.w / C.width;
-      this.defY = this.h * .485; this.coreY = this.h * .558; this.top = 33;
-      this.scaleY = (this.defY - this.top) / C.defenseY; this.pileTop = this.h * .627; this.pileHeight = this.h * .35 - 28;
+      const pileArea = Math.min(290, Math.max(210, this.h * .39));
+      this.pileTop = this.h - pileArea; this.pileHeight = pileArea - 42;
+      this.coreY = this.pileTop - 33; this.defY = this.coreY - 48; this.top = 33; this.backgroundLayer = null;
+      this.scaleY = (this.defY - this.top) / C.defenseY;
       const byId = id => document.getElementById(id);
       byId('board-caption').style.top = (this.defY - this.w / 9 * .66 - 27) + 'px';
-      byId('pile-caption').style.top = (this.h * .601) + 'px';
+      byId('pile-caption').style.top = (this.pileTop - 7) + 'px';
       byId('pile-empty').style.top = (this.pileTop + this.pileHeight * .17) + 'px';
     }
     point(p) { return { x: p.x * this.scaleX, y: p.y <= 1000 ? this.top + p.y * this.scaleY : this.defY + (p.y - 1000) / 120 * (this.coreY - this.defY) }; }
     unpoint(p) { return { x: TD.clamp(p.x / this.scaleX, 0, 900), y: TD.clamp(p.y <= this.defY ? (p.y - this.top) / this.scaleY : 1000 + (p.y - this.defY) / (this.coreY - this.defY) * 120, 0, 1120) }; }
     pileRect(piece) { return { x: piece.x * this.w, y: this.pileTop + piece.y * this.pileHeight, w: piece.w * this.w, h: piece.h * this.pileHeight }; }
-    rounded(x, y, w, h, r) { const c = this.ctx; c.beginPath(); c.roundRect(x, y, w, h, Math.min(r, w / 2, h / 2)); }
+    rounded(x, y, w, h, r) { const c = this.ctx; r = Math.max(0, Math.min(r, w / 2, h / 2)); c.beginPath(); if (c.roundRect) c.roundRect(x, y, w, h, r); else { c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r); c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath(); } }
     text(text, x, y, color, size = 10, weight = 500) { const c = this.ctx; c.font = `${weight} ${size}px "PingFang SC","Microsoft YaHei",system-ui,sans-serif`; c.fillStyle = color; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(text, x, y); }
     circle(x, y, r, color, stroke = false) { const c = this.ctx; c.beginPath(); c.arc(x, y, r, 0, TAU); c[stroke ? 'strokeStyle' : 'fillStyle'] = color; c[stroke ? 'stroke' : 'fill'](); }
     draw(realTime) {
@@ -761,26 +871,45 @@
       c.clearRect(0, 0, this.w, this.h); this.background(realTime);
       this.zones(); this.enemies(); this.projectiles(); this.slots(); this.pile(); this.flights(); this.effects();
       if (game.drag) this.preview();
+      this.pressFeedback(realTime);
       if (game.status === 'ready') {
         const g = c.createLinearGradient(0, 0, 0, this.h); g.addColorStop(0, '#0a0d1800'); g.addColorStop(1, '#0a0d1838'); c.fillStyle = g; c.fillRect(0, 0, this.w, this.h);
       }
     }
     background(realTime) {
+      const danger = this.game.core <= 30;
+      if (!this.backgroundLayer || this.backgroundDanger !== danger) {
+        const output = this.ctx, layer = document.createElement('canvas'), dpr = Math.min(2, root.devicePixelRatio || 1);
+        layer.width = Math.max(1, Math.round(this.w * dpr)); layer.height = Math.max(1, Math.round(this.h * dpr));
+        this.ctx = layer.getContext('2d'); this.ctx.scale(dpr, dpr); this.paintBackground(0);
+        this.ctx = output; this.backgroundLayer = layer; this.backgroundDanger = danger;
+      }
+      this.ctx.drawImage(this.backgroundLayer, 0, 0, this.w, this.h);
+    }
+    paintBackground(realTime) {
       const c = this.ctx, w = this.w;
-      const g = c.createLinearGradient(0, 0, 0, this.coreY); g.addColorStop(0, '#202036'); g.addColorStop(1, '#171f31'); c.fillStyle = g; c.fillRect(0, 0, w, this.coreY + 10);
+      const g = c.createLinearGradient(0, 0, 0, this.coreY); g.addColorStop(0, '#243b49'); g.addColorStop(1, '#182c38'); c.fillStyle = g; c.fillRect(0, 0, w, this.coreY + 10);
       const glow = c.createRadialGradient(w / 2, 0, 0, w / 2, 0, w * .7); glow.addColorStop(0, '#6b427524'); glow.addColorStop(1, '#26253a00'); c.fillStyle = glow; c.fillRect(0, 0, w, this.defY);
-      c.save(); c.strokeStyle = '#8e9ec909'; c.lineWidth = 1;
+      c.save(); c.strokeStyle = '#a2d5d912'; c.lineWidth = 1;
       for (let i = 0; i <= 9; i++) { c.beginPath(); c.moveTo(w / 2 + (i - 4.5) * w / 12, 29); c.lineTo(i * w / 9, this.defY); c.stroke(); }
       for (let i = 1; i < 8; i++) { const y = this.top + (this.defY - this.top) * (i / 8) ** 1.2; c.beginPath(); c.moveTo(0, y); c.lineTo(w, y); c.stroke(); }
       c.setLineDash([2, 5]); c.strokeStyle = '#a384c22a'; c.beginPath(); c.moveTo(25, 35); c.lineTo(w - 25, 35); c.stroke(); c.restore();
       for (const x of [250, 450, 650]) { const p = this.point({ x, y: 0 }); c.save(); c.globalAlpha = .26 + .08 * Math.sin(realTime / 1400 + x); this.rounded(p.x - 12, 30, 24, 3, 2); c.fillStyle = '#cd91ce'; c.fill(); c.restore(); }
-      c.fillStyle = '#1e253a'; c.fillRect(0, this.defY - 15, w, this.coreY - this.defY + 25);
+      c.save();
+      for (let lane = 0; lane < 3; lane++) {
+        const x = (lane + .5) * w / 3;
+        c.strokeStyle = '#a4d5ce15'; c.lineWidth = 1; c.setLineDash([8, 14]); c.beginPath(); c.moveTo(x, 44); c.lineTo(x, this.defY - 45); c.stroke();
+      }
+      c.setLineDash([]); c.fillStyle = '#0e1e2a'; c.fillRect(0, 0, 7, this.defY); c.fillRect(w - 7, 0, 7, this.defY);
+      for (let y = 65; y < this.defY - 24; y += 60) { this.circle(4, y, 1.5, '#9fbcbf'); this.circle(w - 4, y, 1.5, '#9fbcbf'); }
+      c.restore();
+      c.fillStyle = '#2d4350'; c.fillRect(0, this.defY - 15, w, this.coreY - this.defY + 25);
       c.strokeStyle = '#555d8533'; c.lineWidth = 1; c.beginPath(); c.moveTo(0, this.defY - 20); c.lineTo(w, this.defY - 20); c.stroke();
       const coreColor = this.game.core <= 30 ? '#f97990' : '#89dcb9';
       c.save(); c.globalAlpha = .28; c.strokeStyle = coreColor; c.lineWidth = 1; c.beginPath(); c.moveTo(16, this.coreY); c.lineTo(w - 16, this.coreY); c.stroke(); c.restore();
       this.rounded(w / 2 - 23, this.coreY - 8, 46, 15, 4); c.fillStyle = '#1a2635'; c.fill(); c.strokeStyle = coreColor + '65'; c.stroke(); this.text('核心', w / 2, this.coreY, coreColor, 8);
-      c.fillStyle = '#151827'; c.fillRect(0, this.coreY + 13, w, this.h);
-      const pg = c.createLinearGradient(0, this.pileTop - 30, 0, this.h); pg.addColorStop(0, '#1a1c2e'); pg.addColorStop(1, '#171a2c'); c.fillStyle = pg; c.fillRect(0, this.pileTop - 28, w, this.h);
+      c.fillStyle = '#152330'; c.fillRect(0, this.coreY + 13, w, this.h);
+      const pg = c.createLinearGradient(0, this.pileTop - 30, 0, this.h); pg.addColorStop(0, '#1f3340'); pg.addColorStop(1, '#14212e'); c.fillStyle = pg; c.fillRect(0, this.pileTop - 28, w, this.h);
       c.strokeStyle = '#938fab12'; c.beginPath(); c.moveTo(19, this.pileTop - 30); c.lineTo(w - 19, this.pileTop - 30); c.stroke();
       c.save(); c.strokeStyle = '#ffffff05'; c.lineWidth = .7;
       for (let y = this.pileTop + 9; y < this.h - 35; y += 16) for (let x = 19; x < w - 15; x += 16) { c.beginPath(); c.moveTo(x - 1, y); c.lineTo(x + 1, y); c.stroke(); }
@@ -797,14 +926,21 @@
         if (kind === 'missile') { c.rotate(.45); c.beginPath(); c.moveTo(0, -13); c.quadraticCurveTo(-7, -6, -4, 6); c.lineTo(-9, 11); c.lineTo(-2, 10); c.lineTo(0, 13); c.lineTo(2, 10); c.lineTo(9, 11); c.lineTo(4, 6); c.quadraticCurveTo(7, -6, 0, -13); c.fill(); c.fillStyle = '#e8ffd5'; this.circle(0, -3, 2, '#e8ffd5'); }
         if (kind === 'laser') { c.beginPath(); c.moveTo(0, -12); c.lineTo(9, 0); c.lineTo(0, 12); c.lineTo(-9, 0); c.closePath(); c.stroke(); c.beginPath(); c.moveTo(-14, 0); c.lineTo(14, 0); c.stroke(); this.circle(0, 0, 3, w.color); }
       } else {
-        this.circle(0, 0, 11, '#1a2032'); c.lineWidth = 1.6; this.circle(0, 0, 10, w.color + 'aa', true);
+        const armor = level >= 4 ? '#a1bac1' : '#607c88';
+        c.fillStyle = armor; this.rounded(-12, -8, 24, 19, level >= 3 ? 3 : 6); c.fill();
+        c.fillStyle = '#253846'; this.rounded(-10, -6, 20, 15, 4); c.fill();
+        if (level >= 2) { c.fillStyle = w.color; c.fillRect(-12, -5, 3, 11); c.fillRect(9, -5, 3, 11); }
+        if (level >= 3) { for (const sign of [-1, 1]) { c.fillStyle = w.color; c.beginPath(); c.moveTo(sign * 10, -6); c.lineTo(sign * 16, -2); c.lineTo(sign * 13, 7); c.lineTo(sign * 10, 5); c.closePath(); c.fill(); } }
+        if (level >= 4) { c.lineWidth = 1.8; c.strokeStyle = w.color; this.rounded(-14, -10, 28, 23, 4); c.stroke(); }
+        if (level === 5) { c.fillStyle = '#fff1af'; for (const dx of [-8, 0, 8]) { c.beginPath(); c.moveTo(dx - 2, -12); c.lineTo(dx, -16); c.lineTo(dx + 2, -12); c.fill(); } }
+        this.circle(0, 0, 10, '#1a2032'); c.lineWidth = 1.6; this.circle(0, 0, 10, w.color + 'aa', true);
         c.rotate(angle + Math.PI / 2);
-        if (kind === 'gun') { const barrels = level >= 2 ? [-3, 3] : [0]; for (const dx of barrels) { c.fillStyle = w.color; this.rounded(dx - 2, -16, 4, 16, 1); c.fill(); c.fillStyle = '#fff0be'; c.fillRect(dx - 1, -15, 2, 3); } this.rounded(-7, -5, 14, 11, 3); c.fillStyle = '#685642'; c.fill(); c.strokeStyle = w.color; c.stroke(); }
-        if (kind === 'fire') { this.rounded(-5, -14, 10, 15, 3); c.fillStyle = '#825047'; c.fill(); c.stroke(); this.circle(0, -12, 3, w.color); this.circle(0, 2, 6, '#ce7454'); c.fillStyle = '#ffdc8a'; c.fillRect(-2, -1, 4, 5); }
-        if (kind === 'ice') { c.beginPath(); c.moveTo(0, -16); c.lineTo(6, -7); c.lineTo(0, 3); c.lineTo(-6, -7); c.closePath(); c.fillStyle = '#517b9f'; c.fill(); c.stroke(); this.circle(0, 4, 4, w.color); }
-        if (kind === 'lightning') { c.beginPath(); c.moveTo(-6, 5); c.lineTo(-4, -11); c.moveTo(6, 5); c.lineTo(4, -11); c.stroke(); this.circle(-4, -11, 2, w.color); this.circle(4, -11, 2, w.color); c.beginPath(); c.moveTo(-4, -9); c.lineTo(2, -6); c.lineTo(-1, -3); c.lineTo(5, 0); c.stroke(); this.circle(0, 6, 4, '#8970b0'); }
-        if (kind === 'missile') { for (const dx of [-4, 4]) { this.rounded(dx - 2.8, -12, 5.6, 16, 2); c.fillStyle = '#5d7c54'; c.fill(); c.stroke(); c.fillStyle = w.color; c.fillRect(dx - 1.5, -10, 3, 5); } this.circle(0, 6, 4, '#a8ce88'); }
-        if (kind === 'laser') { c.beginPath(); c.moveTo(-6, 6); c.lineTo(-5, -10); c.lineTo(0, -17); c.lineTo(5, -10); c.lineTo(6, 6); c.closePath(); c.fillStyle = '#794a74'; c.fill(); c.stroke(); this.circle(0, -8, 3, '#fff0ff'); c.fillStyle = w.color; c.fillRect(-3, 3, 6, 3); }
+        if (kind === 'gun') { const barrels = level >= 4 ? [-5, 0, 5] : level >= 2 ? [-3, 3] : [0]; for (const dx of barrels) { c.fillStyle = w.color; this.rounded(dx - 2, -16, 4, 16, 1); c.fill(); c.fillStyle = '#fff0be'; c.fillRect(dx - 1, -15, 2, 3); } this.rounded(-7, -5, 14, 11, 3); c.fillStyle = '#685642'; c.fill(); c.strokeStyle = w.color; c.stroke(); }
+        if (kind === 'fire') { this.rounded(-5 - (level >= 3 ? 2 : 0), -14, 10 + (level >= 3 ? 4 : 0), 15, 3); c.fillStyle = '#825047'; c.fill(); c.stroke(); this.circle(0, -12, 3, w.color); this.circle(0, 2, 6, '#ce7454'); c.fillStyle = '#ffdc8a'; c.fillRect(-2, -1, 4, 5); }
+        if (kind === 'ice') { if (level >= 3) { c.fillStyle = '#bdfaff'; for (const dx of [-9, 9]) { c.beginPath(); c.moveTo(dx, -8); c.lineTo(dx + 3, 0); c.lineTo(dx - 3, 0); c.fill(); } } c.beginPath(); c.moveTo(0, -16); c.lineTo(6, -7); c.lineTo(0, 3); c.lineTo(-6, -7); c.closePath(); c.fillStyle = '#517b9f'; c.fill(); c.stroke(); this.circle(0, 4, 4, w.color); }
+        if (kind === 'lightning') { if (level >= 3) { this.circle(0, -10, 6, w.color + '50'); this.circle(0, -10, 3, '#eee6ff'); } c.beginPath(); c.moveTo(-6, 5); c.lineTo(-4, -11); c.moveTo(6, 5); c.lineTo(4, -11); c.stroke(); this.circle(-4, -11, 2, w.color); this.circle(4, -11, 2, w.color); c.beginPath(); c.moveTo(-4, -9); c.lineTo(2, -6); c.lineTo(-1, -3); c.lineTo(5, 0); c.stroke(); this.circle(0, 6, 4, '#8970b0'); }
+        if (kind === 'missile') { for (const dx of (level >= 3 ? [-7, 0, 7] : [-4, 4])) { this.rounded(dx - 2.8, -12, 5.6, 16, 2); c.fillStyle = '#5d7c54'; c.fill(); c.stroke(); c.fillStyle = w.color; c.fillRect(dx - 1.5, -10, 3, 5); } this.circle(0, 6, 4, '#a8ce88'); }
+        if (kind === 'laser') { if (level >= 3) { c.fillStyle = w.color; c.fillRect(-11, -7, 3, 13); c.fillRect(8, -7, 3, 13); } c.beginPath(); c.moveTo(-6, 6); c.lineTo(-5, -10); c.lineTo(0, -17); c.lineTo(5, -10); c.lineTo(6, 6); c.closePath(); c.fillStyle = '#794a74'; c.fill(); c.stroke(); this.circle(0, -8, 3, '#fff0ff'); c.fillStyle = w.color; c.fillRect(-3, 3, 6, 3); }
         c.rotate(-(angle + Math.PI / 2));
         if (level >= 3) { c.lineWidth = .8; for (let i = 0; i < level - 2; i++) { const a = Math.PI / 2 + (i - (level - 3) / 2) * .4; this.circle(Math.cos(a) * 12, Math.sin(a) * 12, 1.3, w.color); } }
       }
@@ -817,17 +953,17 @@
         if (!slot.active) {
           c.save(); c.globalAlpha = .65; c.strokeStyle = '#dd7c8b60'; c.lineWidth = 1.2;
           c.beginPath(); c.moveTo(x - 6, y - 6); c.lineTo(x + 2, y); c.lineTo(x - 2, y + 5); c.moveTo(x + 3, y - 5); c.lineTo(x + 8, y + 4); c.stroke(); c.restore();
-          this.text('缺口', x, y + size / 2 + 7, '#856576', 7); continue;
+          this.text('缺口', x, y + size / 2 + 7, '#ffaf9d', 9); continue;
         }
         const item = slot.item, color = item ? TD.weapon(item.kind).color : '#8890aa';
-        this.rounded(x - size / 2, y - size / 2, size, size, 7); c.fillStyle = '#293248'; c.fill(); c.lineWidth = 1;
-        c.strokeStyle = item ? color + '80' : '#65718c55'; c.stroke();
+        this.rounded(x - size / 2, y - size / 2, size, size, 7); c.fillStyle = '#324d5c'; c.fill(); c.lineWidth = 1;
+        c.strokeStyle = item ? color + '80' : '#9dbbc866'; c.stroke();
         if (slot.hitAt && game.time - slot.hitAt < .13) { c.fillStyle = '#ff9cab35'; c.fill(); }
         this.rounded(x - size / 2 + 3, y - size / 2 + 3, size - 6, size - 6, 5); c.strokeStyle = '#ffffff06'; c.stroke();
         if (item) {
           const busy = item.busyUntil > game.time;
           this.icon(item.kind, x, y - (item.level ? 3 : 0), size * (item.level ? .78 : .5), item.angle, item.level, busy ? .35 : game.drag?.item.id === item.id ? .38 : 1);
-          if (item.level) { this.text('Lv' + item.level, x, y + size * .34, color, 7, 700); }
+          if (item.level) { this.rounded(x - 12, y + size * .23, 24, 12, 4); c.fillStyle = '#10212de8'; c.fill(); this.text('Lv' + item.level, x, y + size * .36, '#f2f4dc', 9, 800); }
           if (item.chargeUntil > game.time) { c.save(); c.strokeStyle = color; c.lineWidth = 1.6; c.beginPath(); c.arc(x, y, size * .42, -Math.PI / 2, -Math.PI / 2 + TAU * (1 - (item.chargeUntil - game.time) / .7)); c.stroke(); c.restore(); }
         } else { this.circle(x, y, 6, '#6a779a35', true); this.circle(x, y, 1.4, '#8390b057'); }
         c.fillStyle = '#0c1522'; c.fillRect(x - size / 2 + 2, y + size / 2 + 5, size - 4, 2.5);
@@ -837,16 +973,18 @@
     }
     pile() {
       const c = this.ctx, game = this.game;
-      for (const piece of game.pile.filter(p => !p.removed).sort((a, b) => a.layer - b.layer || a.id - b.id)) {
-        const r = this.pileRect(piece), w = TD.weapon(piece.kind), blocked = game.blockers(piece).length > 0;
-        c.save(); c.globalAlpha = blocked ? .66 : 1;
+      for (const piece of game.pile) {
+        if (piece.removed) continue;
+        const r = this.pileRect(piece), w = TD.weapon(piece.kind), blocked = game.isBlocked(piece);
+        c.save(); c.globalAlpha = blocked ? .55 : 1;
         this.rounded(r.x - r.w / 2, r.y - r.h / 2 + 5, r.w, r.h, 8); c.fillStyle = '#0d101e'; c.fill();
         this.rounded(r.x - r.w / 2, r.y - r.h / 2, r.w, r.h, 8);
-        c.fillStyle = blocked ? '#26283c' : '#353044'; c.fill(); c.strokeStyle = blocked ? '#6962755a' : w.color + '70'; c.lineWidth = 1; c.stroke();
+        c.fillStyle = blocked ? '#253743' : '#416273'; c.fill(); c.strokeStyle = blocked ? '#5f77836a' : w.color + 'db'; c.lineWidth = 1; c.stroke();
         this.rounded(r.x - r.w / 2 + 3, r.y - r.h / 2 + 3, r.w - 6, r.h - 6, 6); c.strokeStyle = '#ffffff08'; c.stroke();
         this.icon(piece.kind, r.x, r.y - 3, Math.min(r.h * .53, 25));
-        this.text(w.short, r.x, r.y + r.h * .29, blocked ? '#9690a4' : w.color, 7.5, 600);
-        if (!blocked) { this.circle(r.x + r.w / 2 - 7, r.y - r.h / 2 + 7, 1.3, w.color + '88'); }
+        this.text(w.short, r.x, r.y + r.h * .29, blocked ? '#a1adb3' : '#f2f4e9', Math.max(9, Math.min(11, r.h * .24)), 700);
+        if (!blocked) { c.fillStyle = w.color; this.rounded(r.x - r.w / 2 + 3, r.y - r.h / 2 + 3, 3, r.h - 6, 1); c.fill(); this.circle(r.x + r.w / 2 - 7, r.y - r.h / 2 + 7, 2, w.color); }
+        if (this.blockedHint?.until > performance.now() && this.blockedHint.ids.includes(piece.id)) { c.strokeStyle = '#fff0a9'; c.lineWidth = 2.5; this.rounded(r.x-r.w/2,r.y-r.h/2,r.w,r.h,8); c.stroke(); }
         c.restore();
       }
     }
@@ -869,11 +1007,12 @@
     enemies() {
       const c = this.ctx, game = this.game;
       for (const e of [...game.enemies].sort((a, b) => a.y - b.y || a.id - b.id)) {
-        const p = this.point(e), r = Math.max(5.5, e.def.radius * this.scaleX * .86); if (p.y < 13) continue;
-        const frozen = e.freezeUntil > game.time, stunned = e.paralyzeUntil > game.time, protectedBoss = game.protected(e);
+        const p = this.point(e), r = Math.max(7.5, e.def.radius * this.scaleX * .95); if (p.y < 13) continue;
+        const frozen = e.freezeUntil > game.time, stunned = e.paralyzeUntil > game.time, protectedBoss = game.protected(e) || (e.kind === 'boss' && e.hp <= (e.phase === 1 ? e.maxHP * .7 : e.phase === 2 ? e.maxHP * .35 : 1) + .01 && game.time - e.phaseStart < C.phaseMin);
         c.save(); c.translate(p.x, p.y); const color = frozen ? '#8ee4ff' : e.def.color;
-        c.shadowColor = color + '33'; c.shadowBlur = 6;
+        c.shadowColor = color + '33'; c.shadowBlur = 2;
         this.circle(0, 3, r + 2, '#060b183f');
+        c.fillStyle = '#10222c'; this.rounded(-r * 1.08, -r * .58, r * .38, r * 1.35, 2); c.fill(); this.rounded(r * .7, -r * .58, r * .38, r * 1.35, 2); c.fill();
         c.fillStyle = e.flashUntil > game.time ? '#ffe6ed' : color; c.strokeStyle = '#ffcfdf5a'; c.lineWidth = 1;
         if (e.kind === 'boss' || e.kind === 'giant') {
           for (const sign of [-1, 1]) { this.rounded(sign * r * .85 - r * .17, -r * .65, r * .34, r * 1.4, r * .1); c.fillStyle = '#454055'; c.fill(); c.fillStyle = color; c.fillRect(sign * r * .85 - r * .09, -r * .35, r * .18, r * .65); }
@@ -971,17 +1110,33 @@
       }
       c.save(); c.globalAlpha = drag.valid ? 1 : .5; this.circle(p.x, p.y, 21, '#1c2036d9'); this.circle(p.x, p.y, 22, w.color, true); this.icon(item.kind, p.x, p.y - 1, 29, -Math.PI / 2, item.level); this.text('Lv' + item.level, p.x, p.y + 30, w.color, 9, 700); c.restore();
     }
+    pressFeedback(now) {
+      const c = this.ctx, game = this.game, size = this.w / 9 - 5;
+      if (this.press) {
+        const x = (this.press.index + .5) * this.w / 9;
+        c.save(); c.strokeStyle = '#fff0b7'; c.lineWidth = 3;
+        c.beginPath(); c.arc(x, this.defY, size * .56, -Math.PI / 2, -Math.PI / 2 + TAU * TD.clamp((now - this.press.start) / 180, 0, 1)); c.stroke(); c.restore();
+      }
+      if (game.mode === 'tutorial' && this.tutorialStep < 2) {
+        for (const p of game.pile) if (!p.removed) { const r = this.pileRect(p); c.save(); c.strokeStyle = '#fff0ac'; c.lineWidth = 2.5; this.rounded(r.x-r.w/2-3,r.y-r.h/2-3,r.w+6,r.h+6,10); c.stroke(); c.restore(); }
+      }
+      if ((game.mode === 'tutorial' && this.tutorialStep === 3) || game.slots.every(s => !s.active || s.item)) {
+        c.save(); c.strokeStyle = '#ffe29e'; c.lineWidth = 1.8;
+        for (const s of game.slots) if (s.active && s.item?.level > 0) { const x = (s.index + .5) * this.w / 9; this.rounded(x-size/2-1,this.defY-size/2-1,size+2,size+2,8); c.stroke(); }
+        c.restore();
+      }
+      if (game.drag) { c.save(); c.strokeStyle = '#f7d78966'; c.setLineDash([6,6]); this.rounded(10, this.top + 3, this.w - 20, this.defY - this.top - size/2 - 20, 10); c.stroke(); c.restore(); }
+    }
     hit(point) {
       const size = this.w / 9 - 5;
       if (Math.abs(point.y - this.defY) <= size / 2 + 8) { const index = Math.floor(point.x / (this.w / 9)); return { type: 'slot', index: TD.clamp(index, 0, 8) }; }
-      const pieces = [...this.game.pile].filter(p => !p.removed).sort((a, b) => b.layer - a.layer || b.id - a.id);
-      const piece = pieces.find(p => { const r = this.pileRect(p); return Math.abs(point.x - r.x) <= r.w / 2 && Math.abs(point.y - r.y) <= r.h / 2; });
-      if (piece) return { type: 'piece', id: piece.id }; return null;
+      for (let i = this.game.pile.length - 1; i >= 0; i--) { const p = this.game.pile[i]; if (p.removed) continue; const r = this.pileRect(p); if (Math.abs(point.x-r.x) <= r.w/2 && Math.abs(point.y-r.y) <= r.h/2) return { type: 'piece', id: p.id }; } return null;
     }
     validDrop(point) { const size = this.w / 9 - 5; return point.y >= this.top && point.y <= this.coreY + 6 && Math.abs(point.y - this.defY) > size / 2 + 9 && point.x >= 0 && point.x <= this.w; }
   }
   TD.View = View;
 })(globalThis);
+
 
 
 /* 局外表现层：只读取战斗事件，不修改模拟、命中或伤害。 */
@@ -1006,15 +1161,6 @@
       });
       this.cursor = 0;
       this.renderTimes = [];
-      if (new URLSearchParams(root.location.search).get('debug') === '1') {
-        const draw = view.draw.bind(view);
-        view.draw = now => {
-          const started = performance.now(), result = draw(now);
-          this.renderTimes.push(performance.now() - started);
-          if (this.renderTimes.length > 240) this.renderTimes.shift();
-          return result;
-        };
-      }
       this.reducedMotion = root.matchMedia?.('(prefers-reduced-motion: reduce)').matches || false;
     }
     metrics() {
@@ -1036,7 +1182,8 @@
       node.textContent = message;
       node.dataset.kind = kind;
       node.dataset.active = '1';
-      node.style.left = Math.max(36, Math.min(this.view.w - 36, x)) + 'px';
+      const margin = Math.min(this.view.w / 2, Math.max(70, message.length * 8.5));
+      node.style.left = Math.max(margin, Math.min(this.view.w - margin, x)) + 'px';
       node.style.top = Math.max(48, Math.min(this.view.h - 48, y)) + 'px';
       node.style.setProperty('--signal-scale', importance >= 3 ? '1.12' : '1');
       // Reset a recycled node's animation; the DOM pool bounds allocations.
@@ -1093,165 +1240,208 @@
 })(globalThis);
 
 
+
+/* 有并发上限的合成音效；只在用户交互后解锁音频。 */
+(function (root) {
+  'use strict';
+  class AudioBank {
+    constructor() { this.enabled = true; this.context = null; this.active = 0; this.cooldowns = new Map(); }
+    unlock() {
+      if (!this.enabled) return;
+      try { this.context ||= new (root.AudioContext || root.webkitAudioContext)(); if (this.context.state === 'suspended') this.context.resume().catch(() => {}); } catch (_) {}
+    }
+    suspend() { if (this.context?.state === 'running') this.context.suspend().catch(() => {}); }
+    tone(f, seconds = .1, type = 'sine', volume = .035, end = f, delay = 0) {
+      if (!this.enabled || !this.context || this.context.state !== 'running' || this.active >= 12) return;
+      const c = this.context, t = c.currentTime + delay, o = c.createOscillator(), g = c.createGain();
+      o.type = type; o.frequency.setValueAtTime(f, t); o.frequency.exponentialRampToValueAtTime(Math.max(25, end), t + seconds);
+      g.gain.setValueAtTime(.001, t); g.gain.exponentialRampToValueAtTime(volume, t + .008); g.gain.exponentialRampToValueAtTime(.001, t + seconds);
+      o.connect(g); g.connect(c.destination); this.active++;
+      o.onended = () => { o.disconnect(); g.disconnect(); this.active--; };
+      o.start(t); o.stop(t + seconds + .01);
+    }
+    event(e) {
+      if (!this.enabled || !this.context) return;
+      const now = this.context.currentTime, key = e.type === 'shot' ? 'shot' : e.type;
+      const limit = e.type === 'shot' ? .12 : e.type === 'pick' ? .035 : .06;
+      if (now - (this.cooldowns.get(key) ?? -Infinity) < limit) return;
+      this.cooldowns.set(key, now);
+      if (e.type === 'pick') this.tone(620, .07, 'sine', .022, 850);
+      if (e.type === 'merge') {
+        const f = 330 * 2 ** (Math.min(e.level, 5) / 5);
+        this.tone(f, .16, 'triangle', .04); this.tone(f * 1.5, .19, 'sine', .026, f * 1.5, .055);
+        if (e.level >= 3) this.tone(f * 2, .28, 'sine', .022, f * 2, .11);
+      }
+      if (e.type === 'shot') {
+        const sounds = { gun: [170, .035, 'triangle', 95], fire: [150, .09, 'sine', 65], ice: [940, .06, 'sine', 540], lightning: [660, .045, 'triangle', 180], missile: [100, .1, 'triangle', 45], laser: [760, .055, 'sine', 340] };
+        const [f, s, type, end] = sounds[e.kind]; this.tone(f, s, type, .009, end);
+      }
+      if (e.type === 'blast') { this.tone(95, .3, 'triangle', .055, 28); this.tone(190, .12, 'sawtooth', .015, 45); }
+      if (e.type === 'slotLost' || e.type === 'coreHit') this.tone(185, .18, 'triangle', .034, 65);
+      if (e.type === 'boss' || e.type === 'phase') { this.tone(110, .4, 'triangle', .04, 55); this.tone(165, .3, 'sine', .025, 82, .16); }
+      if (e.type === 'won') for (const [i, f] of [523, 659, 784, 1046].entries()) this.tone(f, .3, 'triangle', .03, f, i * .09);
+      if (e.type === 'lost') { this.tone(220, .35, 'triangle', .035, 110); this.tone(165, .4, 'sine', .025, 82, .15); }
+    }
+  }
+  root.TD.AudioBank = AudioBank;
+})(globalThis);
+
+
 (function () {
   'use strict';
   const TD = globalThis.TD, C = TD.CONFIG, $ = id => document.getElementById(id);
   const params = new URLSearchParams(location.search), debug = params.get('debug') === '1', testMode = debug && params.get('test') === '1';
-  const game = new TD.Game(), canvas = $('game'), view = new TD.View(canvas, game), qualityFX = new TD.QualityFX(game, view);
-  let last = performance.now(), accumulator = 0, hudAt = 0, toastTimer, press = null, adRequest = null, resultShown = false, sound = false, audioContext = null, lastShotSound = 0;
-  const timeText = seconds => `${String(Math.floor(seconds / 60)).padStart(2, '0')}:${String(Math.floor(seconds % 60)).padStart(2, '0')}`;
-  try { sound = localStorage.getItem('erhetafang.sound') === '1'; } catch (_) { /* 文件模式可能禁止持久化；不影响战斗。 */ }
-  function soundButton() { $('sound').classList.toggle('active', sound); $('sound').setAttribute('aria-label', sound ? '关闭音效' : '开启音效'); }
-  soundButton();
-  function tone(frequency, duration = .07, type = 'sine', volume = .025, endFrequency = frequency) {
-    if (!sound) return;
-    try {
-      audioContext ||= new (globalThis.AudioContext || globalThis.webkitAudioContext)();
-      if (audioContext.state === 'suspended') audioContext.resume();
-      const oscillator = audioContext.createOscillator(), gain = audioContext.createGain(), t = audioContext.currentTime;
-      oscillator.type = type; oscillator.frequency.setValueAtTime(frequency, t); oscillator.frequency.exponentialRampToValueAtTime(Math.max(30, endFrequency), t + duration);
-      gain.gain.setValueAtTime(volume, t); gain.gain.exponentialRampToValueAtTime(.001, t + duration);
-      oscillator.connect(gain); gain.connect(audioContext.destination); oscillator.start(t); oscillator.stop(t + duration);
-    } catch (_) { /* 无 WebAudio 时静音继续。 */ }
-  }
-  function toast(text) { clearTimeout(toastTimer); $('toast').textContent = text; $('toast').classList.add('visible'); toastTimer = setTimeout(() => $('toast').classList.remove('visible'), 1800); }
-  const overlays = ['menu', 'pause-screen', 'guide-screen', 'ad-screen', 'result-screen'];
-  function overlay(id) { for (const other of overlays) $(other).classList.toggle('hidden', id !== other); }
-  function cancelPress() { if (press?.timer) clearTimeout(press.timer); press = null; }
+  const game = new TD.Game(), canvas = $('game'), view = new TD.View(canvas, game), fx = new TD.QualityFX(game, view);
+  const clock = new TD.FrameClock(C.step), perf = new TD.PerformanceMonitor(), audio = new TD.AudioBank(), rewards = new TD.RewardBridge();
+  const storage = { get(key) { try { return localStorage.getItem('erhetafang.' + key); } catch (_) { return null; } }, set(key, value) { try { localStorage.setItem('erhetafang.' + key, value); } catch (_) {} } };
+  audio.enabled = storage.get('sound') !== '0';
+  let last = performance.now(), hudAt = 0, drawAt = 0, perfAt = 0, toastTimer, press = null, adRequest = null, resultShown = false, tutorial = null, trialNumber = 0;
+  const cache = new Map(), timeText = seconds => `${String(Math.floor(seconds / 60)).padStart(2, '0')}:${String(Math.floor(seconds % 60)).padStart(2, '0')}`;
+  function text(id, value) { if (cache.get(id) !== value) { $(id).textContent = value; cache.set(id, value); } }
+  function hidden(id, value) { if ($(id).classList.contains('hidden') !== value) $(id).classList.toggle('hidden', value); }
+  function soundButton() { $('sound').classList.toggle('active', audio.enabled); $('sound').setAttribute('aria-label', audio.enabled ? '关闭音效' : '开启音效'); }
+  function toast(message) { clearTimeout(toastTimer); text('toast', message); $('toast').classList.add('visible'); toastTimer = setTimeout(() => $('toast').classList.remove('visible'), 1800); }
+  function clearTransient() { clearTimeout(toastTimer); text('toast', ''); $('toast').classList.remove('visible'); $('game-shell').classList.remove('core-hit'); view.press = null; view.blockedHint = null; fx.clear(); }
+  const overlays = ['menu', 'pause-screen', 'guide-screen', 'ad-screen', 'result-screen', 'tutorial-complete'];
+  function overlay(id) { for (const other of overlays) hidden(other, id !== other); }
+  function cancelPress() { if (press?.timer) clearTimeout(press.timer); if (press && canvas.hasPointerCapture(press.pointerId)) canvas.releasePointerCapture(press.pointerId); press = null; view.press = null; }
   function pause() {
-    if (game.status !== 'playing' || game.adRequest) return;
-    cancelPress(); if (game.drag) game.releaseDrag(false); game.paused = true; overlay('pause-screen'); sync();
+    if (game.status !== 'playing' || game.paused || game.adRequest) return;
+    cancelPress(); if (game.drag) game.releaseDrag(false); game.paused = true; audio.suspend(); overlay('pause-screen'); sync();
   }
-  function resume() { if (game.status !== 'playing' || game.adRequest) return; game.paused = false; overlay(null); last = performance.now(); accumulator = 0; sync(); }
-  function start() {
-    cancelPress(); qualityFX.clear(); adRequest = null; resultShown = false; game.reset(C.seed); game.start(); accumulator = 0; last = performance.now(); overlay(null); sync();
-    tone(330, .13, 'triangle', .04, 660);
+  function resume() { if (game.status !== 'playing' || game.adRequest || !$('tutorial-complete').classList.contains('hidden')) return; audio.unlock(); game.paused = false; overlay(null); last = performance.now(); clock.reset(); sync(); }
+  function start(mode = 'trial') {
+    cancelPress(); clearTransient(); adRequest = null; resultShown = false; tutorial = mode === 'tutorial' ? { step: 0, shots: 0, spawned: false } : null;
+    const fixedSeed = debug && params.has('seed') ? Number(params.get('seed')) >>> 0 : null;
+    const seed = fixedSeed ?? (C.seed + (mode === 'trial' ? trialNumber++ : 0));
+    game.reset(seed, mode); game.start(); clock.reset(); perf.reset(); last = performance.now(); audio.unlock(); overlay(null); sync();
+    audio.tone(330, .13, 'triangle', .035, 660);
   }
-  game.onEvent = event => {
-    qualityFX.onEvent(event);
-    if (event.type === 'hint') toast(event.text);
-    if (event.type === 'pick') tone(480, .055, 'sine', .018, 620);
-    if (event.type === 'merge') { tone(420 + event.level * 110, .12, 'triangle', .04, 730 + event.level * 110); if (event.level >= 3) toast(`${TD.weapon(event.kind).name} · Lv${event.level}`); }
-    if (event.type === 'blast') tone(130, .32, 'sawtooth', .045, 35);
-    if (event.type === 'slotLost') { toast(`第 ${event.slot + 1} 格防线被摧毁`); tone(160, .2, 'triangle', .04, 50); }
-    if (event.type === 'slotAdded') toast(`第 ${event.slot + 1} 格空槽已补充`);
-    if (event.type === 'boss') { toast('攻城巨兽登场'); tone(90, .55, 'triangle', .05, 45); }
-    if (event.type === 'phase') toast(`巨兽阶段 ${event.phase} · ${event.phase === 2 ? '召唤增援' : '狂暴推进'}`);
-    if (event.type === 'coreHit') { $('game-shell').classList.remove('core-hit'); void $('game-shell').offsetWidth; $('game-shell').classList.add('core-hit'); }
-    if (event.type === 'shot' && performance.now() - lastShotSound > 100) { lastShotSound = performance.now(); tone(event.kind === 'laser' ? 800 : event.kind === 'missile' ? 100 : 210, .035, 'triangle', .008, 90); }
+  function startFromHome() { start(storage.get('tutorial.v2') ? 'trial' : 'tutorial'); }
+  function finishTutorial(skipped) {
+    if (!tutorial) return;
+    storage.set('tutorial.v2', skipped ? 'skipped' : 'complete'); tutorial = null; hidden('tutorial-panel', true);
+    if (skipped) start('trial'); else { game.paused = true; cancelPress(); overlay('tutorial-complete'); sync(); }
+  }
+  function tutorialSync() {
+    if (!tutorial) return;
+    if (tutorial.step < 2) tutorial.step = Math.min(2, game.stats.picks);
+    if (tutorial.step === 2 && game.stats.merges && !tutorial.spawned) { tutorial.spawned = true; const e = game.spawn('normal', 450, 770); e.hp = e.maxHP = 1000; e.def = { ...e.def, speed: 0, slot: 0, core: 0 }; }
+    if (tutorial.step === 2 && tutorial.shots) tutorial.step = 3;
+    if (game.stats.explosions) { finishTutorial(false); return; }
+    const steps = [ ['点击亮起的零件', '先取一件机枪零件，放进防线。'], ['再取一件相同零件', '两件同类零件会自动合成完整武器。'], ['武器会自动攻击', '合成后无需点击开火，观察它击中敌人。'], ['长按武器，向上拖动', '拖到战斗区松手自爆；拖回防线可以取消。'] ];
+    text('tutorial-step', `操作练习 ${tutorial.step + 1}/4`); text('tutorial-title', steps[tutorial.step][0]); text('tutorial-detail', steps[tutorial.step][1]); view.tutorialStep = tutorial.step;
+  }
+  game.onEvent = e => {
+    fx.onEvent(e); audio.event(e);
+    if (e.type === 'hint') { toast(e.text); if (e.blockers?.length) view.blockedHint = { ids: e.blockers, until: performance.now() + 850 }; }
+    if (e.type === 'shot' && tutorial) tutorial.shots++;
+    if (e.type === 'merge' && e.level >= 3) toast(`${TD.weapon(e.kind).name} · Lv${e.level}`);
+    if (e.type === 'slotLost') toast(`第 ${e.slot + 1} 格防线被摧毁，注意缺口`);
+    if (e.type === 'slotAdded') toast(`第 ${e.slot + 1} 格空槽已补充`);
+    if (e.type === 'boss') toast('攻城巨兽登场 · 保留火力，留意增援');
+    if (e.type === 'phase') toast(`巨兽阶段 ${e.phase} · ${e.phase === 2 ? '增援突袭' : '狂暴推进'}`);
+    if (e.type === 'coreHit') { $('game-shell').classList.remove('core-hit'); void $('game-shell').offsetWidth; $('game-shell').classList.add('core-hit'); }
   };
   function sync() {
-    const slots = game.slots.filter(s => s.active).length, remaining = game.pile.filter(p => !p.removed).length, boss = game.boss;
-    $('core').textContent = Math.ceil(game.core); $('core').classList.toggle('danger', game.core <= 30);
+    const active = game.slots.filter(s => s.active), remaining = game.pile.filter(p => !p.removed).length, boss = game.boss;
+    text('edition', tutorial ? '操作练习' : `综合试炼 · ${C.version || '1.3'}`);
+    text('core', Math.ceil(game.core)); $('core').classList.toggle('danger', game.core <= 30);
     $('core-fill').style.width = game.core + '%'; $('core-fill').style.background = game.core <= 30 ? '#fa8296' : '#92ddba';
-    $('slot-count').innerHTML = `${slots}<span>/9</span>`; $('time').textContent = timeText(game.time);
-    $('progress').style.width = Math.min(100, game.time / 240 * 100) + '%';
-    const waveName = game.time < 20 ? '前哨接敌' : game.time < 50 ? '群怪入侵' : game.time < 80 ? '两翼疾袭' : game.time < 110 ? '重甲推进' : game.time < 140 ? '突击浪潮' : game.time < 170 ? '巨兽压境' : game.time < 200 ? '决战前夜' : '巨兽攻城';
-    $('wave-label').textContent = waveName; $('battle-state').innerHTML = game.drag ? '<i></i> 慢速瞄准 50%' : '<i></i> 自动开火';
-    $('boss-hud').classList.toggle('hidden', !boss || game.status === 'ready' || !!game.drag);
-    if (boss) { $('boss-fill').style.width = Math.max(0, boss.hp / boss.maxHP * 100) + '%'; $('boss-phase').textContent = game.protected(boss) ? '阶段切换' : `阶段 ${boss.phase} / 3`; }
-    $('pile-total').textContent = `共 ${game.pile.length} 件`; $('pile-count').textContent = `剩余 ${remaining} 件`;
-    $('pile-empty').classList.toggle('hidden', remaining > 0);
-    const recover = $('recover'); recover.classList.toggle('hidden', slots === 9 || game.status !== 'playing');
-    recover.textContent = game.adCount >= 3 ? '补槽次数用尽' : debug ? `＋ 测试补槽 ${3 - game.adCount}` : '＋ 广告补槽';
+    if (cache.get('slots') !== active.length) { $('slot-count').innerHTML = `${active.length}<span>/9</span>`; cache.set('slots', active.length); }
+    text('time', timeText(game.time)); $('progress').style.width = Math.min(100, game.time / 240 * 100) + '%';
+    text('wave-label', tutorial ? '训练场 · 安全练习' : boss ? '巨兽攻城' : game.time >= C.bossTime - 15 ? '巨兽即将到来' : game.time < 20 ? '前哨接敌' : game.time < 50 ? '群怪入侵' : game.time < 80 ? '两翼疾袭' : game.time < 110 ? '重甲推进' : game.time < 140 ? '突击浪潮' : '巨兽压境');
+    if (cache.get('drag') !== !!game.drag) { $('battle-state').innerHTML = game.drag ? '<i></i> 慢速瞄准 50%' : '<i></i> 自动开火'; cache.set('drag', !!game.drag); }
+    hidden('boss-hud', !boss || game.status === 'ready' || !!game.drag);
+    if (boss) { $('boss-fill').style.width = Math.max(0, boss.hp / boss.maxHP * 100) + '%'; const floor = boss.phase === 1 ? boss.maxHP * .7 : boss.phase === 2 ? boss.maxHP * .35 : 1; const shield = boss.hp <= floor + .01 && game.time - boss.phaseStart < C.phaseMin; text('boss-phase', game.protected(boss) ? '阶段切换' : shield ? `阶段护盾 ${Math.ceil(C.phaseMin - game.time + boss.phaseStart)}秒` : `阶段 ${boss.phase} / 3`); }
+    text('pile-total', `全部 ${game.pile.length} 件`); text('pile-count', `剩余 ${remaining} 件`); hidden('pile-empty', remaining > 0 || !!tutorial);
+    const recover = $('recover'); hidden('recover', active.length === 9 || game.status !== 'playing' || !!tutorial || (!debug && !rewards.available()));
+    text('recover', game.adCount >= 3 ? '补槽次数用尽' : debug ? `＋ 测试补槽 ${3 - game.adCount}` : '＋ 广告补槽');
     recover.disabled = game.adCount >= 3 || !!game.drag || game.slots.some(s => s.item?.merge && s.item.busyUntil > game.time);
-    $('drag-caption').classList.toggle('hidden', !game.drag);
-    if (game.drag) {
-      const item = game.drag.item; $('drag-title').textContent = `${TD.weapon(item.kind).name} · Lv${item.level}`;
-      const descriptions = { gun: '区域弹幕', fire: '持续火海', ice: '范围冻结', lightning: '全场传导', missile: '爆炸与击退', laser: '米字贯穿' };
-      $('drag-detail').textContent = game.drag.valid ? `松手释放 · ${descriptions[item.kind]}` : '移入战斗区，松手自爆';
-    }
-    const hasWeapon = game.slots.some(s => s.item?.level > 0);
-    $('operation-hint').textContent = !hasWeapon && game.stats.merges === 0 ? '点击表面零件，两个相同对象自动合成' : game.slots.every(s => !s.active || s.item) ? '槽位已满 · 长按武器，拖到战场自爆腾位' : '点零件补充火力 · 长按武器拖拽自爆';
+    hidden('drag-caption', !game.drag);
+    if (game.drag) { const item = game.drag.item; text('drag-title', `${TD.weapon(item.kind).name} · Lv${item.level}`); const descriptions = { gun: '区域弹幕', fire: '持续火海', ice: '范围冻结', lightning: '全场传导', missile: '爆炸与击退', laser: '米字贯穿' }; text('drag-detail', game.drag.valid ? `松手释放 · ${descriptions[item.kind]}` : '移入战斗区，松手自爆'); }
+    const full = active.length > 0 && active.every(s => s.item);
+    $('playfield').classList.toggle('slots-full', full && !game.drag);
+    text('operation-hint', tutorial ? '跟随提示完成练习' : full ? '防线已满 · 长按完整武器，向上拖动自爆腾位' : !game.stats.merges ? '点两件相同零件，自动合成武器' : '点零件合成 · 长按武器向上拖动自爆');
+    hidden('tutorial-panel', !tutorial); hidden('learn-pause', !!tutorial);
+    tutorialSync();
     if (['won', 'lost'].includes(game.status) && !resultShown) result();
   }
   function result() {
-    cancelPress(); resultShown = true; const won = game.status === 'won', stats = game.stats;
-    $('result-eyebrow').textContent = won ? 'VICTORY' : 'DEFENSE LOST'; $('result-title').textContent = won ? '防线守住了' : '核心被击破';
-    $('result-emblem').textContent = won ? '✦' : '◇'; $('result-emblem').style.color = won ? '#ffd384' : '#e38baf';
-    $('result-subtitle').textContent = won ? '攻城巨兽已被击败，试炼完成。' : '重新布置火力，选择下一次自爆的时机。';
-    $('result-stats').innerHTML = [[timeText(game.time), '战斗用时'], [stats.kills, '击败敌人'], [`Lv${stats.highest}`, '最高武器等级'], [stats.explosions, '主动自爆']].map(([value, label]) => `<div><b>${value}</b><span>${label}</span></div>`).join('');
-    overlay('result-screen'); tone(won ? 660 : 160, .35, 'triangle', .045, won ? 990 : 80);
+    cancelPress(); resultShown = true; const won = game.status === 'won', s = game.stats;
+    text('result-eyebrow', won ? '试炼完成' : '防守结束'); text('result-title', won ? '防线守住了' : '核心被击破');
+    text('result-emblem', won ? '✦' : '◇'); $('result-emblem').style.color = won ? '#ffd384' : '#e38baf';
+    text('result-subtitle', won ? '攻城巨兽已被击败。' : '带着这局经验，再布置一次防线。');
+    $('result-stats').innerHTML = [[timeText(game.time), '战斗用时'], [s.kills, '击败敌人'], [`Lv${s.highest}`, '最高武器'], [s.explosions, '主动自爆'], [s.lostSlots, '损失槽位'], [Math.ceil(s.coreDamage), '核心受损']].map(([v, l]) => `<div><b>${v}</b><span>${l}</span></div>`).join('');
+    const source = Object.entries(s.coreSources).sort((a, b) => b[1] - a[1])[0];
+    text('result-review', (source && C.enemies[source[0]] ? `核心主要受到${C.enemies[source[0]].name}攻击。` : '') + TD.debrief(game));
+    if (won) { let best = null; try { best = JSON.parse(storage.get('record.v2')); } catch (_) {} if (!best || game.time < best.time) storage.set('record.v2', JSON.stringify({ time: game.time, highest: s.highest })); }
+    overlay('result-screen'); audio.event({ type: won ? 'won' : 'lost' }); updateRecord();
   }
-  function canvasPoint(event) { const rect = canvas.getBoundingClientRect(); return { x: event.clientX - rect.left, y: event.clientY - rect.top }; }
-  function moveDrag(point) { game.moveDrag(view.unpoint(point), view.validDrop(point)); sync(); }
-  canvas.addEventListener('pointerdown', event => {
-    if (game.status !== 'playing' || game.paused || press || event.button > 0) return;
-    event.preventDefault(); const point = canvasPoint(event), hit = view.hit(point); if (!hit) return;
-    press = { pointerId: event.pointerId, point, latest: point, hit, moved: false, gameId: game.gameId };
-    canvas.setPointerCapture(event.pointerId);
-    if (hit.type === 'slot') {
-      const item = game.slots[hit.index].item;
+  function updateRecord() { try { const best = JSON.parse(storage.get('record.v2')); if (best) text('best-record', `最佳通关 ${timeText(best.time)} · 最高 Lv${best.highest}`); } catch (_) {} }
+  function canvasPoint(e) { const r = canvas.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; }
+  function moveDrag(point) { game.moveDrag(view.unpoint(point), view.validDrop(point)); }
+  canvas.addEventListener('pointerdown', e => {
+    if (game.status !== 'playing' || game.paused || press || e.button > 0) return;
+    audio.unlock(); e.preventDefault(); const point = canvasPoint(e), hit = view.hit(point); if (!hit) return;
+    perf.input(performance.now()); press = { pointerId: e.pointerId, point, latest: point, hit, moved: false, gameId: game.gameId };
+    canvas.setPointerCapture(e.pointerId);
+    if (hit.type === 'slot') { const item = game.slots[hit.index].item;
       if (item?.level && item.busyUntil <= game.time) {
-        press.timer = setTimeout(() => {
-          if (!press || press.gameId !== game.gameId || press.moved || game.paused) return;
-          if (game.beginDrag(hit.index)) { moveDrag(press.latest); tone(300, .08, 'sine', .025); }
-        }, 180);
+        view.press = { index: hit.index, start: performance.now() };
+        press.timer = setTimeout(() => { if (!press || press.gameId !== game.gameId || press.moved || game.paused) return; if (game.beginDrag(hit.index)) { view.press = null; moveDrag(press.latest); audio.tone(330, .09, 'sine', .02, 520); sync(); } }, 180);
       }
     }
   });
-  canvas.addEventListener('pointermove', event => {
-    if (!press || press.pointerId !== event.pointerId) return; event.preventDefault(); const point = canvasPoint(event); press.latest = point;
+  canvas.addEventListener('pointermove', e => {
+    if (!press || press.pointerId !== e.pointerId) return; e.preventDefault(); const point = canvasPoint(e); press.latest = point;
     if (game.drag) moveDrag(point);
-    else if (Math.hypot(point.x - press.point.x, point.y - press.point.y) > 15) { press.moved = true; clearTimeout(press.timer); }
+    else if (Math.hypot(point.x - press.point.x, point.y - press.point.y) > 15) { press.moved = true; clearTimeout(press.timer); view.press = null; }
   });
-  canvas.addEventListener('pointerup', event => {
-    if (!press || press.pointerId !== event.pointerId) return;
-    event.preventDefault(); clearTimeout(press.timer); const point = canvasPoint(event);
+  canvas.addEventListener('pointerup', e => {
+    if (!press || press.pointerId !== e.pointerId) return; e.preventDefault(); clearTimeout(press.timer); const point = canvasPoint(e); perf.input(performance.now());
     if (game.drag) { moveDrag(point); game.releaseDrag(view.validDrop(point)); }
-    else if (!press.moved) {
-      if (press.hit.type === 'piece') game.pick(press.hit.id);
-      else if (game.slots[press.hit.index].item?.level) toast('长按武器，再拖到战场松手自爆');
-      else if (game.slots[press.hit.index].item) toast('两个相同零件会自动合成');
-    }
-    cancelPress(); if (canvas.hasPointerCapture(event.pointerId)) canvas.releasePointerCapture(event.pointerId); sync();
+    else if (!press.moved) { if (press.hit.type === 'piece') game.pick(press.hit.id); else if (game.slots[press.hit.index].item?.level) toast('按住，看到武器抬起后向上拖动'); else if (game.slots[press.hit.index].item) toast('再取一件相同零件即可合成'); }
+    cancelPress(); sync();
   });
   canvas.addEventListener('pointercancel', () => { if (game.drag) game.releaseDrag(false); cancelPress(); sync(); });
-  $('start').addEventListener('click', start); $('retry').addEventListener('click', start); $('restart-pause').addEventListener('click', start);
+  $('start').addEventListener('click', startFromHome); $('retry').addEventListener('click', () => start()); $('restart-pause').addEventListener('click', () => start(tutorial ? 'tutorial' : 'trial'));
   $('pause').addEventListener('click', () => game.paused ? resume() : pause()); $('resume').addEventListener('click', resume);
-  $('home').addEventListener('click', () => { cancelPress(); game.reset(C.seed); resultShown = false; overlay('menu'); sync(); });
-  $('sound').addEventListener('click', () => { sound = !sound; soundButton(); try { localStorage.setItem('erhetafang.sound', sound ? '1' : '0'); } catch (_) {} tone(580, .09); });
+  $('home').addEventListener('click', () => { cancelPress(); clearTransient(); tutorial = null; game.reset(); resultShown = false; audio.suspend(); overlay('menu'); sync(); });
+  $('sound').addEventListener('click', () => { audio.enabled = !audio.enabled; storage.set('sound', audio.enabled ? '1' : '0'); soundButton(); if (audio.enabled) { audio.unlock(); audio.tone(580, .09); } else audio.suspend(); });
   $('guide').addEventListener('click', () => overlay('guide-screen')); $('guide-back').addEventListener('click', () => overlay('pause-screen'));
-  const guideText = [
-    ['Ⅱ', '快速点射 · 持续锁定提升攻速', '自爆：区域内持续弹幕'], ['♨', '范围命中 · 火区持续灼烧', '自爆：中心最强的三圈火海'],
-    ['❄', '减速 · 高等级连续命中冻结', '自爆：中心冻结，外围减速'], ['ϟ', '连锁传导 · 高等级概率麻痹', '自爆：爆心重击，全场传导'],
-    ['↑', '单体穿甲 · 优先 Boss 与精英', '自爆：三圈爆炸，向外击退'], ['◇', '直线贯穿 · 高等级灼烧', '自爆：四条米字线贯穿全场']
-  ];
-  $('weapon-guide').innerHTML = C.weapons.map((w, i) => `<div class="guide-row"><div class="guide-symbol" style="color:${w.color}">${guideText[i][0]}</div><div><b style="color:${w.color}">${w.name}</b><p>${guideText[i][1]}</p><span>${guideText[i][2]}</span></div></div>`).join('');
+  for (const id of ['learn-home', 'learn-pause', 'tutorial-again']) $(id).addEventListener('click', () => start('tutorial'));
+  $('tutorial-enter').addEventListener('click', () => start()); $('tutorial-skip').addEventListener('click', () => finishTutorial(true));
+  const descriptions = [['Ⅱ', '持续点射', '锁定同一敌人提升攻速', '区域弹幕，清理密集敌群'], ['♨', '范围燃烧', '火区持续灼烧', '三圈火海，中心伤害最高'], ['❄', '减速冻结', '高等级连续命中可冻结', '中心冻结，外围减速'], ['ϟ', '连锁雷电', '传导攻击，高等级概率麻痹', '爆心重击，并传导全场'], ['↑', '穿甲导弹', '优先 Boss 与精英，命中击退', '三圈爆炸，向外击退'], ['◇', '贯穿激光', '直线贯穿，高等级附加灼烧', '米字八方向贯穿']];
+  $('weapon-guide').innerHTML = C.weapons.map((w, i) => `<div class="guide-row"><div class="guide-symbol" style="color:${w.color}">${descriptions[i][0]}</div><div><b style="color:${w.color}">${w.name} <small>${descriptions[i][1]}</small></b><p>${descriptions[i][2]}</p><span>自爆：${descriptions[i][3]}</span></div></div>`).join('');
   $('recover').addEventListener('click', () => {
-    adRequest = game.beginAd(); if (!adRequest) { toast('当前暂时不能补槽'); return; }
-    overlay('ad-screen'); $('ad-title').textContent = debug ? '补槽测试' : '补充空槽';
-    $('ad-text').textContent = debug ? '测试模式可模拟成功奖励：新增一个 100 耐久空槽。本局最多 3 次，广告期间战斗暂停。' : '广告服务尚未接入。接入激励视频后，每次成功观看可补充一个空槽，本局最多 3 次。';
-    $('ad-success').classList.toggle('hidden', !debug); sync();
+    if (!debug && !rewards.available()) return;
+    adRequest = game.beginAd(); if (!adRequest) { toast('合成结束后可补槽'); return; }
+    audio.suspend(); overlay('ad-screen'); text('ad-title', debug ? '补槽测试' : '补充空槽');
+    text('ad-text', debug ? '仅测试：模拟奖励补充一个100耐久空槽，每局最多3次。' : '完整观看广告后，补充一个100耐久空槽。本局最多3次，观看期间暂停战斗。');
+    hidden('ad-success', !debug); hidden('ad-watch', debug); $('ad-cancel').disabled = false; $('ad-watch').disabled = false; sync();
   });
-  function endAd(success) { game.finishAd(adRequest, success); adRequest = null; overlay(game.paused ? 'pause-screen' : null); accumulator = 0; last = performance.now(); sync(); }
-  $('ad-success').addEventListener('click', () => endAd(debug)); $('ad-cancel').addEventListener('click', () => endAd(false));
-  document.addEventListener('visibilitychange', () => { if (document.hidden) pause(); });
-  document.addEventListener('keydown', event => {
-    if (event.key === 'Escape') { if (game.drag) { game.releaseDrag(false); cancelPress(); sync(); } else if (game.paused) resume(); else pause(); }
-    if (event.code === 'Space' && event.target === document.body) { event.preventDefault(); game.paused ? resume() : pause(); }
-    if (event.key === 'Enter' && game.status === 'ready') start();
-  });
-  new ResizeObserver(() => { view.resize(); }).observe($('playfield'));
+  function endAd(success) { const request = adRequest; adRequest = null; const granted = game.finishAd(request, success); overlay(game.paused ? 'pause-screen' : null); clock.reset(); last = performance.now(); if (!document.hidden) audio.unlock(); if (!success && request) toast('广告未完成，未消耗补槽次数'); sync(); return granted; }
+  $('ad-watch').addEventListener('click', async () => { const request = adRequest; if (!request || rewards.pending) return; $('ad-watch').disabled = true; text('ad-text', '广告播放中，返回后会自动确认结果。'); const success = await rewards.show(); if (adRequest?.id === request.id) endAd(success); });
+  $('ad-success').addEventListener('click', () => endAd(debug)); $('ad-cancel').addEventListener('click', () => { if (rewards.pending) { toast('请先关闭广告返回游戏'); return; } endAd(false); });
+  document.addEventListener('visibilitychange', () => { last = performance.now(); clock.reset(); if (document.hidden) { audio.suspend(); pause(); } });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') { if (!$('guide-screen').classList.contains('hidden')) overlay('pause-screen'); else if (game.drag) { game.releaseDrag(false); cancelPress(); sync(); } else if (!$('ad-screen').classList.contains('hidden') || !$('tutorial-complete').classList.contains('hidden')) return; else game.paused ? resume() : pause(); } if (e.code === 'Space' && e.target === document.body) { e.preventDefault(); if (!$('pause-screen').classList.contains('hidden')) resume(); else if (!game.paused) pause(); } });
+  new ResizeObserver(() => { view.resize(); drawAt = 0; }).observe($('playfield'));
   function frame(now) {
-    const elapsed = Math.min(.1, Math.max(0, (now - last) / 1000)); last = now;
-    if (!testMode && game.status === 'playing' && !game.paused) {
-      accumulator += elapsed * (game.drag ? C.dragSpeed : 1);
-      while (accumulator >= C.step && game.status === 'playing' && !game.paused) { game.step(); accumulator -= C.step; }
-    } else accumulator = 0;
-    if (now - hudAt > 80) { sync(); hudAt = now; }
-    view.draw(now); requestAnimationFrame(frame);
+    const started = performance.now(), elapsed = Math.max(0, (now - last) / 1000); last = now;
+    let logicMs = 0, hudMs = 0, drawMs = 0;
+    const running = !testMode && game.status === 'playing' && !game.paused && !document.hidden;
+    if (running) { const t = performance.now(); clock.advance(elapsed, game.drag ? C.dragSpeed : 1, () => game.step(), () => game.status === 'playing' && !game.paused); logicMs = performance.now() - t; } else clock.accumulator = 0;
+    if (now - hudAt >= 100) { const t = performance.now(); sync(); hudMs = performance.now() - t; hudAt = now; }
+    if (!document.hidden && (running || press || now - drawAt >= 150)) { const t = performance.now(); view.draw(now); drawMs = performance.now() - t; drawAt = now; }
+    if (running) perf.sample(elapsed * 1000, logicMs, drawMs, hudMs, performance.now() - started, performance.now());
+    if (debug && now - perfAt > 1000) { text('perf', JSON.stringify({ ...perf.report(), clampedSeconds: +clock.clampedSeconds.toFixed(3), seed: game.seed })); perfAt = now; }
+    requestAnimationFrame(frame);
   }
-  sync(); requestAnimationFrame(frame);
-  if (debug) {
-    const label = document.createElement('span'); label.className = 'debug-label'; label.textContent = 'DEBUG · 广告为模拟奖励'; $('playfield').append(label);
-    globalThis.__TD = { game, view, start, snapshot: () => game.snapshot(),
-      step(seconds) { for (let i = 0; i < Math.round(seconds / C.step); i++) game.step(); sync(); view.draw(performance.now()); return game.snapshot(); },
-      render() { sync(); view.draw(performance.now()); },
-      exportLog() { return { seed: game.seed, ...game.snapshot(), events: game.log }; },
-      metrics: () => qualityFX.metrics() };
-  }
+  soundButton(); updateRecord(); sync(); requestAnimationFrame(frame);
+  if (debug) { hidden('perf', false); globalThis.__TD = { game, view, start, snapshot: () => game.snapshot(), step(seconds) { for (let i = 0; i < Math.round(seconds / C.step); i++) game.step(); sync(); view.draw(performance.now()); return game.snapshot(); }, render() { sync(); view.draw(performance.now()); }, exportLog: () => ({ seed: game.seed, ...game.snapshot(), events: game.log }), metrics: () => ({ ...perf.report(), clampedSeconds: clock.clampedSeconds }), tutorial: () => tutorial && { ...tutorial } }; }
 })();
 </script>
 </body>
 </html>
+
