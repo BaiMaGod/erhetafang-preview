@@ -147,6 +147,14 @@ body{background:radial-gradient(ellipse at 50% 30%,#142543,#060a14 70%);color:#e
 @media(max-height:700px){.hud{padding-top:max(7px,env(safe-area-inset-top));padding-left:13px;padding-right:13px}.progress-track{margin:0 -13px}.topline{margin-bottom:5px}.metrics{padding-bottom:7px}.metric-label{margin-bottom:2px;font-size:9px}.core-value>b{font-size:18px}.metric b{font-size:17px}.icon-button{width:29px;height:29px}.screen-overlay{padding:12px 18px}#menu{padding:25px 23px 16px}.menu-content{margin:auto}.eyebrow{font-size:7px}.title-lockup{margin-top:10px}.title-lockup>span,.title-lockup>strong{font-size:49px}.tagline{margin-top:18px;font-size:10px}.menu-art{height:150px}.home-merge{margin:3px 3px 12px;padding:8px 8px 6px;gap:13px}.home-merge canvas{width:31px;height:31px}.home-merge small{font-size:8px}.instructions{margin:3px 0 12px;gap:20px}.instructions b{font-size:10px}#start{height:46px;font-size:18px}.menu-content>.text-button{margin-top:8px;min-height:29px;font-size:10px}.menu-foot{margin-top:10px;font-size:8px}.dialog{padding:16px}.dialog h1{font-size:23px}.tutorial-panel{top:35px}.operation-hint{font-size:9px}.board-caption small{font-size:8px}}
 @media(max-width:360px){.metrics{gap:11px}.core-track{width:35px}.board-caption{left:10px;right:10px}.pile-caption{left:14px;right:14px}.pile-caption b{letter-spacing:1px}.title-lockup>span,.title-lockup>strong{font-size:48px}.home-merge{gap:12px}.tagline{letter-spacing:2px}.instructions{gap:18px}.guide-row b{font-size:13px}.guide-row p,.guide-row span{font-size:10px}}
 @media(prefers-reduced-motion:reduce){.primary{transition:none}.title-lockup{filter:none}}
+
+
+/* V1.5: one compact HUD row; combat information overlays the battlefield. */
+.hud{padding:7px 13px 0;padding-top:max(7px,env(safe-area-inset-top));flex-shrink:0}
+.topline{margin-bottom:6px}.brand-mark{width:24px;height:26px;font-size:16px}.brand b{font-size:13px}.edition{font-size:8px}.hud-actions{gap:6px}.icon-button{width:29px;height:29px}
+.battle-caption{top:9px;left:14px;right:14px}.battle-metrics{position:absolute;top:27px;left:14px;right:14px;display:flex;justify-content:space-between;pointer-events:none;color:#789ab7;font-size:9px;font-variant-numeric:tabular-nums}.battle-metrics b{font-weight:600;color:#b8d8ed}.battle-metrics b span{color:#789ab7}
+.boss-hud{top:49px}.defense-health{position:absolute;left:17px;right:17px;display:flex;justify-content:space-between;align-items:center;pointer-events:none;font-size:9px;color:#85c5dc;font-variant-numeric:tabular-nums}.defense-health b{font-size:11px;color:#b4f8ff}.defense-health.danger b{color:#ff7f9a}
+@media(max-height:700px){.hud{padding-top:max(5px,env(safe-area-inset-top))}.topline{margin-bottom:4px}.brand-mark{height:24px}.icon-button{height:27px;width:27px}}
 </style>
 </head>
 <body>
@@ -156,22 +164,18 @@ body{background:radial-gradient(ellipse at 50% 30%,#142543,#060a14 70%);color:#e
         <div class="brand"><span class="brand-mark">Ⅱ</span><div><b>二合塔防</b><span class="edition" id="edition">综合试炼 · 01</span></div></div>
         <div class="hud-actions"><button id="sound" class="icon-button" aria-label="开启音效" title="音效">♪</button><button id="pause" class="icon-button" aria-label="暂停" title="暂停">Ⅱ</button></div>
       </div>
-      <div class="metrics">
-        <div class="core-metric"><span class="metric-label">核心耐久</span><div class="core-value"><b id="core">100</b><span>/100</span><div class="core-track"><i id="core-fill"></i></div></div></div>
-        <div class="metric"><span class="metric-label">防线</span><b id="slot-count">9<span>/9</span></b></div>
-        <div class="metric time-metric"><span class="metric-label" id="time-label">战斗时间</span><b id="time">00:00</b></div>
-      </div>
       <div class="progress-track"><i id="progress"></i></div>
     </header>
     <div class="playfield" id="playfield">
       <canvas id="game" aria-label="战斗、9格防线及层叠零件。点击零件堆表面可取零件；长按完整武器拖到战场，松手自爆。"></canvas>
+      <div class="battle-metrics"><span>防线 <b id="slot-count">9<span>/9</span></b></span><span><span id="time-label">战斗时间</span> <b id="time">00:00</b></span></div>
+      <div class="defense-health" id="defense-health" role="meter" aria-label="防线总生命" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><span>防线生命</span><b id="health">100%</b></div>
       <div class="battle-caption"><span id="wave-label">前哨接敌</span><span id="battle-state" class="battle-state"><i></i> 自动开火</span></div>
       <div class="boss-hud hidden" id="boss-hud"><div><b>攻城巨兽</b><span id="boss-phase">阶段 1 / 3</span></div><div class="boss-track"><i id="boss-fill"></i></div></div>
       <div class="board-caption" id="board-caption"><span><i class="small-dot"></i> 防线 <small>长按武器 · 拖拽自爆</small></span><button id="recover" class="recover hidden">＋ 补槽</button></div>
       <div class="pile-caption" id="pile-caption"><div><b>零件堆</b><span id="pile-total">全部开局入堆</span></div><span id="pile-count"></span></div>
       <div class="pile-empty hidden" id="pile-empty"><span class="pile-empty-icon">✓</span><b>零件全部取完</b><span>继续守线，善用现有武器</span></div>
       <div id="tutorial-panel" class="tutorial-panel hidden"><div><span id="tutorial-step">操作练习 1/4</span><button id="tutorial-skip">跳过</button></div><b id="tutorial-title"></b><p id="tutorial-detail"></p></div><output id="perf" class="perf hidden"></output>
-      <div class="operation-hint" id="operation-hint">点击表面零件，两个相同对象自动合成</div>
       <div class="toast" id="toast" role="status"></div>
       <div class="drag-caption hidden" id="drag-caption"><b id="drag-title"></b><span id="drag-detail">移入战斗区，松手自爆</span><small>战斗速度 50% · 移回防线取消</small></div>
       <div class="screen-overlay" id="menu">
@@ -185,7 +189,7 @@ body{background:radial-gradient(ellipse at 50% 30%,#142543,#060a14 70%);color:#e
           <button class="primary" id="start">开始战斗 <span>↗</span></button>
           <button class="text-button" id="learn-home">操作教学</button><p class="menu-foot" id="best-record">六种武器 · 九格防线 · 三阶段 Boss</p>
         </div>
-        <span class="build-label">V1.4.1 · 霓虹机械防线</span>
+        <span class="build-label">V1.5.0 · 霓虹机械防线</span>
       </div>
       <div class="screen-overlay hidden" id="pause-screen">
         <div class="dialog"><span class="eyebrow">TIME OUT</span><h1>战斗暂停</h1><p>一口气，再继续。</p><button id="resume" class="primary">继续战斗 <span>↗</span></button><button id="restart-pause" class="secondary">重新开始</button><button id="guide" class="text-button">查看六种武器</button><button id="learn-pause" class="text-button">重看操作教学</button><p class="subtle">切换窗口时会自动暂停</p></div>
@@ -207,9 +211,9 @@ body{background:radial-gradient(ellipse at 50% 30%,#142543,#060a14 70%);color:#e
   'use strict';
   const TD = root.TD = root.TD || {};
   TD.CONFIG = {
-    version: '1.4.1',
+    version: '1.5.0',
     step: 1 / 60, width: 900, defenseY: 1000, coreY: 1120,
-    slotHP: 100, coreHP: 100, dragSpeed: .5, seed: 21007,
+    slotHP: 100, dragSpeed: .5, seed: 21007,
     pickupTime: .18, mergeTime: .3, chainTime: .18,
     bossTime: 190, phaseMin: 10, phaseTransition: .8,
     // 开局将全部零件投入同一堆，不再依赖时间解锁或批次补给。
@@ -230,13 +234,13 @@ body{background:radial-gradient(ellipse at 50% 30%,#142543,#060a14 70%);color:#e
         width: [12, 16, 20, 24, 28], falloff: [.9, .9, .9, 1, 1], blastWidth: [24, 28, 32, 36, 40] }
     ],
     enemies: {
-      normal: { name: '普通兵', hp: 100, speed: 1, armor: 0, slot: 8, core: 6, control: 0, knock: 0, radius: 19, color: '#ee698b' },
-      fast: { name: '疾跑怪', hp: 60, speed: 1.8, armor: 0, slot: 6, core: 5, control: 0, knock: 0, radius: 16, color: '#edab65' },
-      swarm: { name: '群怪', hp: 30, speed: 1, armor: 0, slot: 3, core: 2, control: 0, knock: 0, radius: 13, color: '#c27bd9' },
-      armor: { name: '重甲怪', hp: 320, speed: .55, armor: .5, slot: 12, core: 9, control: 0, knock: 0, radius: 27, color: '#aeb6d6' },
-      charge: { name: '冲锋怪', hp: 160, speed: 1, armor: .1, slot: 8, core: 7, control: 0, knock: .2, radius: 24, color: '#ff7669' },
-      giant: { name: '巨兽', hp: 800, speed: .4, armor: .35, slot: 18, adjacent: 6, core: 12, control: .4, knock: .5, radius: 38, color: '#b097d6' },
-      boss: { name: '攻城巨兽', hp: 36000, speed: .25, armor: .45, slot: 30, adjacent: 10, core: 20, control: .7, knock: .85, radius: 65, color: '#f57c86' }
+      normal: { name: '普通兵', hp: 100, speed: 1, armor: 0, slot: 8, control: 0, knock: 0, radius: 19, color: '#ee698b' },
+      fast: { name: '疾跑怪', hp: 60, speed: 1.8, armor: 0, slot: 6, control: 0, knock: 0, radius: 16, color: '#edab65' },
+      swarm: { name: '群怪', hp: 30, speed: 1, armor: 0, slot: 3, control: 0, knock: 0, radius: 13, color: '#c27bd9' },
+      armor: { name: '重甲怪', hp: 320, speed: .55, armor: .5, slot: 12, control: 0, knock: 0, radius: 27, color: '#aeb6d6' },
+      charge: { name: '冲锋怪', hp: 160, speed: 1, armor: .1, slot: 8, control: 0, knock: .2, radius: 24, color: '#ff7669' },
+      giant: { name: '巨兽', hp: 800, speed: .4, armor: .35, slot: 18, adjacent: 6, control: .4, knock: .5, radius: 38, color: '#b097d6' },
+      boss: { name: '攻城巨兽', hp: 36000, speed: .25, armor: .45, slot: 30, adjacent: 10, control: .7, knock: .85, radius: 65, color: '#f57c86' }
     }
   };
   TD.weapon = id => TD.CONFIG.weapons.find(w => w.id === id);
@@ -245,6 +249,7 @@ body{background:radial-gradient(ellipse at 50% 30%,#142543,#060a14 70%);color:#e
   TD.distance = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
   TD.rng = seed => { let s = seed >>> 0; return () => { s += 0x6D2B79F5; let t = s; t = Math.imul(t ^ t >>> 15, t | 1); t ^= t + Math.imul(t ^ t >>> 7, t | 61); return ((t ^ t >>> 14) >>> 0) / 4294967296; }; };
 })(globalThis);
+
 
 
 
@@ -262,18 +267,19 @@ body{background:radial-gradient(ellipse at 50% 30%,#142543,#060a14 70%);color:#e
       this.mode = mode;
       this.seed = seed; this.gameId++; this.time = 0; this.status = 'ready'; this.paused = false;
       this.id = 0; this.age = 0; this.random = TD.rng(seed ^ 0xBCC472); this.layoutRandom = TD.rng(seed);
-      this.core = C.coreHP; this.slots = Array.from({ length: 9 }, (_, i) => ({ index: i, generation: 1, hp: C.slotHP, active: true, item: null }));
+      this.slots = Array.from({ length: 9 }, (_, i) => ({ index: i, generation: 1, hp: C.slotHP, active: true, item: null }));
       this.enemies = []; this.projectiles = []; this.zones = []; this.bursts = []; this.effects = [];
       this.damageQueue = []; this.events = []; this.log = []; this.drag = null; this.boss = null;
       this.pile = []; this.pileById = new Map(); this.dotClock = .25;
       this.adRequest = null; this.adCount = 0; this.rewards = new Set(); this.waveIndex = 0;
-      this.stats = { picks: 0, merges: 0, firstMerge: null, highest: 0, explosions: 0, lostSlots: 0, kills: 0, controlSeconds: 0, enemySeconds: 0, blockedSeconds: 0, coreDamage: 0, lastPick: null, lastMerge: null, lastExplosion: null, coreSources: {} };
+      this.stats = { picks: 0, merges: 0, firstMerge: null, highest: 0, explosions: 0, lostSlots: 0, kills: 0, controlSeconds: 0, enemySeconds: 0, blockedSeconds: 0, defenseDamage: 0, lastPick: null, lastMerge: null, lastExplosion: null, defenseSources: {} };
       this.makePile(); this.waves = this.mode === 'tutorial' ? [] : this.makeWaves(); this.waveCursor = 0;
       this.emit('reset');
     }
     start() { if (this.status === 'ready') { this.status = 'playing'; this.emit('start'); } }
     emit(type, data = {}) { const event = { type, time: this.time, ...data }; if (this.onEvent) this.onEvent(event); }
     record(type, data = {}) { const event = { type, time: +this.time.toFixed(3), ...data }; this.log.push(event); this.emit(type, data); }
+    get health() { return this.slots.reduce((sum, s) => sum + (s.active ? s.hp : 0), 0) / (9 * C.slotHP) * 100; }
     alive() { return this.enemies.filter(e => e.hp > 0); }
     targets() { return this.alive().filter(e => e.y >= 0 && e.y <= C.coreY); }
     slotPoint(i) { return { x: i * 100 + 50, y: C.defenseY }; }
@@ -286,7 +292,7 @@ body{background:radial-gradient(ellipse at 50% 30%,#142543,#060a14 70%);color:#e
       // 所有零件零件开局混入同一堆，不使用分批和时间补给。
       const bag = [];
       if (this.mode === 'tutorial') {
-        this.pile = [0, 1].map((i) => ({ id: ++this.id, kind: 'gun', layer: 0, region: 'center', x: .34 + i * .32, y: .45, w: .21, h: .26, removed: false, coveredBy: [] }));
+        this.pile = [0, 1].map((i) => ({ id: ++this.id, kind: 'gun', layer: 0, region: 'center', x: .34 + i * .32, y: .45, w: .14, h: .30, removed: false, coveredBy: [] }));
         this.pileById = new Map(this.pile.map(p => [p.id, p])); this.record('pileReady', { total: 2 }); return;
       }
       C.pileCounts.forEach((count, i) => { for (let n = 0; n < count; n++) bag.push(C.weapons[i].id); });
@@ -322,8 +328,8 @@ body{background:radial-gradient(ellipse at 50% 30%,#142543,#060a14 70%);color:#e
               : .172 + .048 * t + col * (.65 - .125 * t) / 4 + (row % 2 ? .024 : -.015);
             const baseY = .16 + .065 * t + row * (.67 - .13 * t) / (region.rows - 1);
             const x = TD.clamp(baseX + offsetX + (this.layoutRandom() - .5) * (wing ? .04 : .055), .095, .905);
-            const y = TD.clamp(baseY + offsetY + (this.layoutRandom() - .5) * (wing ? .055 : .07), .105, .895);
-            pieces.push({ id: ++this.id, kind: bag[cursor++], layer, region: region.name, x, y, w: .165, h: .17, removed: false });
+            const y = TD.clamp(baseY + offsetY + (this.layoutRandom() - .5) * (wing ? .055 : .07), .14, .86);
+            pieces.push({ id: ++this.id, kind: bag[cursor++], layer, region: region.name, x, y, w: .123, h: .25, removed: false });
           }
         }
       }
@@ -487,12 +493,11 @@ body{background:radial-gradient(ellipse at 50% 30%,#142543,#060a14 70%);color:#e
       enemy.x = TD.clamp(enemy.x + dir.x * amount, enemy.def.radius, C.width - enemy.def.radius);
       enemy.y = Math.max(0, enemy.y + dir.y * amount);
       if (enemy.y < C.defenseY) { enemy.state = 'advance'; enemy.attackAt = Infinity; }
-      else if (enemy.state === 'slot' && Math.floor(enemy.x / 100) !== enemy.slot) { enemy.state = 'breach'; enemy.attackAt = Infinity; }
+      else { enemy.y = C.defenseY; enemy.state = 'advance'; enemy.attackAt = Infinity; }
       if (enemy.kind === 'charge' && enemy.chargeState === 'rush') { enemy.chargeState = 'spent'; enemy.charged = true; }
     }
     queueDamage(enemy, raw, pen = 0, color = '#fff') { this.damageQueue.push({ type: 'enemy', enemy, raw, pen, color }); }
-    queueSlot(index, amount, generation = this.slots[index]?.generation) { this.damageQueue.push({ type: 'slot', index, amount, generation }); }
-    queueCore(amount, source = 'unknown') { this.damageQueue.push({ type: 'core', amount, source }); }
+    queueSlot(index, amount, generation = this.slots[index]?.generation, source = 'unknown') { this.damageQueue.push({ type: 'slot', index, amount, generation, source }); }
     effect(type, point, color, duration, extra = {}) { this.effects.push({ type, ...point, color, start: this.time, end: this.time + duration, ...extra }); }
     chain(start, count, range, enemies = this.targets()) {
       const result = [start], unused = enemies.filter(e => e.id !== start.id);
@@ -527,10 +532,10 @@ body{background:radial-gradient(ellipse at 50% 30%,#142543,#060a14 70%);color:#e
         }
         return best;
       }
-      const sorted = [...enemies].sort((a, b) => (b.state === 'core') - (a.state === 'core') ||
+      const sorted = [...enemies].sort((a, b) => (b.state === 'slot') - (a.state === 'slot') ||
         (item.kind === 'ice' ? (C.defenseY - a.y) / (a.def.speed * 50) - (C.defenseY - b.y) / (b.def.speed * 50) : b.y - a.y) || a.id - b.id);
       const current = enemies.find(e => e.id === item.lock);
-      if (item.kind === 'gun' && current && (current.state === 'core') === (sorted[0].state === 'core') && Math.abs(current.y - sorted[0].y) <= 80) return current;
+      if (item.kind === 'gun' && current && (current.state === 'slot') === (sorted[0].state === 'slot') && Math.abs(current.y - sorted[0].y) <= 80) return current;
       return sorted[0];
     }
     updateWeapon(item, origin, dt) {
@@ -714,30 +719,40 @@ body{background:radial-gradient(ellipse at 50% 30%,#142543,#060a14 70%);color:#e
       const slow = Math.min(enemy.kind === 'boss' ? .4 : .7, Math.max(0, ...Object.values(enemy.slows).map(s => s.amount)));
       if (this.protected(enemy)) return;
       if (this.controlled(enemy)) { if (['rush', 'warning'].includes(enemy.chargeState)) { enemy.chargeState = 'spent'; enemy.charged = true; } return; }
-      if (enemy.state === 'slot' && (!this.slots[enemy.slot].active || Math.floor(enemy.x / 100) !== enemy.slot)) { enemy.state = 'breach'; enemy.attackAt = Infinity; }
-      if (enemy.state === 'advance' || enemy.state === 'breach') {
+      // Every enemy is stopped by the defense boundary, including an empty lane.
+      enemy.y = Math.min(enemy.y, C.defenseY);
+      if (enemy.state === 'slot' && (!this.slots[enemy.slot]?.active || Math.abs(enemy.x - this.slotPoint(enemy.slot).x) > .01)) {
+        enemy.state = 'shift'; enemy.attackAt = Infinity;
+      }
+      const speed = 50 * def.speed * phaseSpeed * (1 - slow) * (enemy.chargeState === 'rush' ? 2.8 : 1);
+      if (enemy.state === 'advance') {
         if (enemy.kind === 'charge' && enemy.y >= 800 && enemy.chargeState === 'none') { enemy.chargeState = 'warning'; enemy.chargeAt = this.time + .5; }
         if (enemy.chargeState === 'warning') { if (this.time + EPS < enemy.chargeAt) return; enemy.chargeState = 'rush'; }
-        const speed = 50 * def.speed * phaseSpeed * (1 - slow) * (enemy.chargeState === 'rush' ? 2.8 : 1);
-        enemy.y += speed * dt;
-        if (enemy.state === 'advance' && enemy.y >= C.defenseY) {
-          const index = TD.clamp(Math.floor(enemy.x / 100), 0, 8), slot = this.slots[index];
-          if (slot.active) {
-            enemy.y = C.defenseY; enemy.state = 'slot'; enemy.slot = index; enemy.attackAt = this.time + 1;
-            if (enemy.chargeState === 'rush' && !enemy.charged) { this.queueSlot(index, 25); enemy.charged = true; }
-          } else enemy.state = 'breach';
-          if (enemy.chargeState === 'rush') { enemy.chargeState = 'spent'; enemy.charged = true; }
+        const rush = enemy.chargeState === 'rush';
+        enemy.y = Math.min(C.defenseY, enemy.y + 50 * def.speed * phaseSpeed * (1 - slow) * (rush ? 2.8 : 1) * dt);
+        if (enemy.y >= C.defenseY) {
+          const lane = TD.clamp(Math.floor(enemy.x / 100), 0, 8);
+          enemy.slot = lane; enemy.state = 'shift'; enemy.attackAt = Infinity;
+          if (rush && !enemy.charged && this.slots[lane].active) this.queueSlot(lane, 25, undefined, enemy.kind);
+          if (rush) { enemy.chargeState = 'spent'; enemy.charged = true; }
         }
-        if (enemy.state === 'breach' && enemy.y >= C.coreY) { enemy.y = C.coreY; enemy.state = 'core'; enemy.attackAt = this.time + 1; }
       }
-      if ((enemy.state === 'slot' || enemy.state === 'core') && this.time + EPS >= enemy.attackAt) {
-        enemy.attackAt = this.time + 1; // 解控只执行一次到期攻击，不补算被冻结期间的积压。
+      if (enemy.state === 'shift') {
+        // Keep the current live neighbor; choose the nearest survivor when it falls.
+        let target = this.slots[enemy.slot];
+        if (!target?.active) target = this.slots.filter(s => s.active).sort((a,b) => Math.abs(this.slotPoint(a.index).x-enemy.x)-Math.abs(this.slotPoint(b.index).x-enemy.x) || a.index-b.index)[0];
+        if (!target) return;
+        enemy.slot = target.index;
+        const dx = this.slotPoint(target.index).x - enemy.x;
+        const travel = Math.min(Math.abs(dx), speed * dt);
+        enemy.x += Math.sign(dx) * travel;
+        if (Math.abs(dx) <= travel + EPS) { enemy.state = 'slot'; enemy.attackAt = this.time + 1; }
+      }
+      if (enemy.state === 'slot' && this.time + EPS >= enemy.attackAt) {
+        enemy.attackAt = this.time + 1;
         const factor = enemy.kind === 'boss' ? [1, 1.25, 1.5][enemy.phase - 1] : 1;
-        if (enemy.state === 'core') this.queueCore(def.core * factor, enemy.kind);
-        else {
-          this.queueSlot(enemy.slot, def.slot * factor);
-          if (def.adjacent) { this.queueSlot(enemy.slot - 1, def.adjacent * factor); this.queueSlot(enemy.slot + 1, def.adjacent * factor); }
-        }
+        this.queueSlot(enemy.slot, def.slot * factor, undefined, enemy.kind);
+        if (def.adjacent) { this.queueSlot(enemy.slot - 1, def.adjacent * factor, undefined, enemy.kind); this.queueSlot(enemy.slot + 1, def.adjacent * factor, undefined, enemy.kind); }
         enemy.attackFlash = this.time + .18;
       }
     }
@@ -752,10 +767,13 @@ body{background:radial-gradient(ellipse at 50% 30%,#142543,#060a14 70%);color:#e
           if (before - enemy.hp > 0 && (damage.raw >= 100 || enemy.hp <= 0)) this.effect('number', enemy, damage.color, .65, { text: Math.round(before - enemy.hp) });
         } else if (damage.type === 'slot') {
           const slot = this.slots[damage.index]; if (!slot?.active || slot.generation !== damage.generation) continue;
-          slot.hp = Math.max(0, slot.hp - damage.amount); slot.hitAt = this.time; if (!slot.hp) this.destroySlot(damage.index, damage.generation);
-        } else {
-          const amount = Math.min(this.core, damage.amount); this.core = Math.max(0, this.core - damage.amount); this.stats.coreDamage += amount; this.stats.coreSources[damage.source || 'unknown'] = (this.stats.coreSources[damage.source || 'unknown'] || 0) + amount;
-          this.emit('coreHit', { amount: damage.amount });
+          const amount = Math.min(slot.hp, Math.max(0, damage.amount));
+          slot.hp -= amount; slot.hitAt = this.time;
+          const percent = amount / (9 * C.slotHP) * 100;
+          this.stats.defenseDamage += percent;
+          this.stats.defenseSources[damage.source || 'unknown'] = (this.stats.defenseSources[damage.source || 'unknown'] || 0) + percent;
+          if (amount > 0) this.emit('defenseHit', { amount: percent, slot: slot.index });
+          if (!slot.hp) this.destroySlot(damage.index, damage.generation);
         }
       }
       this.damageQueue = [];
@@ -764,7 +782,7 @@ body{background:radial-gradient(ellipse at 50% 30%,#142543,#060a14 70%);color:#e
       this.enemies = this.enemies.filter(e => e.hp > 0);
       const boss = this.boss;
       if (boss?.hp <= 0 && boss.phase === 3) this.finish('won');
-      else if (this.core <= 0) this.finish('lost');
+      else if (this.health <= 0) this.finish('lost');
       if (this.status === 'playing' && boss?.hp > 0) this.updateBoss(boss);
     }
     updateBoss(boss) {
@@ -780,7 +798,7 @@ body{background:radial-gradient(ellipse at 50% 30%,#142543,#060a14 70%);color:#e
     }
     finish(status) {
       if (this.status !== 'playing') return;
-      this.status = status; this.drag = null; this.record('finish', { status, core: this.core, seconds: this.time, stats: { ...this.stats } });
+      this.status = status; this.drag = null; this.record('finish', { status, health: this.health, seconds: this.time, stats: { ...this.stats } });
     }
     step(dt = C.step) {
       if (this.status !== 'playing' || this.paused) return;
@@ -801,7 +819,7 @@ body{background:radial-gradient(ellipse at 50% 30%,#142543,#060a14 70%);color:#e
       this.resolve(); this.effects = this.effects.filter(e => e.end > this.time);
     }
     snapshot() {
-      return { status: this.status, time: +this.time.toFixed(3), core: this.core, gameId: this.gameId, paused: this.paused,
+      return { status: this.status, time: +this.time.toFixed(3), health: this.health, gameId: this.gameId, paused: this.paused,
         slots: this.slots.map(s => ({ index: s.index, hp: s.hp, active: s.active, generation: s.generation, item: s.item && { id: s.item.id, age: s.item.age, kind: s.item.kind, level: s.item.level, busy: s.item.busyUntil > this.time, cd: s.item.cd } })),
         total: this.pile.length, remaining: this.pile.filter(p => !p.removed).length, accessible: this.accessible().map(p => ({ id: p.id, kind: p.kind, x: p.x, y: p.y })),
         enemies: this.enemies.map(e => ({ id: e.id, kind: e.kind, hp: e.hp, x: e.x, y: e.y, state: e.state, frozen: this.controlled(e) })),
@@ -811,6 +829,7 @@ body{background:radial-gradient(ellipse at 50% 30%,#142543,#060a14 70%);color:#e
   }
   TD.Game = Game; TD.geometry = { direction, lineDistance, forward };
 })(globalThis);
+
 
 
 
@@ -858,8 +877,8 @@ body{background:radial-gradient(ellipse at 50% 30%,#142543,#060a14 70%);color:#e
     const s = game.stats;
     if (s.picks < 2) return '先取两件相同零件，合成第一座武器。';
     if (!s.explosions && s.blockedSeconds > 5) return '满槽后长按完整武器，拖到敌群中自爆腾位。';
-    if (s.lostSlots >= 2) return '防线缺口会让敌人直击核心，优先清理靠近缺口的敌人。';
-    if (s.coreDamage > 0) return '敌人已经突破防线；保留控制武器，并用自爆处理贴近核心的敌人。';
+    if (s.lostSlots >= 2) return '底座被毁后敌人会转攻相邻底座，优先清理贴近防线的敌人。';
+    if (s.defenseDamage > 0) return '防线正在受损；保留控制武器，并用自爆处理正在攻击底座的敌人。';
     if (game.status === 'won') return `本局完成 ${s.merges} 次合成，守住 ${game.slots.filter(s => s.active).length} 格防线。试试保留高阶火力，再选择自爆时机。`;
     return '保留高阶武器持续输出，用低阶武器自爆清理拥挤槽位。';
   }
@@ -881,6 +900,7 @@ body{background:radial-gradient(ellipse at 50% 30%,#142543,#060a14 70%);color:#e
 })(globalThis);
 
 
+
 (function (root) {
   'use strict';
   const TD = root.TD, C = TD.CONFIG, TAU = Math.PI * 2;
@@ -890,13 +910,14 @@ body{background:radial-gradient(ellipse at 50% 30%,#142543,#060a14 70%);color:#e
       const rect = this.canvas.getBoundingClientRect(); this.w = rect.width; this.h = rect.height;
       const dpr = Math.min(2, root.devicePixelRatio || 1); this.canvas.width = Math.round(this.w * dpr); this.canvas.height = Math.round(this.h * dpr);
       this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0); this.scaleX = this.w / C.width;
-      const pileArea = Math.min(290, Math.max(210, this.h * .39));
-      this.pileTop = this.h - pileArea; this.pileHeight = pileArea - 42;
-      this.coreY = this.pileTop - 33; this.defY = this.coreY - 48; this.top = 33; this.backgroundLayer = null;
+      const pileArea = Math.min(340, Math.max(220, this.h * .42));
+      this.pileTop = this.h - pileArea; this.pileHeight = pileArea - 12;
+      this.coreY = this.pileTop - 33; this.defY = this.coreY - 48; this.top = 48; this.backgroundLayer = null;
       this.scaleY = (this.defY - this.top) / C.defenseY;
       const byId = id => document.getElementById(id);
       byId('board-caption').style.top = (this.defY - this.w / 9 * .66 - 27) + 'px';
       byId('pile-caption').style.top = (this.pileTop - 7) + 'px';
+      byId('defense-health').style.top = (this.coreY - 22) + 'px';
       byId('pile-empty').style.top = (this.pileTop + this.pileHeight * .17) + 'px';
     }
     point(p) { return { x: p.x * this.scaleX, y: p.y <= 1000 ? this.top + p.y * this.scaleY : this.defY + (p.y - 1000) / 120 * (this.coreY - this.defY) }; }
@@ -908,7 +929,7 @@ body{background:radial-gradient(ellipse at 50% 30%,#142543,#060a14 70%);color:#e
     draw(realTime) {
       const c = this.ctx, game = this.game;
       c.clearRect(0, 0, this.w, this.h); this.background(realTime);
-      this.zones(); this.enemies(); this.projectiles(); this.slots(); this.pile(); this.flights(); this.effects();
+      this.defenseBar(); this.zones(); this.enemies(); this.projectiles(); this.slots(); this.pile(); this.flights(); this.effects();
       if (game.drag) this.preview();
       this.pressFeedback(realTime);
       if (game.status === 'ready') {
@@ -916,7 +937,7 @@ body{background:radial-gradient(ellipse at 50% 30%,#142543,#060a14 70%);color:#e
       }
     }
     background(realTime) {
-      const danger = this.game.core <= 30;
+      const danger = this.game.health <= 30;
       if (!this.backgroundLayer || this.backgroundDanger !== danger) {
         const output = this.ctx, layer = document.createElement('canvas'), dpr = Math.min(2, root.devicePixelRatio || 1);
         layer.width = Math.max(1, Math.round(this.w * dpr)); layer.height = Math.max(1, Math.round(this.h * dpr));
@@ -924,6 +945,17 @@ body{background:radial-gradient(ellipse at 50% 30%,#142543,#060a14 70%);color:#e
         this.ctx = output; this.backgroundLayer = layer; this.backgroundDanger = danger;
       }
       this.ctx.drawImage(this.backgroundLayer, 0, 0, this.w, this.h);
+    }
+    defenseBar() {
+      const c = this.ctx, health = this.game.health, x = 17, y = this.coreY - 4, w = this.w - 34;
+      c.fillStyle = '#030b18'; c.fillRect(x, y - 3, w, 14);
+      const gap = 3, segment = (w - gap * 8) / 9;
+      for (const slot of this.game.slots) {
+        const left = x + slot.index * (segment + gap);
+        c.fillStyle = '#1e3048'; c.fillRect(left, y, segment, 6);
+        c.fillStyle = health <= 30 ? '#ff426e' : '#35e7ff';
+        c.fillRect(left, y, segment * (slot.active ? slot.hp / C.slotHP : 0), 6);
+      }
     }
     paintBackground(realTime) {
       const c = this.ctx, w = this.w;
@@ -944,9 +976,9 @@ body{background:radial-gradient(ellipse at 50% 30%,#142543,#060a14 70%);color:#e
       c.restore();
       c.fillStyle = '#2d4350'; c.fillRect(0, this.defY - 15, w, this.coreY - this.defY + 25);
       c.strokeStyle = '#555d8533'; c.lineWidth = 1; c.beginPath(); c.moveTo(0, this.defY - 20); c.lineTo(w, this.defY - 20); c.stroke();
-      const coreColor = this.game.core <= 30 ? '#f97990' : '#89dcb9';
+      const coreColor = this.game.health <= 30 ? '#f97990' : '#89dcb9';
       c.save(); c.globalAlpha = .28; c.strokeStyle = coreColor; c.lineWidth = 1; c.beginPath(); c.moveTo(16, this.coreY); c.lineTo(w - 16, this.coreY); c.stroke(); c.restore();
-      this.rounded(w / 2 - 23, this.coreY - 8, 46, 15, 4); c.fillStyle = '#1a2635'; c.fill(); c.strokeStyle = coreColor + '65'; c.stroke(); this.text('核心', w / 2, this.coreY, coreColor, 8);
+      this.rounded(w / 2 - 23, this.coreY - 8, 46, 15, 4); c.fillStyle = '#1a2635'; c.fill(); c.strokeStyle = coreColor + '65'; c.stroke(); this.text('防线', w / 2, this.coreY, coreColor, 8);
       c.fillStyle = '#152330'; c.fillRect(0, this.coreY + 13, w, this.h);
       const pg = c.createLinearGradient(0, this.pileTop - 30, 0, this.h); pg.addColorStop(0, '#1f3340'); pg.addColorStop(1, '#14212e'); c.fillStyle = pg; c.fillRect(0, this.pileTop - 28, w, this.h);
       c.strokeStyle = '#938fab12'; c.beginPath(); c.moveTo(19, this.pileTop - 30); c.lineTo(w - 19, this.pileTop - 30); c.stroke();
@@ -1178,6 +1210,7 @@ body{background:radial-gradient(ellipse at 50% 30%,#142543,#060a14 70%);color:#e
 
 
 
+
 /* 局外表现层：只读取战斗事件，不修改模拟、命中或伤害。 */
 (function (root) {
   'use strict';
@@ -1271,9 +1304,8 @@ body{background:radial-gradient(ellipse at 50% 30%,#142543,#060a14 70%);color:#e
           const p = pointForSlot(event.slot);
           this.signal('＋ 空槽恢复', p.x, p.y - 37, 'recover'); break;
         }
-        case 'coreHit':
-          this.signal('核心受击！', this.view.w / 2, this.view.coreY - 28, 'danger', 2);
-          this.flash(true); break;
+        case 'defenseHit':
+          break;
         case 'boss':
           this.signal('⚠ 巨兽来袭', center.x, center.y, 'boss', 3);
           this.flash(true); break;
@@ -1285,6 +1317,7 @@ body{background:radial-gradient(ellipse at 50% 30%,#142543,#060a14 70%);color:#e
   }
   TD.QualityFX = QualityFX;
 })(globalThis);
+
 
 
 
@@ -1366,11 +1399,9 @@ body{background:radial-gradient(ellipse at 50% 30%,#142543,#060a14 70%);color:#e
     }
     c.fillStyle='#182c44';c.fillRect(0,dy-20,w,cy-dy+26);c.fillStyle='#080f20';c.fillRect(0,dy-17,w,cy-dy+17);
     c.lineWidth=1;plate(c,3,dy-23,w-6,cy-dy+38,'#0b1426','#47719b77',11);
-    c.strokeStyle=this.game.core<=30?'#ff426e':'#35e7ff';c.shadowColor=c.strokeStyle;c.shadowBlur=8;c.beginPath();c.moveTo(12,cy);c.lineTo(w*.4,cy);c.lineTo(w*.44,cy-7);c.lineTo(w*.56,cy-7);c.lineTo(w*.6,cy);c.lineTo(w-12,cy);c.stroke();c.shadowBlur=0;
     for(let i=0;i<9;i++){const x=(i+.5)*w/9;plate(c,x-w/19,dy-20,w/9-3,39,'#101e33','#45638788',4);}
-    sprite(c,'core',w/2,cy,45);
-    const top=this.pileTop-24;plate(c,8,top,w-16,h-top-32,'#091222','#344c7399',12);
-    c.strokeStyle='#3148722c';c.beginPath();for(let x=18;x<w;x+=17){c.moveTo(x,top+9);c.lineTo(x,h-43);}for(let y=top+9;y<h-40;y+=17){c.moveTo(16,y);c.lineTo(w-16,y);}c.stroke();
+    const top=this.pileTop-24;plate(c,8,top,w-16,h-top-5,'#091222','#344c7399',12);
+    c.strokeStyle='#3148722c';c.beginPath();for(let x=18;x<w;x+=17){c.moveTo(x,top+9);c.lineTo(x,h-10);}for(let y=top+9;y<h-10;y+=17){c.moveTo(16,y);c.lineTo(w-16,y);}c.stroke();
     for(const x of [11,w-14]){c.fillStyle='#744aff';c.fillRect(x,top+18,3,35);c.fillStyle='#35e7ff';c.fillRect(x,h-81,3,23);}
   };
   P.slots=function(){
@@ -1390,22 +1421,22 @@ body{background:radial-gradient(ellipse at 50% 30%,#142543,#060a14 70%);color:#e
   };
   function card(kind,width,height,blocked){
     const key=[kind,Math.round(width),Math.round(height),blocked].join(':');if(cardCache.has(key))return cardCache.get(key);
-    const canvas=document.createElement('canvas');canvas.width=Math.ceil(width*2);canvas.height=Math.ceil((height+5)*2);
+    const canvas=document.createElement('canvas');canvas.width=Math.ceil(width*2);canvas.height=Math.ceil(height*2);
     const c=canvas.getContext('2d');c.scale(2,2);const col=colors[kind];c.lineWidth=1;
-    plate(c,.7,4.5,width-1.4,height,'#03060f','#14223a',5);
+    plate(c,.7,4.5,width-1.4,height-5.5,'#03060f','#14223a',5);
     const gradient=c.createLinearGradient(0,0,width,height);gradient.addColorStop(0,blocked?'#1e2a40':'#213353');gradient.addColorStop(1,blocked?'#111b2b':'#0b152b');
     plate(c,.7,.7,width-1.4,height-1.4,gradient,blocked?'#3b4d67':col+'e0',5);
     c.lineWidth=.65;plate(c,3.5,3.5,width-7,height-7,null,blocked?'#4d607133':col+'4d',3);
     if(!blocked){c.strokeStyle=col+'29';c.lineWidth=4;plate(c,2,2,width-4,height-4,null,col+'29',5);c.fillStyle=col;c.fillRect(5,6,2,Math.max(6,height-14));c.beginPath();c.arc(width-8,8,2,0,TAU);c.fill();}
     c.save();if(blocked)c.globalAlpha=.36;
-    moduleSprite(c,kind,width/2,height*.39,Math.min(height*.77,width*.7));c.restore();
-    c.fillStyle=blocked?'#7b8a9e':'#e0f3ff';c.textAlign='center';c.textBaseline='middle';c.font='700 '+Math.max(8,Math.min(10,height*.23))+'px "Microsoft YaHei",system-ui';c.fillText(TD.weapon(kind).short,width/2,height*.8);
+    moduleSprite(c,kind,width/2,height*.40,Math.min(height*.59,width*.80));c.restore();
+    c.fillStyle=blocked?'#7b8a9e':'#e0f3ff';c.textAlign='center';c.textBaseline='middle';c.font='700 '+Math.max(8,Math.min(10,height*.23))+'px "Microsoft YaHei",system-ui';c.fillText(TD.weapon(kind).short,width/2,height*.83);
     if(cardCache.size>80)cardCache.clear();cardCache.set(key,canvas);return canvas;
   }
   P.pile=function(){
     if(!ready)return oldPile.call(this);
     const c=this.ctx;
-    for(const piece of this.game.pile){if(piece.removed)continue;const r=this.pileRect(piece),blocked=this.game.isBlocked(piece);c.drawImage(card(piece.kind,r.w,r.h,blocked),r.x-r.w/2,r.y-r.h/2,r.w,r.h+5);
+    for(const piece of this.game.pile){if(piece.removed)continue;const r=this.pileRect(piece),blocked=this.game.isBlocked(piece);c.drawImage(card(piece.kind,r.w,r.h,blocked),r.x-r.w/2,r.y-r.h/2,r.w,r.h);
       if(this.blockedHint?.until>performance.now()&&this.blockedHint.ids.includes(piece.id)){c.lineWidth=2;plate(c,r.x-r.w/2,r.y-r.h/2,r.w,r.h,null,'#ffd074',5);}
     }
   };
@@ -1487,6 +1518,7 @@ body{background:radial-gradient(ellipse at 50% 30%,#142543,#060a14 70%);color:#e
 })(globalThis);
 
 
+
 /* 有并发上限的合成音效；只在用户交互后解锁音频。 */
 (function (root) {
   'use strict';
@@ -1523,7 +1555,7 @@ body{background:radial-gradient(ellipse at 50% 30%,#142543,#060a14 70%);color:#e
         const [f, s, type, end] = sounds[e.kind]; this.tone(f, s, type, .009, end);
       }
       if (e.type === 'blast') { this.tone(95, .3, 'triangle', .055, 28); this.tone(190, .12, 'sawtooth', .015, 45); }
-      if (e.type === 'slotLost' || e.type === 'coreHit') this.tone(185, .18, 'triangle', .034, 65);
+      if (e.type === 'slotLost' || e.type === 'defenseHit') this.tone(185, .18, 'triangle', .034, 65);
       if (e.type === 'boss' || e.type === 'phase') { this.tone(110, .4, 'triangle', .04, 55); this.tone(165, .3, 'sine', .025, 82, .16); }
       if (e.type === 'won') for (const [i, f] of [523, 659, 784, 1046].entries()) this.tone(f, .3, 'triangle', .03, f, i * .09);
       if (e.type === 'lost') { this.tone(220, .35, 'triangle', .035, 110); this.tone(165, .4, 'sine', .025, 82, .15); }
@@ -1531,6 +1563,7 @@ body{background:radial-gradient(ellipse at 50% 30%,#142543,#060a14 70%);color:#e
   }
   root.TD.AudioBank = AudioBank;
 })(globalThis);
+
 
 
 (function () {
@@ -1573,7 +1606,7 @@ body{background:radial-gradient(ellipse at 50% 30%,#142543,#060a14 70%);color:#e
   function tutorialSync() {
     if (!tutorial) return;
     if (tutorial.step < 2) tutorial.step = Math.min(2, game.stats.picks);
-    if (tutorial.step === 2 && game.stats.merges && !tutorial.spawned) { tutorial.spawned = true; const e = game.spawn('normal', 450, 770); e.hp = e.maxHP = 1000; e.def = { ...e.def, speed: 0, slot: 0, core: 0 }; }
+    if (tutorial.step === 2 && game.stats.merges && !tutorial.spawned) { tutorial.spawned = true; const e = game.spawn('normal', 450, 770); e.hp = e.maxHP = 1000; e.def = { ...e.def, speed: 0, slot: 0 }; }
     if (tutorial.step === 2 && tutorial.shots) tutorial.step = 3;
     if (game.stats.explosions) { finishTutorial(false); return; }
     const steps = [ ['点击亮起的零件', '先取一件机枪零件，放进防线。'], ['再取一件相同零件', '两件同类零件会自动合成完整武器。'], ['武器会自动攻击', '合成后无需点击开火，观察它击中敌人。'], ['长按武器，向上拖动', '拖到战斗区松手自爆；拖回防线可以取消。'] ];
@@ -1583,15 +1616,16 @@ body{background:radial-gradient(ellipse at 50% 30%,#142543,#060a14 70%);color:#e
     fx.onEvent(e); audio.event(e);
     if (e.type === 'hint') { toast(e.text); if (e.blockers?.length) view.blockedHint = { ids: e.blockers, until: performance.now() + 850 }; }
     if (e.type === 'shot' && tutorial) tutorial.shots++;
-    if (e.type === 'slotLost') toast(`第 ${e.slot + 1} 格防线被摧毁，注意缺口`);
+    if (e.type === 'slotLost') toast(`第 ${e.slot + 1} 格防线被摧毁，敌人将转攻相邻底座`);
     if (e.type === 'slotAdded') toast(`第 ${e.slot + 1} 格空槽已补充`);
-    if (e.type === 'coreHit') { $('game-shell').classList.remove('core-hit'); void $('game-shell').offsetWidth; $('game-shell').classList.add('core-hit'); }
   };
   function sync() {
     const active = game.slots.filter(s => s.active), remaining = game.pile.filter(p => !p.removed).length, boss = game.boss;
     text('edition', tutorial ? '操作练习' : `综合试炼 · ${C.version || '1.3'}`);
-    text('core', Math.ceil(game.core)); $('core').classList.toggle('danger', game.core <= 30);
-    $('core-fill').style.width = game.core + '%'; $('core-fill').style.background = game.core <= 30 ? '#fa8296' : '#92ddba';
+    const health = game.health;
+    text('health', (health >= 100 ? '100' : health > 0 && health < .1 ? '<0.1' : health.toFixed(1).replace(/\.0$/, '')) + '%');
+    $('defense-health').classList.toggle('danger', health <= 30);
+    $('defense-health').setAttribute('aria-valuenow', String(health));
     if (cache.get('slots') !== active.length) { $('slot-count').innerHTML = `${active.length}<span>/9</span>`; cache.set('slots', active.length); }
     text('time', timeText(game.time)); $('progress').style.width = Math.min(100, game.time / 240 * 100) + '%';
     text('wave-label', tutorial ? '训练场 · 安全练习' : boss ? '巨兽攻城' : game.time >= C.bossTime - 15 ? '巨兽即将到来' : game.time < 20 ? '前哨接敌' : game.time < 50 ? '群怪入侵' : game.time < 80 ? '两翼疾袭' : game.time < 110 ? '重甲推进' : game.time < 140 ? '突击浪潮' : '巨兽压境');
@@ -1606,19 +1640,18 @@ body{background:radial-gradient(ellipse at 50% 30%,#142543,#060a14 70%);color:#e
     if (game.drag) { const item = game.drag.item; text('drag-title', `${TD.weapon(item.kind).name} · Lv${item.level}`); const descriptions = { gun: '区域弹幕', fire: '持续火海', ice: '范围冻结', lightning: '全场传导', missile: '爆炸与击退', laser: '米字贯穿' }; text('drag-detail', game.drag.valid ? `松手释放 · ${descriptions[item.kind]}` : '移入战斗区，松手自爆'); }
     const full = active.length > 0 && active.every(s => s.item);
     $('playfield').classList.toggle('slots-full', full && !game.drag);
-    text('operation-hint', tutorial ? '跟随提示完成练习' : full ? '防线已满 · 长按完整武器，向上拖动自爆腾位' : !game.stats.merges ? '点两件相同零件，自动合成武器' : '点零件合成 · 长按武器向上拖动自爆');
     hidden('tutorial-panel', !tutorial); hidden('learn-pause', !!tutorial);
     tutorialSync();
     if (['won', 'lost'].includes(game.status) && !resultShown) result();
   }
   function result() {
     cancelPress(); resultShown = true; const won = game.status === 'won', s = game.stats;
-    text('result-eyebrow', won ? '试炼完成' : '防守结束'); text('result-title', won ? '防线守住了' : '核心被击破');
+    text('result-eyebrow', won ? '试炼完成' : '防守结束'); text('result-title', won ? '防线守住了' : '防线全部被摧毁');
     text('result-emblem', won ? '✦' : '◇'); $('result-emblem').style.color = won ? '#ffd384' : '#e38baf';
     text('result-subtitle', won ? '攻城巨兽已被击败。' : '带着这局经验，再布置一次防线。');
-    $('result-stats').innerHTML = [[timeText(game.time), '战斗用时'], [s.kills, '击败敌人'], [`Lv${s.highest}`, '最高武器'], [s.explosions, '主动自爆'], [s.lostSlots, '损失槽位'], [Math.ceil(s.coreDamage), '核心受损']].map(([v, l]) => `<div><b>${v}</b><span>${l}</span></div>`).join('');
-    const source = Object.entries(s.coreSources).sort((a, b) => b[1] - a[1])[0];
-    text('result-review', (source && C.enemies[source[0]] ? `核心主要受到${C.enemies[source[0]].name}攻击。` : '') + TD.debrief(game));
+    $('result-stats').innerHTML = [[timeText(game.time), '战斗用时'], [s.kills, '击败敌人'], [`Lv${s.highest}`, '最高武器'], [s.explosions, '主动自爆'], [s.lostSlots, '损失槽位'], [`${+s.defenseDamage.toFixed(1)}%`, '防线受损']].map(([v, l]) => `<div><b>${v}</b><span>${l}</span></div>`).join('');
+    const source = Object.entries(s.defenseSources).sort((a, b) => b[1] - a[1])[0];
+    text('result-review', (source && C.enemies[source[0]] ? `防线主要受到${C.enemies[source[0]].name}攻击。` : '') + TD.debrief(game));
     if (won) { let best = null; try { best = JSON.parse(storage.get('record.v2')); } catch (_) {} if (!best || game.time < best.time) storage.set('record.v2', JSON.stringify({ time: game.time, highest: s.highest })); }
     overlay('result-screen'); audio.event({ type: won ? 'won' : 'lost' }); updateRecord();
   }
@@ -1685,7 +1718,9 @@ body{background:radial-gradient(ellipse at 50% 30%,#142543,#060a14 70%);color:#e
   soundButton(); updateRecord(); sync(); requestAnimationFrame(frame);
   if (debug) { hidden('perf', false); globalThis.__TD = { game, view, start, snapshot: () => game.snapshot(), step(seconds) { for (let i = 0; i < Math.round(seconds / C.step); i++) game.step(); sync(); view.draw(performance.now()); return game.snapshot(); }, render() { sync(); view.draw(performance.now()); }, exportLog: () => ({ seed: game.seed, ...game.snapshot(), events: game.log }), metrics: () => ({ ...perf.report(), clampedSeconds: clock.clampedSeconds }), tutorial: () => tutorial && { ...tutorial } }; }
 })();
+
 </script>
 </body>
 </html>
+
 
