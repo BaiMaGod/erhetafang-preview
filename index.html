@@ -185,7 +185,7 @@ body{background:radial-gradient(ellipse at 50% 30%,#142543,#060a14 70%);color:#e
           <button class="primary" id="start">开始战斗 <span>↗</span></button>
           <button class="text-button" id="learn-home">操作教学</button><p class="menu-foot" id="best-record">六种武器 · 九格防线 · 三阶段 Boss</p>
         </div>
-        <span class="build-label">V1.4 · 霓虹机械防线</span>
+        <span class="build-label">V1.4.1 · 霓虹机械防线</span>
       </div>
       <div class="screen-overlay hidden" id="pause-screen">
         <div class="dialog"><span class="eyebrow">TIME OUT</span><h1>战斗暂停</h1><p>一口气，再继续。</p><button id="resume" class="primary">继续战斗 <span>↗</span></button><button id="restart-pause" class="secondary">重新开始</button><button id="guide" class="text-button">查看六种武器</button><button id="learn-pause" class="text-button">重看操作教学</button><p class="subtle">切换窗口时会自动暂停</p></div>
@@ -207,7 +207,7 @@ body{background:radial-gradient(ellipse at 50% 30%,#142543,#060a14 70%);color:#e
   'use strict';
   const TD = root.TD = root.TD || {};
   TD.CONFIG = {
-    version: '1.4',
+    version: '1.4.1',
     step: 1 / 60, width: 900, defenseY: 1000, coreY: 1120,
     slotHP: 100, coreHP: 100, dragSpeed: .5, seed: 21007,
     pickupTime: .18, mergeTime: .3, chainTime: .18,
@@ -1318,10 +1318,17 @@ body{background:radial-gradient(ellipse at 50% 30%,#142543,#060a14 70%);color:#e
         c.fillStyle=color;for(let i=0;i<level-1;i++)c.fillRect(sign<0?-60:51,33-i*11,9,5);
       }
     }
-    sprite(c,kind,0,-5,104+level*7);
     if(level>=4){c.lineWidth=2;plate(c,-62,39,124,23,'#111d34',color,7);c.fillStyle=color;for(let i=0;i<level;i++)c.fillRect(-41+i*18,47,10,4);}
     if(level===5){c.fillStyle='#fff2ab';for(const sign of [-1,1]){c.beginPath();c.moveTo(sign*59,-40);c.lineTo(sign*70,-19);c.lineTo(sign*47,-22);c.closePath();c.fill();}}
-    cache.set(key,tile);return tile;
+    // The socket armor stays still; only the turret head follows its target.
+    const head=document.createElement('canvas');head.width=head.height=160;
+    const hc=head.getContext('2d');sprite(hc,kind,80,75,104+level*7);
+    const pixels=hc.getImageData(0,0,160,160).data;let radiusSquared=1;
+    for(let y=0;y<160;y++)for(let x=0;x<160;x++)if(pixels[(y*160+x)*4+3]){
+      radiusSquared=Math.max(radiusSquared,(x-80)**2+(y-80)**2);
+    }
+    const layers={base:tile,head,radius:Math.sqrt(radiusSquared)+1};
+    cache.set(key,layers);return layers;
   }
   function moduleSprite(c,kind,x,y,size){
     if(kind==='gun')return sprite(c,'component',x,y,size);
@@ -1331,12 +1338,17 @@ body{background:radial-gradient(ellipse at 50% 30%,#142543,#060a14 70%);color:#e
   }
   TD.NeonArt = {get ready(){return ready;}, get spriteCount(){return names.length;}, sprite, colors};
   const oldIcon=P.icon, oldEnemies=P.enemies, oldBackground=P.paintBackground, oldPile=P.pile, oldSlots=P.slots;
-  P.icon=function(kind,x,y,size,angle=-Math.PI/2,level=0,alpha=1){
+  P.icon=function(kind,x,y,size,angle=-Math.PI/2,level=0,alpha=1,socketWidth=0){
     if(!ready)return oldIcon.call(this,kind,x,y,size,angle,level,alpha);
     const c=this.ctx;c.save();c.globalAlpha*=alpha;
     if(level){
       const facing=Math.atan2(Math.sin(angle)*this.scaleY,Math.cos(angle)*this.scaleX)+Math.PI/2;
-      c.translate(x,y);c.rotate(facing);const s=size*1.65;c.drawImage(turret(kind,level),-s/2,-s/2,s,s);
+      const layers=turret(kind,level),baseSize=size*1.45;
+      c.translate(x,y);c.drawImage(layers.base,-baseSize/2,-baseSize/2,baseSize,baseSize);
+      let radius=size*(.52+level*.03);
+      if(socketWidth)radius=Math.min(radius,(socketWidth-4)/2,x-2,this.w-x-2);
+      const headSize=160*Math.max(1,radius)/layers.radius;
+      c.rotate(facing);c.drawImage(layers.head,-headSize/2,-headSize/2,headSize,headSize);
     }else moduleSprite(c,kind,x,y,size*1.15);
     c.restore();
   };
@@ -1368,7 +1380,7 @@ body{background:radial-gradient(ellipse at 50% 30%,#142543,#060a14 70%);color:#e
       if(!slot.active){plate(c,x-s/2,y-s/2,s,s,'#140f20','#b4426266',5);c.strokeStyle='#ff426e';c.lineWidth=1.4;c.beginPath();c.moveTo(x-7,y-6);c.lineTo(x+2,y-1);c.lineTo(x-2,y+5);c.lineTo(x+7,y+9);c.stroke();this.text('缺口',x,y+s*.75,'#ff7f9a',8);continue;}
       if(!sprite(c,'socket',x,y,s*1.23)){this.rounded(x-s/2,y-s/2,s,s,4);c.fillStyle='#14233a';c.fill();}
       if(slot.hitAt&&game.time-slot.hitAt<.13){c.fillStyle='#ff426e55';c.fillRect(x-s/2,y-s/2,s,s);}
-      if(item){const busy=item.busyUntil>game.time;this.icon(item.kind,x,y-(item.level?5:0),s*(item.level?.85:.67),item.angle,item.level,busy?.28:game.drag?.item.id===item.id?.33:1);
+      if(item){const busy=item.busyUntil>game.time;this.icon(item.kind,x,y-(item.level?5:0),s*(item.level?.85:.67),item.angle,item.level,busy?.28:game.drag?.item.id===item.id?.33:1,s+5);
         if(item.level){plate(c,x-12,y+s*.24,24,12,'#071120e8',color+'88',2);this.text('Lv'+item.level,x,y+s*.4,'#e6f7ff',8,800);}
         if(item.chargeUntil>game.time){c.lineWidth=1.5;this.circle(x,y,s*.48,color+'ba',true);}
       }else{this.text('+',x,y,'#56859d',15,400);}
