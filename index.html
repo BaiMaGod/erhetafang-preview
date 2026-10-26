@@ -246,6 +246,22 @@ html[data-motion="reduced"] *,html[data-motion="reduced"] *:before,html[data-mot
 .loading-screen b{padding:10px 20px;background:url('assets/ui-crest.svg') center/contain no-repeat;text-shadow:0 3px #234276,0 0 15px #39cfff}.loading-screen progress{appearance:none;-webkit-appearance:none;border:1px solid #45cfff;background:#07172a;box-shadow:0 0 0 3px #132d49,0 0 15px #35cfff44;height:14px;border-radius:0}.loading-screen progress::-webkit-progress-bar{background:#07172a}.loading-screen progress::-webkit-progress-value{background:repeating-linear-gradient(90deg,#41e6ff 0 7px,#137baf 7px 9px);box-shadow:0 0 8px #35dfff}.loading-screen progress::-moz-progress-bar{background:#41e6ff}
 @media(max-height:700px){.screen-overlay:not(#menu){padding:12px}.dialog{border-width:16px;border-image-width:16px;padding:8px 10px 12px}.panel-heading{margin-bottom:12px;padding:7px 8px 10px}.dialog .panel-heading h1{font-size:23px}.panel-symbol{height:25px;margin-bottom:2px}.panel-symbol svg{height:23px;width:23px}.dialog>p{font-size:11px;margin-bottom:10px}.session-summary{padding:9px 2px;margin-bottom:8px}.session-summary b{font-size:15px}.dialog .primary,.dialog .secondary{height:42px;min-height:42px;margin-top:8px}.pause-tools{gap:6px;margin-top:10px}.pause-tools button{min-height:34px!important;height:34px!important;margin:0!important}.dialog p.subtle{margin-top:9px}.settings-row{padding:10px;min-height:48px}.guide-dialog{padding:8px}.guide-dialog .panel-heading{top:-8px}.guide-row{padding:9px 7px;gap:7px}.result-dialog .result-emblem{width:42px;height:42px;margin:2px auto 10px}.result-emblem:before{font-size:26px}.result-stats>div{padding:8px 2px}.result-stats b{font-size:15px}.dialog>.result-review{padding:7px;font-size:10px}.battle-metrics{font-size:9px}.battle-caption{font-size:9px}}
 @media(max-width:360px){.dialog{padding-inline:8px}.dialog .panel-heading h1{font-size:22px;letter-spacing:1px}.guide-row{grid-template-columns:48px minmax(0,1fr);gap:7px}.guide-symbol{width:48px;height:48px}.session-summary span{font-size:8px}.session-summary b{font-size:14px}.guide-row p{font-size:10px}.guide-row span{font-size:10px}.guide-levels>div{font-size:9px}.dialog #confirm-message{font-size:12px}.confirm-actions{gap:7px}.confirm-actions button{font-size:12px!important}.settings-row{font-size:12px}}
+
+/* P1 event presentation: a single readable warning lane; input passes through. */
+.battle-notice{position:absolute;top:49px;left:18px;right:18px;min-height:74px;display:grid;grid-template-columns:62px minmax(0,1fr);align-items:center;gap:8px;padding:8px 12px;color:#f3eaff;background:linear-gradient(110deg,#27132df0,#071425ec 80%);border:1px solid #e44d9d;box-shadow:inset 0 0 0 3px #080c20,inset 0 0 0 4px #673b77,0 5px 18px #02051288;clip-path:polygon(12px 0,calc(100% - 12px) 0,100% 12px,100% calc(100% - 12px),calc(100% - 12px) 100%,12px 100%,0 calc(100% - 12px),0 12px);pointer-events:none}
+.battle-notice[hidden]{display:none}.battle-notice canvas{width:62px;height:62px;filter:drop-shadow(0 0 5px #ff278b66)}.notice-copy{min-width:0;display:flex;flex-direction:column;gap:3px}.notice-copy small{font-size:8px;letter-spacing:3px;color:#ee95bf}.notice-copy b{font-size:22px;font-weight:950;font-style:italic;line-height:1.2;letter-spacing:2px;text-shadow:0 2px #4e224a,0 0 9px #ff278b55}.notice-copy span{font-size:10px;line-height:1.6;color:#c9d4eb}.notice-stages{grid-column:1/-1;display:flex;justify-content:center;gap:5px;height:3px}.notice-stages i{height:3px;width:22px;background:#472c50}.notice-stages i.lit{background:#ff71b1;box-shadow:0 0 4px #ff3f9a66}
+.battle-notice[data-phase='0']{grid-template-columns:minmax(0,1fr);min-height:64px;padding-inline:15px}.battle-notice[data-phase='0'] canvas,.battle-notice[data-phase='0'] .notice-stages{display:none}.battle-notice[data-kind='full']{border-color:#60ceff;background:linear-gradient(110deg,#10334be8,#071425ef);box-shadow:inset 0 0 0 3px #080f20,inset 0 0 0 4px #275c7c,0 5px 18px #02051288}.battle-notice[data-kind='full'] small{color:#7edfff}.battle-notice[data-kind='full'] b{font-size:18px;color:#d1f8ff;text-shadow:0 0 8px #17bcff55}
+.quality-signal.playing{animation:p1-cue 720ms ease-out forwards;font-size:11px;line-height:1.4;max-width:44%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:4px 7px;border:1px solid color-mix(in srgb,var(--cue-color) 60%,transparent);background:#051321de;color:var(--cue-color)!important;text-shadow:0 1px #000,0 0 5px #000;box-shadow:0 0 8px #0008;font-style:normal;letter-spacing:0}
+.quality-signal[data-kind='merge-high'].playing{font-size:12px;border-width:2px}.quality-signal[data-active='0']{display:none}.feedback-paused *{animation-play-state:paused!important}
+@keyframes p1-cue{0%{opacity:0;transform:translate(-50%,-20%) scale(.9)}15%,75%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-70%) scale(1)}}
+#result-screen:not(.hidden) .result-emblem{animation:result-mark 480ms cubic-bezier(.2,.8,.3,1) both}@keyframes result-mark{from{opacity:0;transform:rotate(45deg) scale(.65)}to{opacity:1;transform:rotate(45deg) scale(1)}}
+@media(max-height:700px){.battle-notice{left:12px;right:12px;min-height:57px;padding:6px 10px;grid-template-columns:43px minmax(0,1fr);gap:6px}.battle-notice canvas{width:43px;height:43px}.notice-copy b{font-size:18px}.notice-copy small{font-size:7px;letter-spacing:2px}.notice-copy span{font-size:9px}.battle-notice[data-phase='0']{min-height:57px}.quality-signal.playing{font-size:10px;padding:3px 5px}}
+html[data-motion='reduced'] .quality-signal.playing{animation:none!important;transform:translate(-50%,-50%);opacity:1}html[data-motion='reduced'] .quality-layer{animation:none!important;box-shadow:none!important}html[data-motion='reduced'] #result-screen .result-emblem{animation:none!important}
+
+.playfield:has(.battle-notice:not([hidden])) .boss-hud{visibility:hidden}
+.notice-stages:before{content:'';height:3px;flex:1;background:linear-gradient(90deg,#ff5f9f var(--boss-hp,100%),#45233c var(--boss-hp,100%));margin-right:6px}
+
+.battle-notice[data-phase='0'][data-has-boss='true'] .notice-stages{display:flex}
 </style>
 </head>
 <body>
@@ -281,7 +297,7 @@ html[data-motion="reduced"] *,html[data-motion="reduced"] *:before,html[data-mot
           <button class="primary" id="start">开始战斗 <span>↗</span></button>
           <button class="text-button" id="learn-home">操作教学</button><p class="menu-foot" id="best-record">六种武器 · 九格防线 · 三阶段 Boss</p>
         </div>
-        <span class="build-label">V1.6.0 · 霓虹机械防线</span>
+        <span class="build-label">V1.7.0 · 霓虹机械防线</span>
       </div>
       <div class="screen-overlay hidden" id="pause-screen">
         <div class="dialog"><span class="eyebrow">TIME OUT</span><h1>战斗暂停</h1><p>一口气，再继续。</p><button id="resume" class="primary">继续战斗 <span>↗</span></button><button id="restart-pause" class="secondary">重新开始</button><button id="guide" class="text-button">查看六种武器</button><button id="learn-pause" class="text-button">重看操作教学</button><p class="subtle">切换窗口时会自动暂停</p></div>
@@ -303,7 +319,7 @@ html[data-motion="reduced"] *,html[data-motion="reduced"] *:before,html[data-mot
   'use strict';
   const TD = root.TD = root.TD || {};
   TD.CONFIG = {
-    version: '1.5.0',
+    version: '1.7.0',
     step: 1 / 60, width: 900, defenseY: 1000, coreY: 1120,
     slotHP: 100, dragSpeed: .5, seed: 21007,
     pickupTime: .18, mergeTime: .3, chainTime: .18,
@@ -1305,115 +1321,73 @@ html[data-motion="reduced"] *,html[data-motion="reduced"] *:before,html[data-mot
 
 
 
-/* 局外表现层：只读取战斗事件，不修改模拟、命中或伤害。 */
-(function (root) {
-  'use strict';
-  const TD = root.TD;
-  class QualityFX {
-    constructor(game, view) {
-      this.game = game;
-      this.view = view;
-      this.view.neonPulses = [];
-      this.root = document.createElement('div');
-      this.root.className = 'quality-layer';
-      this.root.setAttribute('aria-hidden', 'true');
-      document.getElementById('playfield').appendChild(this.root);
-      this.pool = Array.from({ length: 12 }, () => {
-        const node = document.createElement('div');
-        node.className = 'quality-signal';
-        node.dataset.active = '0';
-        node.addEventListener('animationend', () => { node.dataset.active = '0'; node.classList.remove('playing'); });
-        this.root.appendChild(node);
-        return node;
-      });
-      this.cursor = 0;
-      this.renderTimes = [];
-      this.reducedMotion = root.matchMedia?.('(prefers-reduced-motion: reduce)').matches || false;
-    }
-    metrics() {
-      const values = [...this.renderTimes].sort((a, b) => a - b);
-      if (!values.length) return { frames: 0 };
-      const mean = values.reduce((sum, n) => sum + n, 0) / values.length;
-      return { frames: values.length, meanDrawMs: +mean.toFixed(3),
-        p95DrawMs: +values[Math.min(values.length - 1, Math.floor(values.length * .95))].toFixed(3),
-        worstDrawMs: +values[values.length - 1].toFixed(3) };
-    }
-    clear() {
-      this.view.neonPulses = [];
-      for (const node of this.pool) { node.dataset.active = '0'; node.classList.remove('playing'); }
-      this.root.classList.remove('quality-flash', 'quality-flash-danger');
-    }
-    signal(message, x, y, kind, importance = 1) {
-      if (kind === 'merge' || kind === 'merge-high') {
-        for (const active of this.pool) if (['merge', 'merge-high'].includes(active.dataset.kind)) {
-          active.dataset.active = '0'; active.classList.remove('playing');
-        }
-      }
-      let node = this.pool.find(n => n.dataset.active !== '1');
-      if (!node) node = this.pool[this.cursor++ % this.pool.length];
-      node.classList.remove('playing');
-      node.textContent = message;
-      node.dataset.kind = kind;
-      node.dataset.active = '1';
-      const margin = Math.min(this.view.w / 2, Math.max(70, message.length * 8.5));
-      node.style.left = Math.max(margin, Math.min(this.view.w - margin, x)) + 'px';
-      node.style.top = Math.max(48, Math.min(this.view.h - 48, y)) + 'px';
-      node.style.setProperty('--signal-scale', importance >= 3 ? '1.12' : '1');
-      // Reset a recycled node's animation; the DOM pool bounds allocations.
-      void node.offsetWidth;
-      node.classList.add('playing');
-    }
-    flash(danger = false) {
-      if(TD.presentationReducedMotion)return;
-      this.root.classList.remove('quality-flash', 'quality-flash-danger');
-      void this.root.offsetWidth;
-      this.root.classList.add(danger ? 'quality-flash-danger' : 'quality-flash');
-    }
-    onEvent(event) {
-      const center = { x: this.view.w / 2, y: this.view.defY * .42 };
-      const pointForSlot = index => this.view.point(this.game.slotPoint(index));
-      switch (event.type) {
-        case 'pick': {
-          const p = pointForSlot(event.slot);
-          this.view.neonPulses.push({ ...p, start: this.game.time, color: '#35e7ff', merge: false }); break;
-        }
-        case 'merge': {
-          const p = pointForSlot(event.to);
-          this.view.neonPulses.push({ ...p, start: this.game.time, color: event.level >= 3 ? '#ac6bff' : '#35e7ff', merge: true });
-          this.signal('Lv' + event.level + (event.level >= 3 ? ' · 火力进阶' : ' · 合成'),
-            this.view.w / 2, this.view.defY - 48, event.level >= 3 ? 'merge-high' : 'merge', event.level);
-          if (event.level >= 4) this.flash();
-          break;
-        }
-        case 'explode': {
-          const p = this.view.point({ x: event.x, y: event.y });
-          this.signal(event.level >= 4 ? '✦ 终极自爆！' : '轰！自爆', p.x, p.y - 26, 'blast', event.level);
-          if (event.level >= 3) this.flash();
-          break;
-        }
-        case 'slotLost': {
-          const p = pointForSlot(event.slot);
-          this.signal('防线破损！', p.x, p.y - 37, 'danger', 2); this.flash(true); break;
-        }
-        case 'slotAdded': {
-          const p = pointForSlot(event.slot);
-          this.signal('＋ 空槽恢复', p.x, p.y - 37, 'recover'); break;
-        }
-        case 'defenseHit':
-          break;
-        case 'boss':
-          this.signal('⚠ 巨兽来袭', center.x, center.y, 'boss', 3);
-          this.flash(true); break;
-        case 'phase':
-          this.signal('⚠ BOSS · 阶段 ' + event.phase, center.x, center.y, 'boss', 3);
-          this.flash(true); break;
-      }
-    }
+/* Presentation only: real game events, bounded notices, no simulation writes. */
+(function(root){
+ 'use strict';
+ const TD=root.TD;
+ const BLAST={gun:'弹幕自爆',fire:'火海自爆',ice:'冻结自爆',lightning:'雷电自爆',missile:'击退自爆',laser:'米字自爆'};
+ class QualityFX{
+  constructor(game,view){
+   this.game=game;this.view=view;view.neonPulses=[];view.defenseHitUntil=new Map();this.deadlines=new Map();this.full=false;this.noticeUntil=-Infinity;this.noticePriority=0;
+   this.root=document.createElement('div');this.root.className='quality-layer';this.root.setAttribute('aria-hidden','true');document.getElementById('playfield').appendChild(this.root);
+   this.notice=document.createElement('div');this.notice.className='battle-notice';this.notice.hidden=true;
+   this.notice.innerHTML='<canvas width="128" height="128"></canvas><div class="notice-copy"><small></small><b></b><span></span></div><div class="notice-stages"><i></i><i></i><i></i></div>';
+   this.root.appendChild(this.notice);
+   this.pool=Array.from({length:6},()=>{const n=document.createElement('div');n.className='quality-signal';n.dataset.active='0';this.root.appendChild(n);return n;});
   }
-  TD.QualityFX = QualityFX;
+  clear(){
+   this.view.neonPulses.length=0;this.view.defenseHitUntil.clear();this.deadlines.clear();this.notice.hidden=true;this.noticeUntil=-Infinity;this.noticePriority=0;this.full=false;
+   for(const n of this.pool){n.dataset.active='0';n.classList.remove('playing');}this.root.classList.remove('quality-flash','quality-flash-danger');
+  }
+  pulse(slot,color,merge=false){if(TD.presentationReducedMotion)return;const p=this.view.point(this.game.slotPoint(slot));this.view.neonPulses.push({...p,start:this.game.time,color,merge});if(this.view.neonPulses.length>12)this.view.neonPulses.shift();}
+  announce(kind,title,detail,priority=1,duration=1.6,phase=0){
+   if(this.game.time<this.noticeUntil&&priority<this.noticePriority)return;
+   this.notice.dataset.kind=kind;this.notice.dataset.phase=String(phase);this.notice.dataset.hasBoss=String(!!(this.game.boss?.hp>0));this.notice.querySelector('small').textContent=kind==='boss'?'威胁警报':kind==='phase-warning'?'装甲重构':kind==='phase'?'形态改变':kind==='damage'?'防线警报':'战术提示';
+   this.notice.querySelector('b').textContent=title;this.notice.querySelector('span').textContent=detail;
+   const cv=this.notice.querySelector('canvas'),c=cv.getContext('2d');c.clearRect(0,0,128,128);
+   if(phase&&TD.NeonArt?.enemy){c.save();c.translate(64,64);TD.NeonArt.enemy(c,{kind:'boss',phase},122);c.restore();}
+   this.notice.querySelectorAll('i').forEach((n,i)=>n.classList.toggle('lit',i<(phase||this.game.boss?.phase||0)));
+   this.noticeUntil=this.game.time+duration;this.noticePriority=priority;this.notice.hidden=false;
+  }
+  signal(message,kind,color){
+   const group=kind==='blast'?'blast':'merge';let node=this.pool.find(n=>n.dataset.group===group)||this.pool.find(n=>n.dataset.active!=='1')||this.pool[0];
+   node.classList.remove('playing');node.textContent=message;node.dataset.group=group;node.dataset.kind=kind;node.dataset.active='1';node.style.setProperty('--cue-color',color||'#65eaff');
+   node.style.left=(this.view.w*(group==='blast'?.73:.27))+'px';node.style.top=(this.view.defY-Math.max(34,this.view.w/9*.7))+'px';
+   this.deadlines.set(node,this.game.time+.72);void node.offsetWidth;node.classList.add('playing');
+  }
+  flash(danger=false){if(TD.presentationReducedMotion)return;this.root.classList.remove('quality-flash','quality-flash-danger');void this.root.offsetWidth;this.root.classList.add(danger?'quality-flash-danger':'quality-flash');}
+  update(){
+   const time=this.game.time;this.root.classList.toggle('feedback-paused',!!this.game.paused);
+   if(!this.notice.hidden&&time>=this.noticeUntil)this.notice.hidden=true;
+   if(this.game.boss)this.notice.style.setProperty('--boss-hp',Math.max(0,this.game.boss.hp/this.game.boss.maxHP*100)+'%');
+   for(const [node,until] of this.deadlines)if(time>=until){node.dataset.active='0';node.classList.remove('playing');this.deadlines.delete(node);}
+   for(const [slot,until] of this.view.defenseHitUntil)if(time>=until)this.view.defenseHitUntil.delete(slot);
+   if(TD.presentationReducedMotion)this.view.neonPulses.length=0;
+   const full=this.game.status==='playing'&&this.game.mode!=='tutorial'&&this.game.slots.some(s=>s.active)&&this.game.slots.every(s=>!s.active||s.item);
+   if(full&&!this.full&&!this.game.drag)this.announce('full','槽位已满','长按完整武器，向上拖动自爆腾位',1,1.7);
+   this.full=full;
+   if(!full&&this.notice.dataset.kind==='full')this.notice.hidden=true;
+   if(this.game.drag)this.notice.hidden=true;
+  }
+  onEvent(e){
+   switch(e.type){
+    case 'reset':this.clear();break;
+    case 'pick':this.pulse(e.slot,'#35e7ff');break;
+    case 'merge':this.pulse(e.to,e.level>=3?'#ac6bff':'#35e7ff',true);this.signal('Lv'+e.level+' · '+TD.weapon(e.kind).name+'升级',e.level>=3?'merge-high':'merge',TD.weapon(e.kind).color);break;
+    case 'explode':this.signal(BLAST[e.kind]+' · Lv'+e.level,'blast',TD.weapon(e.kind).color);break;
+    case 'defenseHit':this.view.defenseHitUntil.set(e.slot,this.game.time+.28);break;
+    case 'slotLost':this.announce('damage','第 '+(e.slot+1)+' 格底座被毁','敌人正转攻相邻底座 · 留意剩余防线',2,1.65);break;
+    case 'slotAdded':if(this.notice.dataset.kind==='damage'){this.notice.hidden=true;this.noticeUntil=-Infinity;}this.view.defenseHitUntil.delete(e.slot);this.pulse(e.slot,'#70f3c8',true);this.signal('空槽恢复','recover','#70f3c8');break;
+    case 'hint':if(e.text?.includes('槽位已满')&&(this.notice.dataset.kind!=='full'||this.game.time>=this.noticeUntil))this.announce('full','槽位已满','长按完整武器，向上拖动自爆腾位',1,1.7);break;
+    case 'boss':this.announce('boss','BOSS 来袭','攻城巨兽已进入战场',3,1.8,1);break;
+    case 'phaseWarning':this.announce('phase-warning','阶段转换','正在进入阶段 '+e.phase+' / 3',3,.8,this.game.boss?.phase||1);break;
+    case 'phase':this.announce('phase','阶段 '+e.phase+' / 3','巨兽形态已改变 · 战斗继续',3,1.5,e.phase);break;
+    case 'finish':this.clear();break;
+   }
+  }
+ }
+ TD.QualityFX=QualityFX;
 })(globalThis);
-
-
 
 
 /* Neon presentation: original simulation, hit tests and all nine slots stay authoritative. */
@@ -1475,7 +1449,7 @@ html[data-motion="reduced"] *,html[data-motion="reduced"] *:before,html[data-mot
     // Detached emitter/coil/crystal: omit the complete turret's lower chassis.
     c.drawImage(image,index%4*256+30,Math.floor(index/4)*256+8,196,172,x-size/2,y-size*.44,size,size*.88);
   }
-  TD.NeonArt = {get ready(){return ready;}, get weaponsReady(){return weaponsReady;}, get spriteCount(){return names.length+(weaponsReady?36:0);}, sprite, colors, moduleSprite, weapon(c,kind,level,x,y,size){if(!weaponsReady)return sprite(c,kind,x,y,size);const layer=turret(kind,level);c.drawImage(layer.head,x-size/2,y-size/2,size,size);}};
+  TD.NeonArt = {get ready(){return ready;}, get weaponsReady(){return weaponsReady;}, get spriteCount(){return names.length+(weaponsReady?36:0);}, sprite, enemy:enemySprite, colors, moduleSprite, weapon(c,kind,level,x,y,size){if(!weaponsReady)return sprite(c,kind,x,y,size);const layer=turret(kind,level);c.drawImage(layer.head,x-size/2,y-size/2,size,size);}};
   const oldIcon=P.icon, oldEnemies=P.enemies, oldBackground=P.paintBackground, oldPile=P.pile, oldSlots=P.slots;
   P.icon=function(kind,x,y,size,angle=-Math.PI/2,level=0,alpha=1,socketWidth=0){
     if(!ready)return oldIcon.call(this,kind,x,y,size,angle,level,alpha);
@@ -1578,10 +1552,11 @@ html[data-motion="reduced"] *,html[data-motion="reduced"] *:before,html[data-mot
   const oldEffects=P.effects;
   P.effects=function(){
     oldEffects.call(this);const c=this.ctx,time=this.game.time;c.save();c.globalCompositeOperation='lighter';
-    for(const e of this.game.effects){if(!['merge','cross','missileBlast','iceBlast'].includes(e.type))continue;const t=TD.clamp((time-e.start)/(e.end-e.start),0,1),p=this.point(e),r=(e.type==='cross'?60:32)*this.scaleX*(.4+t*2);c.globalAlpha=(1-t)*.5;c.lineWidth=2;c.strokeStyle=e.color;this.circle(p.x,p.y,r,e.color,true);}
+    if(!TD.presentationReducedMotion)for(const e of this.game.effects){if(!['merge','cross','missileBlast','iceBlast'].includes(e.type))continue;const t=TD.clamp((time-e.start)/(e.end-e.start),0,1),p=this.point(e),r=(e.type==='cross'?60:32)*this.scaleX*(.4+t*2);c.globalAlpha=(1-t)*.5;c.lineWidth=2;c.strokeStyle=e.color;this.circle(p.x,p.y,r,e.color,true);}
     const pulses=this.neonPulses||[];
     for(let i=pulses.length-1;i>=0;i--){const e=pulses[i],t=(time-e.start)/.45;if(t>=1){pulses.splice(i,1);continue;}c.globalAlpha=(1-t)*.8;c.lineWidth=e.merge?2:1;this.circle(e.x,e.y,8+t*(e.merge?23:14),e.color,true);}
     if(pulses.length>12)pulses.splice(0,pulses.length-12);
+    for(const [slot] of this.defenseHitUntil||[]){const x=(slot+.5)*this.w/9,s=this.w/9-5;c.globalAlpha=.8;c.lineWidth=2;c.strokeStyle='#ff6f9b';c.beginPath();c.moveTo(x-s*.4,this.defY+s*.6);c.lineTo(x+s*.4,this.defY+s*.6);c.stroke();}
     c.restore();
   };
   const flame=document.createElement('canvas');flame.width=32;flame.height=48;
@@ -1705,51 +1680,69 @@ html[data-motion="reduced"] *,html[data-motion="reduced"] *:before,html[data-mot
 })(globalThis);
 
 
-/* 有并发上限的合成音效；只在用户交互后解锁音频。 */
-(function (root) {
-  'use strict';
-  class AudioBank {
-    constructor() { this.enabled = true; this.context = null; this.active = 0; this.cooldowns = new Map(); }
-    unlock() {
-      if (!this.enabled) return;
-      try { this.context ||= new (root.AudioContext || root.webkitAudioContext)(); if (this.context.state === 'suspended') this.context.resume().catch(() => {}); } catch (_) {}
-    }
-    suspend() { if (this.context?.state === 'running') this.context.suspend().catch(() => {}); }
-    tone(f, seconds = .1, type = 'sine', volume = .035, end = f, delay = 0) {
-      if (!this.enabled || !this.context || this.context.state !== 'running' || this.active >= 12) return;
-      const c = this.context, t = c.currentTime + delay, o = c.createOscillator(), g = c.createGain();
-      o.type = type; o.frequency.setValueAtTime(f, t); o.frequency.exponentialRampToValueAtTime(Math.max(25, end), t + seconds);
-      g.gain.setValueAtTime(.001, t); g.gain.exponentialRampToValueAtTime(volume, t + .008); g.gain.exponentialRampToValueAtTime(.001, t + seconds);
-      o.connect(g); g.connect(c.destination); this.active++;
-      o.onended = () => { o.disconnect(); g.disconnect(); this.active--; };
-      o.start(t); o.stop(t + seconds + .01);
-    }
-    event(e) {
-      if (!this.enabled || !this.context) return;
-      const now = this.context.currentTime, key = e.type === 'shot' ? 'shot' : e.type;
-      const limit = e.type === 'shot' ? .12 : e.type === 'pick' ? .035 : .06;
-      if (now - (this.cooldowns.get(key) ?? -Infinity) < limit) return;
-      this.cooldowns.set(key, now);
-      if (e.type === 'pick') this.tone(620, .07, 'sine', .022, 850);
-      if (e.type === 'merge') {
-        const f = 330 * 2 ** (Math.min(e.level, 5) / 5);
-        this.tone(f, .16, 'triangle', .04); this.tone(f * 1.5, .19, 'sine', .026, f * 1.5, .055);
-        if (e.level >= 3) this.tone(f * 2, .28, 'sine', .022, f * 2, .11);
-      }
-      if (e.type === 'shot') {
-        const sounds = { gun: [170, .035, 'triangle', 95], fire: [150, .09, 'sine', 65], ice: [940, .06, 'sine', 540], lightning: [660, .045, 'triangle', 180], missile: [100, .1, 'triangle', 45], laser: [760, .055, 'sine', 340] };
-        const [f, s, type, end] = sounds[e.kind]; this.tone(f, s, type, .009, end);
-      }
-      if (e.type === 'blast') { this.tone(95, .3, 'triangle', .055, 28); this.tone(190, .12, 'sawtooth', .015, 45); }
-      if (e.type === 'slotLost' || e.type === 'defenseHit') this.tone(185, .18, 'triangle', .034, 65);
-      if (e.type === 'boss' || e.type === 'phase') { this.tone(110, .4, 'triangle', .04, 55); this.tone(165, .3, 'sine', .025, 82, .16); }
-      if (e.type === 'won') for (const [i, f] of [523, 659, 784, 1046].entries()) this.tone(f, .3, 'triangle', .03, f, i * .09);
-      if (e.type === 'lost') { this.tone(220, .35, 'triangle', .035, 110); this.tone(165, .4, 'sine', .025, 82, .15); }
-    }
+/* Bounded event audio; scheduled voices are cancelled on mute, pause and reset. */
+(function(root){
+ 'use strict';
+ class AudioBank{
+  constructor(context=null){this.enabled=true;this.context=context;this.voices=new Set();this.cooldowns=new Map();this.master=null;this.combat=null;this.cues=null;}
+  get active(){return this.voices.size;}
+  output(){
+   if(this.master)return;const c=this.context;
+   this.master=c.createGain();this.master.gain.value=.65;
+   this.combat=c.createGain();this.combat.gain.value=.65;this.cues=c.createGain();this.cues.gain.value=1;
+   const limiter=c.createDynamicsCompressor();limiter.threshold.value=-9;limiter.knee.value=12;limiter.ratio.value=6;limiter.attack.value=.003;limiter.release.value=.12;
+   this.combat.connect(this.master);this.cues.connect(this.master);this.master.connect(limiter);limiter.connect(c.destination);
   }
-  root.TD.AudioBank = AudioBank;
+  unlock(){if(!this.enabled)return;try{this.context ||= new(root.AudioContext||root.webkitAudioContext)();this.output();if(this.context.state==='suspended'&&!this.context.startRendering)this.context.resume().catch(()=>{});}catch(_){}}
+  reset(){for(const v of [...this.voices])this.stop(v);this.cooldowns.clear();if(this.combat){this.combat.gain.cancelScheduledValues(this.context.currentTime);this.combat.gain.setValueAtTime(.65,this.context.currentTime);}}
+  suspend(){this.reset();if(this.context?.state==='running')this.context.suspend().catch(()=>{});}
+  stop(v){if(!this.voices.delete(v))return;try{v.o.stop();}catch(_){}v.o.disconnect();v.g.disconnect();}
+  tone(f,seconds=.1,type='sine',volume=.035,end=f,delay=0,priority=1){
+   const c=this.context;if(!this.enabled||!c||!(c.state==='running'||c.startRendering))return;
+   if(this.active>=12){const disposable=[...this.voices].find(v=>v.priority<priority);if(!disposable)return;this.stop(disposable);}
+   this.output();const t=c.currentTime+delay,o=c.createOscillator(),g=c.createGain(),v={o,g,priority};
+   o.type=type;o.frequency.setValueAtTime(Math.max(25,f),t);o.frequency.exponentialRampToValueAtTime(Math.max(25,end),t+seconds);
+   g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(Math.max(.0002,Math.min(.055,volume)),t+Math.min(.008,seconds/3));g.gain.exponentialRampToValueAtTime(.0001,t+seconds);
+   o.connect(g);g.connect(priority===0?this.combat:this.cues);this.voices.add(v);o.onended=()=>this.stop(v);o.start(t);o.stop(t+seconds+.01);
+  }
+  duck(){if(!this.combat)return;const t=this.context.currentTime;this.combat.gain.cancelScheduledValues(t);this.combat.gain.setValueAtTime(.2,t);this.combat.gain.linearRampToValueAtTime(.65,t+.45);}
+  event(e){
+   if(!this.enabled||!this.context)return;
+   if(e.type==='finish'){this.reset();return;}
+   if(e.type==='blast')return; // The richer explode event is the single audible trigger.
+   const now=this.context.currentTime,key=e.type==='shot'?'shot':e.type,limit=e.type==='shot'?.12:e.type==='defenseHit'?.28:e.type==='pick'?.035:.08;
+   if(now-(this.cooldowns.get(key)??-Infinity)<limit)return;this.cooldowns.set(key,now);
+   const play=(f,s,type,v,end=f,delay=0)=>this.tone(f,s,type,v,end,delay,e.type==='shot'?0:2);
+   if(['explode','boss','phaseWarning','phase','slotLost','won','lost'].includes(e.type))this.duck();
+   if(e.type==='pick')play(620,.065,'sine',.018,850);
+   if(e.type==='merge'){
+    const f=330*2**(Math.min(e.level,5)/5);play(f,.14,'triangle',.029);play(f*1.5,.18,'sine',.023,f*1.5,.045);
+    if(e.level>=3)play(f*2,.23,'sine',.019,f*2,.09);if(e.level===5)play(f*2.5,.29,'sine',.017,f*2.5,.15);
+   }
+   if(e.type==='shot'){
+    const sounds={gun:[170,.035,'triangle',95],fire:[150,.09,'sine',65],ice:[940,.06,'sine',540],lightning:[660,.045,'triangle',180],missile:[100,.1,'triangle',45],laser:[760,.055,'sine',340]};
+    const s=sounds[e.kind];if(s)play(s[0],s[1],s[2],.009,s[3]);
+   }
+   if(e.type==='explode'){
+    if(e.kind==='gun')for(let i=0;i<4;i++)play(240-i*25,.055,'triangle',.027,90,i*.055);
+    if(e.kind==='fire'){play(95,.38,'triangle',.038,38);play(185,.22,'sine',.022,62,.07);}
+    if(e.kind==='ice')for(const [i,f] of [1175,1568,2093].entries())play(f,.22,'sine',.022,f*.92,i*.055);
+    if(e.kind==='lightning')for(const [i,f] of [780,280,1040,160].entries())play(f,.07,'triangle',.027,f*.55,i*.045);
+    if(e.kind==='missile'){play(170,.2,'sine',.026,40);play(70,.28,'triangle',.043,28,.12);play(140,.13,'sine',.023,45,.18);}
+    if(e.kind==='laser'){play(1350,.34,'sine',.03,140);play(680,.24,'triangle',.018,80,.04);}
+   }
+   if(e.type==='defenseHit')play(165,.09,'triangle',.022,95);
+   if(e.type==='slotLost'){play(170,.2,'triangle',.033,55);play(95,.2,'sine',.025,40,.1);}
+   if(e.type==='slotAdded'){play(440,.15,'sine',.025,660);play(880,.2,'sine',.02,880,.08);}
+   if(e.type==='boss')for(let i=0;i<3;i++)play(i===2?165:110,.2,'triangle',.031,i===2?82:70,i*.16);
+   if(e.type==='phaseWarning'){play(330,.1,'triangle',.028,440);play(440,.1,'triangle',.028,587,.15);}
+   if(e.type==='phase'){play(440,.14,'sine',.026,660);play(660,.18,'triangle',.025,880,.08);}
+   if(e.type==='won')for(const [i,f] of [523,659,784,1046].entries())play(f,.27,'triangle',.026,f,i*.09);
+   if(e.type==='lost'){play(220,.32,'triangle',.03,110);play(165,.38,'sine',.023,82,.15);}
+  }
+ }
+ root.TD.AudioBank=AudioBank;
 })(globalThis);
-
 
 
 (function () {
@@ -1780,7 +1773,7 @@ html[data-motion="reduced"] *,html[data-motion="reduced"] *:before,html[data-mot
     cancelPress(); clearTransient(); adRequest = null; resultShown = false; tutorial = mode === 'tutorial' ? { step: 0, shots: 0, spawned: false } : null;
     const fixedSeed = debug && params.has('seed') ? Number(params.get('seed')) >>> 0 : null;
     const seed = fixedSeed ?? (C.seed + (mode === 'trial' ? trialNumber++ : 0));
-    game.reset(seed, mode); game.start(); clock.reset(); perf.reset(); last = performance.now(); audio.unlock(); overlay(null); sync();
+    game.reset(seed, mode); game.start(); clock.reset(); perf.reset(); last = performance.now(); audio.reset(); audio.unlock(); overlay(null); sync();
     audio.tone(330, .13, 'triangle', .035, 660);
   }
   function startFromHome() { start(storage.get('tutorial.v2') ? 'trial' : 'tutorial'); }
@@ -1800,10 +1793,8 @@ html[data-motion="reduced"] *,html[data-motion="reduced"] *:before,html[data-mot
   }
   game.onEvent = e => {
     fx.onEvent(e); audio.event(e);
-    if (e.type === 'hint') { toast(e.text); if (e.blockers?.length) view.blockedHint = { ids: e.blockers, until: performance.now() + 850 }; }
+    if (e.type === 'hint') { if (!e.text.includes('槽位已满')) toast(e.text); if (e.blockers?.length) view.blockedHint = { ids: e.blockers, until: performance.now() + 850 }; }
     if (e.type === 'shot' && tutorial) tutorial.shots++;
-    if (e.type === 'slotLost') toast(`第 ${e.slot + 1} 格防线被摧毁，敌人将转攻相邻底座`);
-    if (e.type === 'slotAdded') toast(`第 ${e.slot + 1} 格空槽已补充`);
   };
   function sync() {
     const active = game.slots.filter(s => s.active), remaining = game.pile.filter(p => !p.removed).length, boss = game.boss;
@@ -1896,6 +1887,7 @@ html[data-motion="reduced"] *,html[data-motion="reduced"] *:before,html[data-mot
     let logicMs = 0, hudMs = 0, drawMs = 0;
     const running = !testMode && game.status === 'playing' && !game.paused && !document.hidden;
     if (running) { const t = performance.now(); clock.advance(elapsed, game.drag ? C.dragSpeed : 1, () => game.step(), () => game.status === 'playing' && !game.paused); logicMs = performance.now() - t; } else clock.accumulator = 0;
+    fx.update();
     if (now - hudAt >= 100) { const t = performance.now(); sync(); hudMs = performance.now() - t; hudAt = now; }
     if (!document.hidden && (running || press || now - drawAt >= 150)) { const t = performance.now(); view.draw(now); drawMs = performance.now() - t; drawAt = now; }
     if (running) perf.sample(elapsed * 1000, logicMs, drawMs, hudMs, performance.now() - started, performance.now());
@@ -1903,7 +1895,7 @@ html[data-motion="reduced"] *,html[data-motion="reduced"] *:before,html[data-mot
     requestAnimationFrame(frame);
   }
   soundButton(); updateRecord(); sync(); requestAnimationFrame(frame);
-  if (debug) { hidden('perf', false); globalThis.__TD = { game, view, start, snapshot: () => game.snapshot(), step(seconds) { for (let i = 0; i < Math.round(seconds / C.step); i++) game.step(); sync(); view.draw(performance.now()); return game.snapshot(); }, render() { sync(); view.draw(performance.now()); }, exportLog: () => ({ seed: game.seed, ...game.snapshot(), events: game.log }), metrics: () => ({ ...perf.report(), clampedSeconds: clock.clampedSeconds }), tutorial: () => tutorial && { ...tutorial } }; }
+  if (debug) { hidden('perf', false); globalThis.__TD = { game, view, start, snapshot: () => game.snapshot(), audioState: () => ({enabled:audio.enabled,active:audio.active,state:audio.context?.state||'locked'}), step(seconds) { for (let i = 0; i < Math.round(seconds / C.step); i++) game.step(); sync(); view.draw(performance.now()); return game.snapshot(); }, render() { sync(); view.draw(performance.now()); }, exportLog: () => ({ seed: game.seed, ...game.snapshot(), events: game.log }), metrics: () => ({ ...perf.report(), clampedSeconds: clock.clampedSeconds }), tutorial: () => tutorial && { ...tutorial } }; }
 })();
 
 
