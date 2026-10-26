@@ -1,1 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120"><defs><linearGradient id="m" x2="1" y2="1"><stop stop-color="#6d83a6"/><stop offset=".2" stop-color="#17283f"/><stop offset=".5" stop-color="#273f61"/><stop offset=".8" stop-color="#080f20"/><stop offset="1" stop-color="#536b91"/></linearGradient></defs><path d="M23 1H97L119 23V97L97 119H23L1 97V23Z" fill="url(#m)" stroke="#020611" stroke-width="2"/><path d="M25 7H95L113 25V95L95 113H25L7 95V25Z" fill="#07152a" stroke="#426c9f" stroke-width="3"/><path d="M27 13H93L107 27V93L93 107H27L13 93V27Z" fill="#0b172b" stroke="#57dfff" stroke-width="1.5"/><path d="M20 15L9 26V45M100 15L111 26V45M9 75V94L20 105M111 75V94L100 105" fill="none" stroke="#12c8ff" stroke-width="3"/><path d="M30 4H45M75 4H90M30 116H45M75 116H90" stroke="#aa60ff" stroke-width="3"/><path d="M25 7L13 19M95 7L107 19M13 101L25 113M107 101L95 113" stroke="#b5dcff"/><path d="M3 52V68M117 52V68" stroke="#f13688" stroke-width="2"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+ <defs>
+  <linearGradient id="armor" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#8aa2c0"/><stop offset=".08" stop-color="#334b6c"/><stop offset=".3" stop-color="#0e192c"/><stop offset=".52" stop-color="#3f5478"/><stop offset=".65" stop-color="#17283d"/><stop offset=".9" stop-color="#071020"/><stop offset="1" stop-color="#6c8caf"/></linearGradient>
+  <linearGradient id="steel" x2="0" y2="1"><stop stop-color="#426386"/><stop offset=".3" stop-color="#12253c"/><stop offset=".7" stop-color="#0a1323"/><stop offset="1" stop-color="#284464"/></linearGradient>
+ </defs>
+ <path d="M24 1H96L119 24V96L96 119H24L1 96V24Z" fill="url(#armor)" stroke="#020611" stroke-width="2"/>
+ <path d="M25 5H95L115 25V95L95 115H25L5 95V25Z" fill="url(#steel)" stroke="#557296"/>
+ <path d="M27 11H93L109 27V93L93 109H27L11 93V27Z" fill="#061224" stroke="#020a16" stroke-width="3"/>
+ <path d="M28 14H92L106 28V92L92 106H28L14 92V28Z" fill="#061224" stroke="#3983ab"/>
+ <path d="M29 17H91L103 29V91L91 103H29L17 91V29Z" fill="#061224" stroke="#153957"/>
+ <path d="M20 14 9 25V43M100 14l11 11v18M9 77v18l11 11M111 77v18l-11 11" fill="none" stroke="#13b5e8" stroke-width="4"/>
+ <path d="M20 14 9 25V43M100 14l11 11v18M9 77v18l11 11M111 77v18l-11 11" fill="none" stroke="#a1f5ff" stroke-width="1.1"/>
+ <path d="M27 5H43M77 5H93M27 115H43M77 115H93" stroke="#8958e8" stroke-width="4"/>
+ <path d="M27 5H43M77 5H93M27 115H43M77 115H93" stroke="#dcbaff"/>
+ <path d="M47 4h26l-4 4H51ZM47 116h26l-4-4H51Z" fill="#071023" stroke="#42668b"/>
+ <path d="M53 5h14M53 115h14" stroke="#41c9ff" stroke-width="1.5"/>
+ <path d="M3 48v24M117 48v24" stroke="#100d25" stroke-width="4"/>
+ <path d="M3 51v18M117 51v18" stroke="#f23891" stroke-width="2"/>
+ <path d="M3 54v12M117 54v12" stroke="#ffd1eb" stroke-width=".7"/>
+ <path d="M25 8 14 19M95 8l11 11M14 101l11 11M106 101l-11 11" stroke="#c4dcf3"/>
+ <path d="M3 30v13M117 30v13M3 77v13M117 77v13" stroke="#6384a3"/>
+ <g fill="#15253c" stroke="#8198b2" stroke-width=".6"><circle cx="23" cy="10" r="1.3"/><circle cx="97" cy="10" r="1.3"/><circle cx="23" cy="110" r="1.3"/><circle cx="97" cy="110" r="1.3"/></g>
+</svg>
