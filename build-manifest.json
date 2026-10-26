@@ -1,7 +1,7 @@
 {
   "index.html": {
-    "bytes": 221957,
-    "sha256": "40fd8b98121af1c841a1bed9b4839574e27a50cea8bc16116e9bed63b890b063"
+    "bytes": 233001,
+    "sha256": "d679374b8b02436482798d18997f08d98291e7b0f43b6f7b48584a9de26472aa"
   },
   "assets/neon-sprites.webp": {
     "bytes": 396470,
@@ -30,5 +30,61 @@
   "assets/ui-crest.svg": {
     "bytes": 2230,
     "sha256": "dce85d6549ae01d306d6cacd9865511084bcc935f633eecd2418affcce429d89"
+  },
+  "assets/ui-raster-home-scene.webp": {
+    "bytes": 568714,
+    "sha256": "777114760911f67e0c7cedb89dcba975672b19453981518da6a5b61799761325"
+  },
+  "assets/ui-raster-title-logo.webp": {
+    "bytes": 148494,
+    "sha256": "557e1ddfa40da1436666860efa8c6887a3ff40b995fd5f5359617b71b581618e"
+  },
+  "assets/ui-raster-button-primary.webp": {
+    "bytes": 73414,
+    "sha256": "d6bed212fdcd03b459270ee5a675700abfbccf60bac3db4993c2f911bd59c18f"
+  },
+  "assets/ui-raster-button-danger.webp": {
+    "bytes": 54774,
+    "sha256": "bc95b833904ae52c2c211367bf1ea6e22cbdb6b38e12ca2c709eb7faa82f633b"
+  },
+  "assets/ui-raster-panel-frame.webp": {
+    "bytes": 135372,
+    "sha256": "e5275c814e1d5940a090b3e63495e583df876d859289591a73f33db2cce122bb"
+  },
+  "assets/ui-raster-merge-frame.webp": {
+    "bytes": 54888,
+    "sha256": "2ccdd5acddf6d51b3439e2347877d745d8cb54816f909605208dff90de3255d2"
+  },
+  "assets/ui-raster-button-small.webp": {
+    "bytes": 43936,
+    "sha256": "409dcb2383e00653231666c052eaca2ceea736491575cd9f4a601d1d60733e49"
+  },
+  "assets/ui-raster-panel-heading.webp": {
+    "bytes": 80414,
+    "sha256": "d6597e3dbec7de4376c4c1aca81b90d17efd0312fc28ba79a74272e96b6ba603"
+  },
+  "assets/ui-raster-icon-frame.webp": {
+    "bytes": 15542,
+    "sha256": "b33bc20e889f6298b145dec45183c2606fa8fe8b24160bb289b182d5f32bea22"
+  },
+  "assets/ui-raster-defense-base.webp": {
+    "bytes": 22174,
+    "sha256": "cde08e7034ab5c3a3b464f7f3f21a735d38058385f22f5553212b65edec91cf0"
+  },
+  "assets/ui-raster-component-card.webp": {
+    "bytes": 20334,
+    "sha256": "0fa79d3342a855159fb62dbf39a3513faa32f19b0a12d6fd7a9dbeab4b1dce6e"
+  },
+  "assets/ui-raster-victory-badge.webp": {
+    "bytes": 150186,
+    "sha256": "0daa43e8a77a39b7110a87dd37e50aaaedad01425b87298937a36b4101994f46"
+  },
+  "assets/ui-raster-defeat-badge.webp": {
+    "bytes": 140752,
+    "sha256": "a4d7dc61cc0a7b99e7e841630fb280af74429f14f0e60460c63b5e61d1f27c55"
+  },
+  "assets/ui-raster-alert-frame.webp": {
+    "bytes": 78086,
+    "sha256": "fd5c5c3f170e1dbde304798942c6a0d3844408cce0658ba647e686a7c6ec1f00"
   }
 }
