@@ -1,0 +1,34 @@
+{
+  "index.html": {
+    "bytes": 190937,
+    "sha256": "d33f6e55d76b89e366af5c2a424640df81cfb8bfe8b8317bfa83d7047f945890"
+  },
+  "assets/neon-sprites.webp": {
+    "bytes": 396470,
+    "sha256": "3df11f89a14d7184473f0c311df88fa795fd1dc6e3caabb729b932e249f052f9"
+  },
+  "assets/neon-home-scene.webp": {
+    "bytes": 476740,
+    "sha256": "7ac104a733e7ada9cfcf53598d1ee9a9525f5e4d47731c2d7828da5845d75ed3"
+  },
+  "assets/neon-battlefield.webp": {
+    "bytes": 364782,
+    "sha256": "be7f05bb93cdbfafc66399424ee8e685e94e3dc45cda82583cb422a363c1dc73"
+  },
+  "assets/neon-weapons.webp": {
+    "bytes": 697286,
+    "sha256": "1f731c51bafc9029c54a37bfff934068a8e2369accd2adad14f1224da6e2f466"
+  },
+  "assets/neon-enemies.webp": {
+    "bytes": 490608,
+    "sha256": "06170f87276b3ff7a1c332ee4989fa47820a7c9d1370f02b4f9016159f2c6afb"
+  },
+  "assets/ui-panel.svg": {
+    "bytes": 995,
+    "sha256": "bdbdbb3e78de16cb6e29ed63959e41edc84c8ff176ec2091214ba72cd2019d3e"
+  },
+  "assets/ui-crest.svg": {
+    "bytes": 736,
+    "sha256": "35c5a9db2cbeb9af89a5c0089898c2be869370a7472ea34630d81691150cd4ec"
+  }
+}
