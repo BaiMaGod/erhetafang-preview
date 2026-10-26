@@ -1,7 +1,7 @@
 {
   "index.html": {
-    "bytes": 212242,
-    "sha256": "42944a41484c0412ea2f7749c8298228067bc7baeb52a7e8f4eaaf9053222ed9"
+    "bytes": 221957,
+    "sha256": "40fd8b98121af1c841a1bed9b4839574e27a50cea8bc16116e9bed63b890b063"
   },
   "assets/neon-sprites.webp": {
     "bytes": 396470,
@@ -24,11 +24,11 @@
     "sha256": "06170f87276b3ff7a1c332ee4989fa47820a7c9d1370f02b4f9016159f2c6afb"
   },
   "assets/ui-panel.svg": {
-    "bytes": 2213,
-    "sha256": "d2e3d1e47381cdc625f8346f35fe1a6205a70c5b21651c4e5e9067490987ac80"
+    "bytes": 2927,
+    "sha256": "71d85a7126bc386ce5f7c9630b29b6dcf47efe1496576b12fe230ab407ab9bdb"
   },
   "assets/ui-crest.svg": {
-    "bytes": 736,
-    "sha256": "35c5a9db2cbeb9af89a5c0089898c2be869370a7472ea34630d81691150cd4ec"
+    "bytes": 2230,
+    "sha256": "dce85d6549ae01d306d6cacd9865511084bcc935f633eecd2418affcce429d89"
   }
 }
