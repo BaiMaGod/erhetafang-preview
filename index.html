@@ -470,6 +470,62 @@ html[data-motion='reduced'] .battle-notice.notice-enter,html[data-motion='reduce
  .battle-notice:is([data-kind='boss'],[data-kind='phase'],[data-kind='phase-warning']) .notice-copy b{font-size:27px}
  .battle-notice:is([data-kind='boss'],[data-kind='phase'],[data-kind='phase-warning']) .notice-copy span{font-size:8px}
 }
+
+/* V1.12: individual generated art, calm panel surfaces, no simulation changes. */
+#menu .title-lockup{width:84%;margin-top:39px}
+#menu #start{width:81%;max-height:66px;background-image:url('assets/ui-raster-button-clean.webp');background-size:contain;background-position:center;font-size:27px;letter-spacing:2px}
+#menu .home-merge{margin-inline:9px;flex-basis:12.5%;max-height:103px}
+#menu .menu-content>#learn-home{width:46%;background-image:none;border:1px solid #386185!important;border-radius:4px!important;min-height:34px}
+
+.dialog{max-width:294px;border:15px solid transparent;border-image:url('assets/ui-raster-panel-frame-slim.webp') 85 fill stretch;border-image-width:15px;padding:3px 8px 10px;background:none;box-shadow:0 12px 30px #0009}
+.dialog .panel-heading{height:64px;padding:28px 4px 2px;margin:-4px -3px 6px;background:none}
+.dialog .panel-symbol{top:0;width:31px!important;height:29px!important;background:url('assets/ui-raster-icon-frame.webp') center/contain no-repeat!important;filter:none!important;display:flex;justify-content:center;align-items:center}
+.dialog .panel-symbol svg{width:19px!important;height:19px!important}
+.dialog .panel-heading h1,#pause-screen .panel-heading h1{font-size:26px;line-height:1.1;margin:7px 0 0;letter-spacing:2px;text-shadow:0 2px #16508d,0 0 7px #21c6ff55}
+.session-summary{border:0;box-shadow:none;background:#031022aa;padding:3px 5px;margin-bottom:6px}
+.session-summary>div{padding:5px 2px}.session-summary span{font-size:10px}.session-summary b{font-size:14px}
+.dialog .primary,.dialog .secondary{height:50px;min-height:46px;margin-top:4px;background-image:url('assets/ui-raster-button-clean.webp');background-size:100% 100%;font-size:16px}
+.dialog .secondary{filter:hue-rotate(145deg);color:#fff;text-shadow:0 0 5px #35dfff,0 1px 2px #031123!important}
+.pause-tools{display:flex;gap:7px;margin-top:7px}
+.pause-tools button,.pause-tools #quit-pause{flex:1;min-height:35px!important;height:35px!important;background-image:url('assets/ui-raster-button-clean.webp');padding:4px 9px!important;font-size:12px!important}
+.pause-tools #quit-pause{filter:hue-rotate(145deg)}
+.pause-help{display:flex;justify-content:space-between;gap:8px;margin-top:5px}
+.pause-help button{flex:1;background:none;border:0;box-shadow:none;color:#a8c4d7;min-height:30px;padding:4px 0;font-size:10px;margin:0!important;text-decoration:none}
+.dialog p.subtle{font-size:8px;margin-top:3px;color:#6f8ca4}
+.settings-row{background:#061528bd;border-color:#29435c}.settings-row input{min-height:22px}
+.confirm-actions button.primary,.confirm-actions button.secondary{background-image:url('assets/ui-raster-button-clean.webp');font-size:12px!important}
+.confirm-actions button.secondary{filter:hue-rotate(145deg);color:#fff}
+.guide-dialog{max-width:398px}.guide-dialog .panel-heading{background:#071225f5;height:58px;top:-3px;margin-top:0;padding-top:13px;border-bottom:1px solid #26475c}
+.guide-dialog .panel-heading h1{margin-top:6px}.guide-dialog .panel-symbol{display:none}
+.result-dialog .panel-heading{height:1px;padding:0}
+
+.battle-notice .boss-identity{display:none}
+.battle-notice:is([data-kind='boss'],[data-kind='phase'],[data-kind='phase-warning']){left:7px;right:7px;top:54px;grid-template-rows:minmax(0,1fr) 58px 25px 5px;padding-bottom:5px;gap:0;background:none}
+.battle-notice:is([data-kind='boss'],[data-kind='phase'],[data-kind='phase-warning']) .notice-portrait{background:linear-gradient(180deg,#110a2644,#17081988),url('assets/ui-raster-home-scene.webp') center 36%/cover;overflow:hidden}
+.battle-notice:is([data-kind='boss'],[data-kind='phase'],[data-kind='phase-warning']) canvas{width:100%;height:100%;max-width:100%;aspect-ratio:auto;object-fit:contain;filter:drop-shadow(0 0 6px #ff275177)}
+.battle-notice:is([data-kind='boss'],[data-kind='phase'],[data-kind='phase-warning']) .notice-copy{border:0;padding:7px 50px 5px;background:url('assets/ui-raster-alert-banner.webp') center/100% 100% no-repeat;gap:0}
+.battle-notice:is([data-kind='boss'],[data-kind='phase'],[data-kind='phase-warning']) .notice-copy b{font-size:clamp(25px,8.7vw,36px);letter-spacing:0;line-height:1.05;font-weight:1000;color:#fff2f4;text-shadow:0 2px #8c1d36,0 0 6px #ff275b}
+.battle-notice:is([data-kind='boss'],[data-kind='phase'],[data-kind='phase-warning']) .notice-copy span{display:none}
+.battle-notice:is([data-kind='boss'],[data-kind='phase'],[data-kind='phase-warning']) .boss-identity{display:flex;align-items:center;justify-content:center;gap:8px;margin:0 30px;background:#180b1de8;border-inline:1px solid #bd285c66;font-size:11px;font-weight:800;color:#fff0f7}
+.boss-identity em{font-size:8px;color:#efa2bd;font-style:normal;font-weight:500;border-left:1px solid #8a255e;padding-left:8px}
+.battle-notice:is([data-kind='boss'],[data-kind='phase'],[data-kind='phase-warning']) .notice-stages{margin:0 30px;padding:0;height:4px;align-self:end}
+.battle-notice[data-kind='phase-warning'] .notice-copy b{font-size:30px}
+@media(max-height:700px){
+ #menu .title-lockup{margin-top:20px;width:84%}#menu #start{height:49px;min-height:49px;font-size:23px}#menu .home-merge{min-height:68px}
+ .dialog{max-width:280px;border-width:13px;border-image-width:13px;padding:2px 7px 7px}
+ .dialog .panel-heading{height:57px;padding-top:25px}.dialog .panel-symbol{width:28px!important;height:26px!important}
+ .dialog .panel-heading h1,#pause-screen .panel-heading h1{font-size:23px;margin-top:6px}
+ .dialog .primary,.dialog .secondary{height:45px;min-height:43px;font-size:15px}
+ .session-summary>div{padding:4px 1px}.session-summary span{font-size:9px}.session-summary b{font-size:13px}
+ .pause-tools button,.pause-tools #quit-pause{height:34px!important;min-height:34px!important;font-size:11px!important}
+ .pause-help button{min-height:29px;font-size:9px}.dialog p.subtle{font-size:7px}
+ .battle-notice:is([data-kind='boss'],[data-kind='phase'],[data-kind='phase-warning']){grid-template-rows:minmax(0,1fr) 44px 18px 4px}
+ .battle-notice:is([data-kind='boss'],[data-kind='phase'],[data-kind='phase-warning']) .notice-copy{padding:6px 42px 4px}
+ .battle-notice:is([data-kind='boss'],[data-kind='phase'],[data-kind='phase-warning']) .notice-copy b{font-size:25px}
+ .battle-notice:is([data-kind='boss'],[data-kind='phase'],[data-kind='phase-warning']) .notice-copy span{font-size:6px}
+ .battle-notice:is([data-kind='boss'],[data-kind='phase'],[data-kind='phase-warning']) .boss-identity{font-size:9px}
+ .boss-identity em{font-size:7px}
+}
 </style>
 </head>
 <body>
@@ -505,7 +561,7 @@ html[data-motion='reduced'] .battle-notice.notice-enter,html[data-motion='reduce
           <button class="primary" id="start">开始战斗 <span>↗</span></button>
           <button class="text-button" id="learn-home">操作教学</button><p class="menu-foot" id="best-record">六种武器 · 九格防线 · 三阶段 Boss</p>
         </div>
-        <span class="build-label">V1.11.0 · 霓虹机械防线</span>
+        <span class="build-label">V1.12.0 · 霓虹机械防线</span>
       </div>
       <div class="screen-overlay hidden" id="pause-screen">
         <div class="dialog"><span class="eyebrow">TIME OUT</span><h1>战斗暂停</h1><p>一口气，再继续。</p><button id="resume" class="primary">继续战斗 <span>↗</span></button><button id="restart-pause" class="secondary">重新开始</button><button id="guide" class="text-button">查看六种武器</button><button id="learn-pause" class="text-button">重看操作教学</button><p class="subtle">切换窗口时会自动暂停</p></div>
@@ -1543,7 +1599,7 @@ html[data-motion='reduced'] .battle-notice.notice-enter,html[data-motion='reduce
    this.game=game;this.view=view;view.neonPulses=[];view.defenseHitUntil=new Map();this.deadlines=new Map();this.full=false;this.noticeUntil=-Infinity;this.noticePriority=0;
    this.root=document.createElement('div');this.root.className='quality-layer';this.root.setAttribute('aria-hidden','true');document.getElementById('playfield').appendChild(this.root);
    this.notice=document.createElement('div');this.notice.className='battle-notice';this.notice.hidden=true;
-   this.notice.innerHTML='<div class="notice-portrait"><canvas width="384" height="384"></canvas></div><div class="notice-copy"><small></small><b></b><span></span></div><div class="notice-stages"><i></i><i></i><i></i></div>';
+   this.notice.innerHTML='<div class="notice-portrait"><canvas width="768" height="600"></canvas></div><div class="notice-copy"><small></small><b></b><span></span></div><div class="boss-identity" aria-hidden="true">攻城巨兽 <em>三阶段变形</em></div><div class="notice-stages"><i></i><i></i><i></i></div>';
    this.root.appendChild(this.notice);
    this.pool=Array.from({length:6},()=>{const n=document.createElement('div');n.className='quality-signal';n.dataset.active='0';this.root.appendChild(n);return n;});
   }
@@ -1556,8 +1612,8 @@ html[data-motion='reduced'] .battle-notice.notice-enter,html[data-motion='reduce
    if(this.game.time<this.noticeUntil&&priority<this.noticePriority)return;
    this.notice.dataset.kind=kind;this.notice.dataset.phase=String(phase);this.notice.dataset.hasBoss=String(!!(this.game.boss?.hp>0));this.notice.querySelector('small').textContent=kind==='boss'?'威胁警报':kind==='phase-warning'?'装甲重构':kind==='phase'?'形态改变':kind==='damage'?'防线警报':'战术提示';
    this.notice.querySelector('b').textContent=title;this.notice.querySelector('span').textContent=detail;
-   const cv=this.notice.querySelector('canvas'),c=cv.getContext('2d');c.clearRect(0,0,384,384);
-   if(phase&&TD.NeonArt?.enemy){c.save();c.translate(192,192);TD.NeonArt.enemy(c,{kind:'boss',phase},370);c.restore();}
+   const cv=this.notice.querySelector('canvas'),c=cv.getContext('2d');c.clearRect(0,0,768,600);
+   if(phase&&TD.NeonArt?.enemy){c.save();c.translate(384,300);TD.NeonArt.enemy(c,{kind:'boss',phase},750);c.restore();}
    this.notice.querySelectorAll('i').forEach((n,i)=>n.classList.toggle('lit',i<(phase||this.game.boss?.phase||0)));
    this.noticeUntil=this.game.time+duration;this.noticePriority=priority;this.notice.hidden=false;
    this.layoutNotice();this.notice.classList.remove('notice-enter');void this.notice.offsetWidth;this.notice.classList.add('notice-enter');
@@ -1567,7 +1623,7 @@ html[data-motion='reduced'] .battle-notice.notice-enter,html[data-motion='reduce
    // Recompute only on a viewport change, never on every animation frame.
    const key=this.view.w+':'+this.view.defY;
    if(key===this.noticeLayout)return;this.noticeLayout=key;
-   const height=Math.max(96,Math.min(248,this.view.defY-82));
+   const height=Math.max(96,Math.min(350,this.view.defY-82));
    this.notice.style.setProperty('--cinema-height',height+'px');
   }
   signal(message,kind,color){
@@ -1628,6 +1684,11 @@ html[data-motion='reduced'] .battle-notice.notice-enter,html[data-motion='reduce
     c.drawImage(image, index%4*256, Math.floor(index/4)*256,256,256,-size/2,-size/2,size,size); c.restore(); return true;
   }
   function enemySprite(c,e,size,alpha=1){
+    if(e.kind==='boss'&&TD.RasterArt?.ready){
+      const image=TD.RasterArt.images[e.phase===3?'boss-phase3':e.phase===2?'boss-phase2':'boss-arrival'];
+      const w=size*.96,h=w*image.naturalHeight/image.naturalWidth;
+      c.save();c.globalAlpha*=alpha;c.drawImage(image,-w/2,-h/2,w,h);c.restore();return;
+    }
     if(!enemiesReady)return sprite(c,e.kind,0,0,size,0,alpha);
     const index=e.kind==='boss'?6+Math.max(0,Math.min(2,(e.phase||1)-1)):['normal','fast','swarm','armor','charge','giant'].indexOf(e.kind);
     if(index<0)return sprite(c,e.kind,0,0,size,0,alpha);
@@ -1832,7 +1893,7 @@ html[data-motion='reduced'] .battle-notice.notice-enter,html[data-motion='reduce
 
 /* Independently generated production raster assets; presentation has no simulation writes. */
 (function(root){
- 'use strict';const TD=root.TD,images={},keys=['home-scene','title-logo','button-primary','button-danger','panel-frame','merge-frame','button-small','panel-heading','icon-frame','defense-base','component-card','victory-badge','defeat-badge','alert-frame'];
+ 'use strict';const TD=root.TD,images={},keys=['home-scene','title-logo','button-primary','button-danger','panel-frame','merge-frame','button-small','panel-heading','icon-frame','defense-base','component-card','victory-badge','defeat-badge','alert-frame','boss-arrival','boss-phase2','boss-phase3','alert-banner','panel-frame-slim','button-clean'];
  let count=0;
  for(const key of keys){const img=images[key]=new Image();img.onload=()=>{if(++count===keys.length){root.dispatchEvent(new Event('raster-art-ready'));root.dispatchEvent(new Event('neon-art-ready'));}};img.src='assets/ui-raster-'+key+'.webp';}
  function nine(c,img,x,y,w,h,slices=[.18,.12,.18,.12],border=16){
@@ -2147,7 +2208,8 @@ html[data-motion='reduced'] .battle-notice.notice-enter,html[data-motion='reduce
  $('pause-screen').querySelector('h1').textContent='暂停中';
  const tools=document.createElement('div');tools.className='pause-tools';
  const pauseSettings=document.createElement('button');pauseSettings.id='settings-pause';pauseSettings.className='text-button';pauseSettings.textContent='设置';pauseSettings.onclick=()=>gear.click();
- tools.append($('guide'),$('learn-pause'),pauseSettings,quit);$('pause-screen').querySelector('.subtle').before(tools);
+ tools.append(pauseSettings,quit);$('pause-screen').querySelector('.subtle').before(tools);
+ const help=document.createElement('div');help.className='pause-help';help.append($('guide'),$('learn-pause'));tools.after(help);
  const actions=document.createElement('div');actions.className='confirm-actions';$('confirm-cancel').before(actions);actions.append($('confirm-cancel'),$('confirm-ok'));
  function summary(id){
   const dialog=$(id).querySelector('.dialog'),box=document.createElement('div');box.className='session-summary';box.setAttribute('aria-label','当前战斗状态');

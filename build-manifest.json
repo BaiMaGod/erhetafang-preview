@@ -1,7 +1,7 @@
 {
   "index.html": {
-    "bytes": 245601,
-    "sha256": "259e84c3a9a993176ee85c2e37dd24ded53f94066685224c481412d4c68c4ef8"
+    "bytes": 252654,
+    "sha256": "3ddbadc593858cca3a0a90ded43f9922e5ecbd913d3e2be8572ece5e9b69c2ed"
   },
   "assets/neon-sprites.webp": {
     "bytes": 396470,
@@ -86,5 +86,29 @@
   "assets/ui-raster-alert-frame.webp": {
     "bytes": 78086,
     "sha256": "fd5c5c3f170e1dbde304798942c6a0d3844408cce0658ba647e686a7c6ec1f00"
+  },
+  "assets/ui-raster-boss-arrival.webp": {
+    "bytes": 169986,
+    "sha256": "051f16854cebc8a910ca921829b68f016a368ae7c31350b7f484748e31eac1f6"
+  },
+  "assets/ui-raster-boss-phase2.webp": {
+    "bytes": 165106,
+    "sha256": "97fee5ecc4a874e3186456c8ef2a95ff81ddfac67ef2dcd2034aefd7ff262dbc"
+  },
+  "assets/ui-raster-boss-phase3.webp": {
+    "bytes": 173836,
+    "sha256": "bfd5860614bf576b43582f42ab7cb33714ce8c841a9d3be0c4b00a5058b68298"
+  },
+  "assets/ui-raster-alert-banner.webp": {
+    "bytes": 77004,
+    "sha256": "102e7a841b1632edd6b29b9e3e0a0aaf38afe2f24b64a624948d411e1613d8da"
+  },
+  "assets/ui-raster-panel-frame-slim.webp": {
+    "bytes": 89436,
+    "sha256": "6c71b31cf2b6cfdef353f5034505724501ba9cc7bba20e89bc1fd04e9f895432"
+  },
+  "assets/ui-raster-button-clean.webp": {
+    "bytes": 78672,
+    "sha256": "c933947df45c9abc5bb5d67ec66ec9d1304e2d192188a35f87d160157e36f412"
   }
 }

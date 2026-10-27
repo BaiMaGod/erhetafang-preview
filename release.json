@@ -1,8 +1,8 @@
 {
-  "sourceCommit": "739da4d27e5c1b60d42d9e5edaac46908740c926",
-  "version": "1.11.0",
+  "sourceCommit": "f2d78f59a9916332c2aaae91e136bf72d6c81405",
+  "version": "1.12.0",
   "engine": "Canvas 2D",
   "browserSmokePassed": true,
-  "sha256": "259e84c3a9a993176ee85c2e37dd24ded53f94066685224c481412d4c68c4ef8",
-  "builtAt": "2026-10-27T06:28:04.929813+00:00"
+  "sha256": "3ddbadc593858cca3a0a90ded43f9922e5ecbd913d3e2be8572ece5e9b69c2ed",
+  "builtAt": "2026-10-27T09:51:50.741356+00:00"
 }
