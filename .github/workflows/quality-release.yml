@@ -12,13 +12,14 @@ concurrency:
   cancel-in-progress: false
 jobs:
   build-test-publish:
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
     steps:
       - name: Checkout public release configuration
         uses: actions/checkout@v4
         with:
           token: ${{ github.token }}
+          ref: main
           path: preview
       - name: Read reviewed source commit
         id: source
@@ -51,11 +52,14 @@ jobs:
           sha256sum index.html > /tmp/stable-index.sha256
           test -s index.html
           ! grep -q '{{JS}}\|{{CSS}}' index.html
-      - name: Install pinned browser test dependency
+      - name: Use installed Chrome with pinned Playwright test API
         working-directory: source
         run: |
           npm install --no-save --no-package-lock playwright@1.56.1
-          npx playwright install --with-deps chromium
+          chrome_bin="$(command -v google-chrome)"
+          test -x "$chrome_bin"
+          "$chrome_bin" --version
+          echo "CHROMIUM_EXECUTABLE=$chrome_bin" >> "$GITHUB_ENV"
       - name: Serve candidate privately on runner
         working-directory: source
         run: |
@@ -104,6 +108,7 @@ jobs:
         env:
           SOURCE_SHA: ${{ steps.source.outputs.sha }}
         run: |
+          git -C preview pull --rebase origin main
           cp source/dist/index.html preview/index.html
           mkdir -p preview/assets
           cp source/dist/assets/* preview/assets/
@@ -111,6 +116,12 @@ jobs:
           python3 - <<'PY'
           import hashlib,json,os,datetime
           data={'sourceCommit':os.environ['SOURCE_SHA'],'version':json.load(open('source/package.json'))['version'],'engine':'Canvas 2D','browserSmokePassed':True,'sha256':hashlib.sha256(open('preview/index.html','rb').read()).hexdigest(),'builtAt':datetime.datetime.now(datetime.timezone.utc).isoformat()}
+          try:
+              previous=json.load(open('preview/release.json'))
+              if previous.get('sourceCommit')==data['sourceCommit'] and previous.get('sha256')==data['sha256']:
+                  data['builtAt']=previous['builtAt']
+          except (OSError,ValueError):
+              pass
           json.dump(data,open('preview/release.json','w'),indent=2)
           PY
           git -C preview config user.name 'preview-deploy-bot'
@@ -143,7 +154,7 @@ jobs:
               const r=await fetch(base+name+'?verify='+Date.now());assert.equal(r.status,200,name);
               const b=Buffer.from(await r.arrayBuffer());assert.equal(crypto.createHash('sha256').update(b).digest('hex'),expected.sha256,name);
             }
-            const browser=await chromium.launch({headless:true}),devices=[];
+            const browser=await chromium.launch({headless:true,executablePath:process.env.CHROMIUM_EXECUTABLE}),devices=[];
             try{for(const [width,height] of [[320,568],[390,844],[1280,800]]){
               const page=await browser.newPage({viewport:{width,height}}),errors=[];
               page.on('pageerror',e=>errors.push(String(e)));
