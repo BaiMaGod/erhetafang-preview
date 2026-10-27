@@ -65,18 +65,18 @@ jobs:
             sleep 1
           done
           exit 1
-      - name: Real-input tutorial, complete victory, natural defeat and retry
-        working-directory: source
-        run: npm run test:browser
       - name: Neon assets, responsive UI and offline entry
         working-directory: source
         run: npm run test:art
-      - name: Foundation health, portrait cards and four responsive layouts
+      - name: Foundation health, square cards and four responsive layouts
         working-directory: source
         run: npm run test:layout
       - name: Art settings, confirmations and recovery interactions
         working-directory: source
         run: node tests/art-v2-interactions.cjs
+      - name: Real-input tutorial, complete victory, natural defeat and retry
+        working-directory: source
+        run: npm run test:browser
       - name: Verify unchanged tested artifact
         working-directory: source
         run: |
