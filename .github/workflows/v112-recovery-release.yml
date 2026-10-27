@@ -1,0 +1,186 @@
+name: V1.12 full verification with installed Chrome
+on:
+  push:
+    branches: ['qa/v112-reference-evidence']
+    paths: ['.github/workflows/v112-recovery-release.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+  pages: write
+concurrency:
+  group: v112-verified-chrome-release
+  cancel-in-progress: false
+jobs:
+  build-test-publish:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - name: Checkout public release configuration
+        uses: actions/checkout@v4
+        with:
+          token: ${{ github.token }}
+          ref: main
+          path: preview
+      - name: Read reviewed source commit
+        id: source
+        run: |
+          python3 - <<'PY'
+          import json,os,re
+          data=json.load(open('preview/release-source.json'))
+          sha=data['sourceCommit']
+          assert re.fullmatch('[0-9a-f]{40}',sha), 'Expected immutable reviewed source SHA'
+          assert sha == '7c959f6d6566ba4e5190d6b4fe44a2369ff76de1', 'Reviewed V1.12 source was superseded'
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f: f.write('sha='+sha+'\n')
+          PY
+      - name: Checkout private source at reviewed commit
+        uses: actions/checkout@v4
+        with:
+          repository: BaiMaGod/erhetafang
+          ref: ${{ steps.source.outputs.sha }}
+          token: ${{ secrets.PREVIEW_SOURCE_SYNC_TOKEN }}
+          persist-credentials: false
+          path: source
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Rules, clocks, tutorial and pacing regression
+        working-directory: source
+        run: npm test
+      - name: Build stable Web bundle
+        working-directory: source
+        run: |
+          npm run build
+          sha256sum index.html > /tmp/stable-index.sha256
+          test -s index.html
+          ! grep -q '{{JS}}\|{{CSS}}' index.html
+      - name: Use installed Chrome with pinned Playwright test API
+        working-directory: source
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          chrome_bin="$(command -v google-chrome)"
+          test -x "$chrome_bin"
+          "$chrome_bin" --version
+          echo "CHROMIUM_EXECUTABLE=$chrome_bin" >> "$GITHUB_ENV"
+      - name: Serve candidate privately on runner
+        working-directory: source
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/stable-http.log 2>&1 &
+          for i in $(seq 1 20); do
+            if curl -fsS http://127.0.0.1:8765/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          exit 1
+      - name: Neon assets, responsive UI and offline entry
+        working-directory: source
+        run: npm run test:art
+      - name: Foundation health, square cards and four responsive layouts
+        working-directory: source
+        run: npm run test:layout
+      - name: Art settings, confirmations and recovery interactions
+        working-directory: source
+        run: node tests/art-v2-interactions.cjs
+      - name: Real-input tutorial, complete victory, natural defeat and retry
+        working-directory: source
+        run: npm run test:browser
+      - name: Verify unchanged tested artifact
+        working-directory: source
+        run: |
+          sha256sum -c /tmp/stable-index.sha256
+          python3 - <<'PY'
+          import json,hashlib,pathlib
+          for name, expected in json.load(open('dist/build-manifest.json')).items():
+              data=pathlib.Path(name).read_bytes()
+              assert len(data)==expected['bytes'] and hashlib.sha256(data).hexdigest()==expected['sha256'], name
+              assert data==pathlib.Path('dist',name).read_bytes(), name
+          report=json.load(open('test-output/release-report.json'))
+          assert report['passed'] is True
+          assert {d['status'] for d in report['devices']} == {'won','lost'}
+          assert len(report['devices']) == 2
+          assert all(not d['errors'] for d in report['devices'])
+          PY
+      - name: Save browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stable-release-browser-evidence
+          path: source/test-output/
+          if-no-files-found: warn
+      - name: Publish only tested runtime bundle
+        env:
+          SOURCE_SHA: ${{ steps.source.outputs.sha }}
+        run: |
+          git -C preview pull --rebase origin main
+          cp source/dist/index.html preview/index.html
+          mkdir -p preview/assets
+          cp source/dist/assets/* preview/assets/
+          cp source/dist/build-manifest.json preview/build-manifest.json
+          python3 - <<'PY'
+          import hashlib,json,os,datetime
+          data={'sourceCommit':os.environ['SOURCE_SHA'],'version':json.load(open('source/package.json'))['version'],'engine':'Canvas 2D','browserSmokePassed':True,'sha256':hashlib.sha256(open('preview/index.html','rb').read()).hexdigest(),'builtAt':datetime.datetime.now(datetime.timezone.utc).isoformat()}
+          try:
+              previous=json.load(open('preview/release.json'))
+              if previous.get('sourceCommit')==data['sourceCommit'] and previous.get('sha256')==data['sha256']:
+                  data['builtAt']=previous['builtAt']
+          except (OSError,ValueError):
+              pass
+          json.dump(data,open('preview/release.json','w'),indent=2)
+          PY
+          git -C preview config user.name 'preview-deploy-bot'
+          git -C preview config user.email '47746427+BaiMaGod@users.noreply.github.com'
+          git -C preview add -- index.html assets build-manifest.json release.json
+          if git -C preview diff --cached --quiet; then exit 0; fi
+          git -C preview commit -m "deploy: verified neon stable build ${SOURCE_SHA} [preview-sync]"
+          git -C preview push origin HEAD:main
+      - name: Request Pages build after verified artifact commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api --method POST "repos/${{ github.repository }}/pages/builds"
+      - name: Verify live Pages bundle and mobile gameplay
+        env:
+          SOURCE_SHA: ${{ steps.source.outputs.sha }}
+        working-directory: source
+        run: |
+          node <<'NODE'
+          const {chromium}=require('playwright'),fs=require('fs'),assert=require('assert/strict'),crypto=require('crypto');
+          const base='https://baimagod.github.io/erhetafang-preview/';
+          (async()=>{
+            let release,ready=false;
+            for(let i=0;i<90;i++){
+              try{const r=await fetch(base+'release.json?verify='+Date.now());release=await r.json();if(release.sourceCommit===process.env.SOURCE_SHA){ready=true;break;}}catch{}
+              await new Promise(r=>setTimeout(r,5000));
+            }
+            assert(ready,'Pages did not publish expected source');
+            const manifest=JSON.parse(fs.readFileSync('dist/build-manifest.json','utf8'));
+            for(const [name,expected] of Object.entries(manifest)){
+              const r=await fetch(base+name+'?verify='+Date.now());assert.equal(r.status,200,name);
+              const b=Buffer.from(await r.arrayBuffer());assert.equal(crypto.createHash('sha256').update(b).digest('hex'),expected.sha256,name);
+            }
+            const browser=await chromium.launch({headless:true,executablePath:process.env.CHROMIUM_EXECUTABLE}),devices=[];
+            try{for(const [width,height] of [[320,568],[390,844],[1280,800]]){
+              const page=await browser.newPage({viewport:{width,height}}),errors=[];
+              page.on('pageerror',e=>errors.push(String(e)));
+              page.on('response',r=>{if(r.status()>=400)errors.push(r.status()+' '+r.url());});
+              await page.goto(base+'?debug=1&seed=21007&verify='+Date.now());
+              await page.locator('#art-loading').waitFor({state:'detached'});
+              await page.locator('#start').click();await page.locator('#tutorial-skip').click();
+              for(let n=0;n<4;n++){
+                const p=await page.evaluate(()=>{const g=__TD.game,v=__TD.view,b=document.getElementById('game').getBoundingClientRect(),a=g.accessible()[0],r=v.pileRect(a);return{x:b.x+r.x,y:b.y+r.y};});
+                await page.mouse.click(p.x,p.y);await page.waitForTimeout(450);
+              }
+              assert.equal(await page.evaluate(()=>__TD.game.stats.picks),4);
+              await page.locator('#pause').click();await page.locator('#restart-pause').click();await page.locator('#confirm-ok').click();
+              assert.equal(await page.locator('#health').textContent(),'100%');
+              await page.screenshot({path:'test-output/live-'+width+'.png'});
+              assert.deepEqual(errors,[]);devices.push({width,height,errors});await page.close();
+            }}finally{await browser.close();}
+            fs.writeFileSync('test-output/live-pages.json',JSON.stringify({passed:true,release,files:Object.keys(manifest),devices},null,2));
+          })().catch(e=>{console.error(e);process.exitCode=1});
+          NODE
+      - name: Save live Pages verification
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: live-pages-verification
+          path: source/test-output/live-*
+          if-no-files-found: warn
+
