@@ -1,7 +1,7 @@
-name: V1.12 reference screenshot review
+name: V1.12 final reference screenshot review
 on:
   push:
-    branches: [main]
+    branches: ['qa/v112-reference-evidence']
     paths: ['.github/workflows/v112-art-evidence.yml']
   workflow_dispatch:
 permissions:
@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: BaiMaGod/erhetafang
-          ref: f2d78f59a9916332c2aaae91e136bf72d6c81405
+          ref: 7c959f6d6566ba4e5190d6b4fe44a2369ff76de1
           token: ${{ secrets.PREVIEW_SOURCE_SYNC_TOKEN }}
           persist-credentials: false
       - uses: actions/setup-node@v4
@@ -59,7 +59,7 @@ jobs:
                   draw.text((12+i*406,10),label,font=font,fill='#d8edff')
               p=out/(name+'.webp');canvas.save(p,quality=90,method=6)
               data=p.read_bytes();encoded=base64.b64encode(data).decode()
-              print('V112_IMAGE_META '+json.dumps({'name':name,'sha256':hashlib.sha256(data).hexdigest(),'bytes':len(data),'width':canvas.width,'height':canvas.height,'fixture':name!='home','sourceCommit':'f2d78f59a9916332c2aaae91e136bf72d6c81405'}))
+              print('V112_IMAGE_META '+json.dumps({'name':name,'sha256':hashlib.sha256(data).hexdigest(),'bytes':len(data),'width':canvas.width,'height':canvas.height,'fixture':name!='home','sourceCommit':'7c959f6d6566ba4e5190d6b4fe44a2369ff76de1'}))
               for i in range(0,len(encoded),8000):print('V112_IMAGE_CHUNK '+name+' '+str(i//8000)+' '+encoded[i:i+8000])
           
           PY
