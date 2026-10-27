@@ -1,0 +1,72 @@
+name: V1.12 reference screenshot review
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/v112-art-evidence.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  capture-reviewed-art:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout reviewed private candidate
+        uses: actions/checkout@v4
+        with:
+          repository: BaiMaGod/erhetafang
+          ref: f2d78f59a9916332c2aaae91e136bf72d6c81405
+          token: ${{ secrets.PREVIEW_SOURCE_SYNC_TOKEN }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Build immutable candidate
+        run: npm run build
+      - name: Install pinned browser
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Capture actual inputs and matched art fixtures
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/v112-art-http.log 2>&1 &
+          for i in $(seq 1 20); do
+            if curl -fsS http://127.0.0.1:8765/ >/dev/null; then break; fi
+            sleep 1
+          done
+          node tests/neon-rebuild.cjs
+      - name: Export exact reference comparison images
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import sys,base64,json,hashlib
+          sys.path.insert(0,'.build-tools')
+          from PIL import Image,ImageDraw,ImageFont
+          out=Path('test-output/rebuild/visual-review');out.mkdir(parents=True,exist_ok=True)
+          actual=Path('test-output/rebuild/final')
+          refs=Path('assets/concepts/neon-defense/webp')
+          old=Path('docs/art/neon-cinema-20261027')
+          font=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf',16)
+          for name,file,ref,before in [('home','phone-home.png',refs/'01-main/01-home.webp','home.webp'),('boss-arrival','phone-arrival-fixture.png',refs/'04-battle-feedback/12-boss-arrival.webp','arrival-fixture.webp'),('pause-dense','phone-pause-dense-fixture.png',refs/'03-modals-and-results/09-pause.webp',None)]:
+              panels=[]
+              if before:panels.append(('V1.11 archived',Image.open(old/before).crop((418,38,808,882)).convert('RGB')))
+              panels.append(('V1.12 current',Image.open(actual/file).convert('RGB')))
+              panels.append(('Concept reference',Image.open(ref).convert('RGB')))
+              canvas=Image.new('RGB',(len(panels)*406+12,892),'#061323');draw=ImageDraw.Draw(canvas)
+              for i,(label,im) in enumerate(panels):
+                  im.thumbnail((390,844),Image.Resampling.LANCZOS)
+                  canvas.paste(im,(12+i*406+(390-im.width)//2,38+(844-im.height)//2))
+                  draw.text((12+i*406,10),label,font=font,fill='#d8edff')
+              p=out/(name+'.webp');canvas.save(p,quality=90,method=6)
+              data=p.read_bytes();encoded=base64.b64encode(data).decode()
+              print('V112_IMAGE_META '+json.dumps({'name':name,'sha256':hashlib.sha256(data).hexdigest(),'bytes':len(data),'width':canvas.width,'height':canvas.height,'fixture':name!='home','sourceCommit':'f2d78f59a9916332c2aaae91e136bf72d6c81405'}))
+              for i in range(0,len(encoded),8000):print('V112_IMAGE_CHUNK '+name+' '+str(i//8000)+' '+encoded[i:i+8000])
+          
+          PY
+      - name: Preserve reference review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v112-reference-review
+          path: test-output/rebuild/
+          if-no-files-found: error
