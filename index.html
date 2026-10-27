@@ -389,6 +389,87 @@ html[data-motion='reduced'] .battle-notice.notice-enter{animation:none!important
  .battle-notice:is([data-kind='boss'],[data-kind='phase'],[data-kind='phase-warning']) .notice-copy span{font-size:9px}
 }
 html[data-motion='reduced'] .battle-notice.notice-enter{animation:none!important}
+
+/* V1.11: reuse the approved individual raster art with deliberate composition. */
+#menu .title-lockup{width:94%;margin:28px auto 0;aspect-ratio:2.9}
+#menu #start{width:94%;align-self:center;flex-basis:10%;max-height:74px}
+#menu .home-merge{flex-basis:13.5%;max-height:111px;margin-bottom:12px}
+#menu .home-merge canvas{width:51px;height:51px}
+#menu .home-merge>div:last-child canvas{width:73px;height:60px}
+#menu .menu-content>#learn-home{width:51%;max-height:38px}
+
+/* Compact, legible session rows and consistent action icons. */
+.session-summary{background:linear-gradient(120deg,#0c2139d9,#040c18ef);border-color:#325675;padding:4px 8px}
+.session-summary>div{justify-content:flex-start;gap:7px}
+.session-summary>div>b{margin-left:auto;font-variant-numeric:tabular-nums}
+.summary-symbol{display:flex;flex:0 0 16px;color:#88ddff}
+.summary-symbol svg{width:15px;height:15px}
+.action-symbol{display:inline-flex;vertical-align:middle;margin-right:8px;color:inherit}
+.action-symbol svg{width:21px;height:21px}
+.pause-tools .action-symbol{margin-right:5px}.pause-tools .action-symbol svg{width:14px;height:14px}
+#pause-screen .panel-heading{margin-bottom:5px}
+#pause-screen .panel-heading h1{font-size:29px;letter-spacing:3px}
+#confirm-screen .session-summary{margin-top:4px}
+#confirm-screen .panel-heading h1{font-size:25px}
+#confirm-screen #confirm-message{font-size:12px;line-height:1.8;color:#d1dfef}
+.confirm-actions button.secondary{background-image:url('assets/ui-raster-button-danger.webp');color:#fff0f6;text-shadow:0 0 7px #ff428e,0 2px 2px #25051a}
+
+/* The cinematic covers only the upper battlefield. All input passes through. */
+.battle-notice[hidden]{display:none!important}
+.battle-notice .notice-portrait{display:flex;align-items:center;justify-content:center;min-width:0}
+.battle-notice[data-phase='0'] .notice-portrait{display:none}
+.battle-notice:is([data-kind='boss'],[data-kind='phase'],[data-kind='phase-warning']){
+ top:54px;left:8px;right:8px;height:var(--cinema-height,200px);min-height:0;
+ display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) 67px 5px;
+ gap:0;padding:0 0 5px;border:0;border-image:none;
+ background:radial-gradient(ellipse at 50% 34%,#951d566b,transparent 70%);
+ color:#fff1f7;isolation:isolate;overflow:visible;
+}
+.battle-notice:is([data-kind='boss'],[data-kind='phase'],[data-kind='phase-warning']) .notice-portrait{
+ width:100%;height:100%;min-height:0;position:relative;overflow:hidden;
+ background:linear-gradient(180deg,#071222ab,#230e2aa6),url('assets/neon-battlefield.webp') center 30%/cover;
+}
+.battle-notice:is([data-kind='boss'],[data-kind='phase'],[data-kind='phase-warning']) canvas{
+ display:block;width:auto;height:100%;max-width:95%;aspect-ratio:1;object-fit:contain;
+ background:none;border:0;clip-path:none;filter:drop-shadow(0 0 8px #ff357766);
+}
+.battle-notice:is([data-kind='boss'],[data-kind='phase'],[data-kind='phase-warning']) .notice-copy{
+ position:relative;z-index:1;align-items:center;justify-content:center;gap:1px;min-height:0;
+ padding:6px 10px 8px;border:8px solid transparent;border-image:url('assets/ui-raster-alert-frame.webp') 55 160 fill stretch;
+ background:#1c0a1cdd;background-clip:padding-box;text-align:center;
+}
+.battle-notice:is([data-kind='boss'],[data-kind='phase'],[data-kind='phase-warning']) .notice-copy small{display:none}
+.battle-notice:is([data-kind='boss'],[data-kind='phase'],[data-kind='phase-warning']) .notice-copy b{
+ font-size:clamp(27px,8.4vw,37px);line-height:1.05;letter-spacing:2px;color:#fff5f8;
+ text-shadow:0 2px #831e54,0 0 12px #ff367fa8;
+}
+.battle-notice:is([data-kind='boss'],[data-kind='phase'],[data-kind='phase-warning']) .notice-copy span{font-size:10px;line-height:1.5;color:#ffe2ed}
+.battle-notice:is([data-kind='boss'],[data-kind='phase'],[data-kind='phase-warning']) .notice-stages{padding:0 18px;margin-top:3px;height:4px}
+.battle-notice[data-kind='phase'] .notice-copy,.battle-notice[data-kind='phase-warning'] .notice-copy{background-color:#1c0d32eb}
+.battle-notice[data-phase='2'] canvas{filter:drop-shadow(0 0 8px #bb69ff66)}
+.battle-notice[data-phase='3'] canvas{filter:drop-shadow(0 0 9px #ff285f88)}
+.battle-notice:is([data-kind='boss'],[data-kind='phase'],[data-kind='phase-warning']).notice-enter{animation:cinema-enter 300ms ease-out both}
+.battle-notice.notice-enter .notice-portrait canvas{animation:cinema-portrait 440ms cubic-bezier(.16,.65,.22,1) both}
+@keyframes cinema-enter{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes cinema-portrait{from{opacity:0;transform:scale(1.12)}to{opacity:1;transform:scale(1)}}
+.feedback-paused .battle-notice,.feedback-paused .notice-portrait canvas{animation-play-state:paused!important}
+html[data-motion='reduced'] .battle-notice.notice-enter,html[data-motion='reduced'] .notice-portrait canvas{animation:none!important;transform:none!important}
+@media(max-height:700px){
+ #menu .title-lockup{margin-top:13px;width:94%}
+ #menu .home-merge{min-height:70px;margin-bottom:9px}
+ #menu .home-merge canvas{width:36px;height:36px}
+ #menu .home-merge>div:last-child canvas{width:51px;height:41px}
+ #menu #start{min-height:49px;flex-basis:10%}
+ #pause-screen .panel-heading h1{font-size:24px}
+ #confirm-screen .panel-heading h1{font-size:21px}
+ #confirm-screen #confirm-message{font-size:11px}
+ .action-symbol{margin-right:6px}.action-symbol svg{width:18px;height:18px}
+ .pause-tools .action-symbol{margin-right:3px}.pause-tools .action-symbol svg{width:12px;height:12px}
+ .battle-notice:is([data-kind='boss'],[data-kind='phase'],[data-kind='phase-warning']){grid-template-rows:minmax(0,1fr) 57px 4px}
+ .battle-notice:is([data-kind='boss'],[data-kind='phase'],[data-kind='phase-warning']) .notice-copy{padding:3px 5px 6px;border-width:7px}
+ .battle-notice:is([data-kind='boss'],[data-kind='phase'],[data-kind='phase-warning']) .notice-copy b{font-size:27px}
+ .battle-notice:is([data-kind='boss'],[data-kind='phase'],[data-kind='phase-warning']) .notice-copy span{font-size:8px}
+}
 </style>
 </head>
 <body>
@@ -424,7 +505,7 @@ html[data-motion='reduced'] .battle-notice.notice-enter{animation:none!important
           <button class="primary" id="start">开始战斗 <span>↗</span></button>
           <button class="text-button" id="learn-home">操作教学</button><p class="menu-foot" id="best-record">六种武器 · 九格防线 · 三阶段 Boss</p>
         </div>
-        <span class="build-label">V1.10.0 · 霓虹机械防线</span>
+        <span class="build-label">V1.11.0 · 霓虹机械防线</span>
       </div>
       <div class="screen-overlay hidden" id="pause-screen">
         <div class="dialog"><span class="eyebrow">TIME OUT</span><h1>战斗暂停</h1><p>一口气，再继续。</p><button id="resume" class="primary">继续战斗 <span>↗</span></button><button id="restart-pause" class="secondary">重新开始</button><button id="guide" class="text-button">查看六种武器</button><button id="learn-pause" class="text-button">重看操作教学</button><p class="subtle">切换窗口时会自动暂停</p></div>
@@ -1462,12 +1543,12 @@ html[data-motion='reduced'] .battle-notice.notice-enter{animation:none!important
    this.game=game;this.view=view;view.neonPulses=[];view.defenseHitUntil=new Map();this.deadlines=new Map();this.full=false;this.noticeUntil=-Infinity;this.noticePriority=0;
    this.root=document.createElement('div');this.root.className='quality-layer';this.root.setAttribute('aria-hidden','true');document.getElementById('playfield').appendChild(this.root);
    this.notice=document.createElement('div');this.notice.className='battle-notice';this.notice.hidden=true;
-   this.notice.innerHTML='<canvas width="256" height="256"></canvas><div class="notice-copy"><small></small><b></b><span></span></div><div class="notice-stages"><i></i><i></i><i></i></div>';
+   this.notice.innerHTML='<div class="notice-portrait"><canvas width="384" height="384"></canvas></div><div class="notice-copy"><small></small><b></b><span></span></div><div class="notice-stages"><i></i><i></i><i></i></div>';
    this.root.appendChild(this.notice);
    this.pool=Array.from({length:6},()=>{const n=document.createElement('div');n.className='quality-signal';n.dataset.active='0';this.root.appendChild(n);return n;});
   }
   clear(){
-   this.view.neonPulses.length=0;this.view.defenseHitUntil.clear();this.deadlines.clear();this.notice.hidden=true;this.noticeUntil=-Infinity;this.noticePriority=0;this.full=false;
+   this.view.neonPulses.length=0;this.view.defenseHitUntil.clear();this.deadlines.clear();this.notice.hidden=true;this.notice.classList.remove('notice-enter');this.noticeUntil=-Infinity;this.noticePriority=0;this.full=false;
    for(const n of this.pool){n.dataset.active='0';n.classList.remove('playing');}this.root.classList.remove('quality-flash','quality-flash-danger');
   }
   pulse(slot,color,merge=false){if(TD.presentationReducedMotion)return;const p=this.view.point(this.game.slotPoint(slot));this.view.neonPulses.push({...p,start:this.game.time,color,merge});if(this.view.neonPulses.length>12)this.view.neonPulses.shift();}
@@ -1475,11 +1556,19 @@ html[data-motion='reduced'] .battle-notice.notice-enter{animation:none!important
    if(this.game.time<this.noticeUntil&&priority<this.noticePriority)return;
    this.notice.dataset.kind=kind;this.notice.dataset.phase=String(phase);this.notice.dataset.hasBoss=String(!!(this.game.boss?.hp>0));this.notice.querySelector('small').textContent=kind==='boss'?'威胁警报':kind==='phase-warning'?'装甲重构':kind==='phase'?'形态改变':kind==='damage'?'防线警报':'战术提示';
    this.notice.querySelector('b').textContent=title;this.notice.querySelector('span').textContent=detail;
-   const cv=this.notice.querySelector('canvas'),c=cv.getContext('2d');c.clearRect(0,0,256,256);
-   if(phase&&TD.NeonArt?.enemy){c.save();c.translate(128,128);TD.NeonArt.enemy(c,{kind:'boss',phase},244);c.restore();}
+   const cv=this.notice.querySelector('canvas'),c=cv.getContext('2d');c.clearRect(0,0,384,384);
+   if(phase&&TD.NeonArt?.enemy){c.save();c.translate(192,192);TD.NeonArt.enemy(c,{kind:'boss',phase},370);c.restore();}
    this.notice.querySelectorAll('i').forEach((n,i)=>n.classList.toggle('lit',i<(phase||this.game.boss?.phase||0)));
    this.noticeUntil=this.game.time+duration;this.noticePriority=priority;this.notice.hidden=false;
-   this.notice.classList.remove('notice-enter');void this.notice.offsetWidth;this.notice.classList.add('notice-enter');
+   this.layoutNotice();this.notice.classList.remove('notice-enter');void this.notice.offsetWidth;this.notice.classList.add('notice-enter');
+  }
+  layoutNotice(){
+   // Reserve the lower battle area, all nine foundations and the entire pile.
+   // Recompute only on a viewport change, never on every animation frame.
+   const key=this.view.w+':'+this.view.defY;
+   if(key===this.noticeLayout)return;this.noticeLayout=key;
+   const height=Math.max(96,Math.min(248,this.view.defY-82));
+   this.notice.style.setProperty('--cinema-height',height+'px');
   }
   signal(message,kind,color){
    const group=kind==='blast'?'blast':'merge';let node=this.pool.find(n=>n.dataset.group===group)||this.pool.find(n=>n.dataset.active!=='1')||this.pool[0];
@@ -1489,7 +1578,7 @@ html[data-motion='reduced'] .battle-notice.notice-enter{animation:none!important
   }
   flash(danger=false){if(TD.presentationReducedMotion)return;this.root.classList.remove('quality-flash','quality-flash-danger');void this.root.offsetWidth;this.root.classList.add(danger?'quality-flash-danger':'quality-flash');}
   update(){
-   const time=this.game.time;this.root.classList.toggle('feedback-paused',!!this.game.paused);
+   const time=this.game.time;if(!this.notice.hidden)this.layoutNotice();this.root.classList.toggle('feedback-paused',!!this.game.paused);
    if(!this.notice.hidden&&time>=this.noticeUntil)this.notice.hidden=true;
    if(this.game.boss)this.notice.style.setProperty('--boss-hp',Math.max(0,this.game.boss.hp/this.game.boss.maxHP*100)+'%');
    for(const [node,until] of this.deadlines)if(time>=until){node.dataset.active='0';node.classList.remove('playing');this.deadlines.delete(node);}
@@ -1775,9 +1864,9 @@ html[data-motion='reduced'] .battle-notice.notice-enter{animation:none!important
  function homeScene(){
   const canvas=document.getElementById('home-art');if(!canvas||!TD.NeonArt.ready||!R.ready)return;
   const w=canvas.clientWidth,h=canvas.clientHeight;if(!w||!h)return;canvas.width=w*2;canvas.height=h*2;const c=canvas.getContext('2d');c.scale(2,2);
-  const deck=h-w*.11;for(const x of [.12,.31,.5,.69,.88])R.base(c,w*x,deck,w*.195);
+  const deck=h-w*.10;for(const x of [.115,.305,.5,.695,.885])R.base(c,w*x,deck,w*.19);
   // Separate silhouettes, keep the center launcher largest and seat every gun on its own deck.
-  const lineup=[['gun',3,.12,.21],['laser',5,.88,.21],['lightning',5,.31,.215],['ice',4,.69,.205],['missile',4,.5,.25]];
+  const lineup=[['gun',3,.115,.205],['laser',5,.885,.205],['lightning',5,.305,.205],['ice',4,.695,.195],['missile',4,.5,.235]];
   for(const [kind,level,x,size] of lineup){
    const tile=document.createElement('canvas');tile.width=tile.height=256;const tc=tile.getContext('2d',{willReadFrequently:true});TD.NeonArt.weapon(tc,kind,level,128,128,256);
    const pixels=tc.getImageData(0,0,256,256).data;let left=256,right=0,top=256,bottom=0;
@@ -2039,12 +2128,12 @@ html[data-motion='reduced'] .battle-notice.notice-enter{animation:none!important
  motion(reduced);
  $('settings-motion').onchange=()=>{motion($('settings-motion').checked);try{localStorage.setItem('erhetafang.motion',$('settings-motion').checked?'reduced':'full');}catch(_){}};
  function ask(title,message,label,action){$('confirm-title').textContent=title;$('confirm-message').textContent=message;$('confirm-ok').textContent=label;callback=action;open(confirm);}
- $('restart-pause').addEventListener('click',e=>{if(bypass)return;e.stopImmediatePropagation();ask('重新开始','确定重新开始本局战斗？当前防线和本局进度将重置。','确认重开',()=>{bypass=true;$('restart-pause').click();bypass=false;});},true);
+ $('restart-pause').addEventListener('click',e=>{if(bypass)return;e.stopImmediatePropagation();ask('重新开始','重新开始本局？当前防线与进度将重置。','确认重开',()=>{bypass=true;$('restart-pause').click();bypass=false;});},true);
  quit.onclick=()=>ask('退出战斗','确定结束本局并返回首页？本局战斗进度不会保留。','确认退出',()=>$('home').click());
  $('confirm-cancel').onclick=()=>close(confirm);
  $('confirm-ok').onclick=()=>{const action=callback;close(confirm);callback=null;action?.();};
  // Live text sits on reusable metal surfaces; no concept screenshot is a button.
- const paths={pause:'M8 5h3v14H8zM15 5h3v14h-3z',settings:'M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6 2.1 2.1M5.6 18.4l2.1-2.1m8.6-8.6 2.1-2.1M17 12a5 5 0 1 1-10 0 5 5 0 0 1 10 0',warning:'M12 3 2 21h20ZM12 9v5m0 3v1',codex:'M3 5h7l2 2 2-2h7v15h-7l-2 2-2-2H3ZM12 7v15',training:'m4 12 5 5L21 5'};
+ const paths={pause:'M8 5h3v14H8zM15 5h3v14h-3z',play:'M8 4v16l12-8Z',restart:'M4 10a8 8 0 1 1 1 8M4 4v6h6',exit:'M10 4H4v16h6M10 12h12m-4-4 4 4-4 4',clock:'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18ZM12 7v6h5',shield:'M12 3 3 7v6c0 5 9 9 9 9s9-4 9-9V7ZM12 8v9',settings:'M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6 2.1 2.1M5.6 18.4l2.1-2.1m8.6-8.6 2.1-2.1M17 12a5 5 0 1 1-10 0 5 5 0 0 1 10 0',warning:'M12 3 2 21h20ZM12 9v5m0 3v1',codex:'M3 5h7l2 2 2-2h7v15h-7l-2 2-2-2H3ZM12 7v15',training:'m4 12 5 5L21 5'};
  function symbol(kind){return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="'+paths[kind]+'" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/></svg>';}
  document.querySelectorAll('.dialog').forEach((dialog,index)=>{
   const title=dialog.querySelector('h1');if(!title)return;
@@ -2055,6 +2144,7 @@ html[data-motion='reduced'] .battle-notice.notice-enter{animation:none!important
  for(const [id,kind] of [['pause-screen','pause'],['settings-screen','settings'],['confirm-screen','warning'],['guide-screen','codex'],['tutorial-complete','training']]){
   const mark=document.createElement('div');mark.className='panel-symbol';mark.innerHTML=symbol(kind);$(id).querySelector('.panel-heading').prepend(mark);
  }
+ $('pause-screen').querySelector('h1').textContent='暂停中';
  const tools=document.createElement('div');tools.className='pause-tools';
  const pauseSettings=document.createElement('button');pauseSettings.id='settings-pause';pauseSettings.className='text-button';pauseSettings.textContent='设置';pauseSettings.onclick=()=>gear.click();
  tools.append($('guide'),$('learn-pause'),pauseSettings,quit);$('pause-screen').querySelector('.subtle').before(tools);
@@ -2067,6 +2157,13 @@ html[data-motion='reduced'] .battle-notice.notice-enter{animation:none!important
   new MutationObserver(refresh).observe($(id),{attributes:true,attributeFilter:['class']});refresh();
  }
  summary('pause-screen');summary('confirm-screen');
+ // Consistent icons identify the real actions and live session values.
+ for(const [id,kind] of [['resume','play'],['restart-pause','restart'],['settings-pause','settings'],['quit-pause','exit']]){
+  const icon=document.createElement('i');icon.className='action-symbol';icon.setAttribute('aria-hidden','true');icon.innerHTML=symbol(kind);$(id).prepend(icon);
+ }
+ for(const box of document.querySelectorAll('.session-summary')){
+  [...box.children].forEach((row,i)=>{const icon=document.createElement('i');icon.className='summary-symbol';icon.innerHTML=symbol(i===0?'clock':'shield');icon.setAttribute('aria-hidden','true');row.prepend(icon);});
+ }
  document.addEventListener('keydown',e=>{const modal=!confirm.classList.contains('hidden')?confirm:!settings.classList.contains('hidden')?settings:null;if(!modal)return;if(e.key==='Escape'){e.stopImmediatePropagation();e.preventDefault();close(modal);}if(e.key==='Tab'){const nodes=[...modal.querySelectorAll('button,input')],first=nodes[0],last=nodes[nodes.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}}},true);
 })(globalThis);
 </script>
