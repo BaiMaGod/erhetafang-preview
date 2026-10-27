@@ -483,9 +483,14 @@ html[data-motion='reduced'] .battle-notice.notice-enter,html[data-motion='reduce
 .dialog .panel-symbol svg{width:19px!important;height:19px!important}
 .dialog .panel-heading h1,#pause-screen .panel-heading h1{font-size:26px;line-height:1.1;margin:7px 0 0;letter-spacing:2px;text-shadow:0 2px #16508d,0 0 7px #21c6ff55}
 .session-summary{border:0;box-shadow:none;background:#031022aa;padding:3px 5px;margin-bottom:6px}
-.session-summary>div{padding:5px 2px}.session-summary span{font-size:10px}.session-summary b{font-size:14px}
+.session-summary>div{padding:3px 2px}.session-summary span{font-size:10px}.session-summary b{font-size:14px}
 .dialog .primary,.dialog .secondary{height:50px;min-height:46px;margin-top:4px;background-image:url('assets/ui-raster-button-clean.webp');background-size:100% 100%;font-size:16px}
 .dialog .secondary{filter:hue-rotate(145deg);color:#fff;text-shadow:0 0 5px #35dfff,0 1px 2px #031123!important}
+.dialog .primary,.dialog .secondary{background-image:linear-gradient(#00245133,#00245133),url('assets/ui-raster-button-clean.webp')}
+#pause-screen .panel-heading{height:78px;margin:-9px -19px 4px;padding-top:38px;background:url('assets/ui-raster-panel-heading.webp') center top/100% 78px no-repeat}
+#pause-screen .panel-heading h1{font-size:29px;margin-top:8px;letter-spacing:2px}
+#pause-screen .panel-symbol{top:9px;background:none!important;width:31px!important;height:29px!important}
+#pause-screen .dialog{box-shadow:0 12px 30px #0009,0 0 13px #12bfff33}
 .pause-tools{display:flex;gap:7px;margin-top:7px}
 .pause-tools button,.pause-tools #quit-pause{flex:1;min-height:35px!important;height:35px!important;background-image:url('assets/ui-raster-button-clean.webp');padding:4px 9px!important;font-size:12px!important}
 .pause-tools #quit-pause{filter:hue-rotate(145deg)}
@@ -504,7 +509,7 @@ html[data-motion='reduced'] .battle-notice.notice-enter,html[data-motion='reduce
 .battle-notice:is([data-kind='boss'],[data-kind='phase'],[data-kind='phase-warning']) .notice-portrait{background:linear-gradient(180deg,#110a2644,#17081988),url('assets/ui-raster-home-scene.webp') center 36%/cover;overflow:hidden}
 .battle-notice:is([data-kind='boss'],[data-kind='phase'],[data-kind='phase-warning']) canvas{width:100%;height:100%;max-width:100%;aspect-ratio:auto;object-fit:contain;filter:drop-shadow(0 0 6px #ff275177)}
 .battle-notice:is([data-kind='boss'],[data-kind='phase'],[data-kind='phase-warning']) .notice-copy{border:0;padding:7px 50px 5px;background:url('assets/ui-raster-alert-banner.webp') center/100% 100% no-repeat;gap:0}
-.battle-notice:is([data-kind='boss'],[data-kind='phase'],[data-kind='phase-warning']) .notice-copy b{font-size:clamp(25px,8.7vw,36px);letter-spacing:0;line-height:1.05;font-weight:1000;color:#fff2f4;text-shadow:0 2px #8c1d36,0 0 6px #ff275b}
+.battle-notice:is([data-kind='boss'],[data-kind='phase'],[data-kind='phase-warning']) .notice-copy b{font-size:clamp(25px,10.8vw,42px);letter-spacing:0;line-height:1.05;font-weight:1000;color:#fff2f4;text-shadow:0 2px #8c1d36,0 0 6px #ff275b}
 .battle-notice:is([data-kind='boss'],[data-kind='phase'],[data-kind='phase-warning']) .notice-copy span{display:none}
 .battle-notice:is([data-kind='boss'],[data-kind='phase'],[data-kind='phase-warning']) .boss-identity{display:flex;align-items:center;justify-content:center;gap:8px;margin:0 30px;background:#180b1de8;border-inline:1px solid #bd285c66;font-size:11px;font-weight:800;color:#fff0f7}
 .boss-identity em{font-size:8px;color:#efa2bd;font-style:normal;font-weight:500;border-left:1px solid #8a255e;padding-left:8px}
@@ -516,7 +521,8 @@ html[data-motion='reduced'] .battle-notice.notice-enter,html[data-motion='reduce
  .dialog .panel-heading{height:57px;padding-top:25px}.dialog .panel-symbol{width:28px!important;height:26px!important}
  .dialog .panel-heading h1,#pause-screen .panel-heading h1{font-size:23px;margin-top:6px}
  .dialog .primary,.dialog .secondary{height:45px;min-height:43px;font-size:15px}
- .session-summary>div{padding:4px 1px}.session-summary span{font-size:9px}.session-summary b{font-size:13px}
+ #pause-screen .panel-heading{height:66px;background-size:100% 66px;padding-top:32px;margin:-7px -17px 4px}#pause-screen .panel-heading h1{font-size:25px;margin-top:7px}#pause-screen .panel-symbol{top:7px}
+ .session-summary>div{padding:3px 1px}.session-summary span{font-size:9px}.session-summary b{font-size:13px}
  .pause-tools button,.pause-tools #quit-pause{height:34px!important;min-height:34px!important;font-size:11px!important}
  .pause-help button{min-height:29px;font-size:9px}.dialog p.subtle{font-size:7px}
  .battle-notice:is([data-kind='boss'],[data-kind='phase'],[data-kind='phase-warning']){grid-template-rows:minmax(0,1fr) 44px 18px 4px}
