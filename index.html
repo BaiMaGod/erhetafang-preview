@@ -534,6 +534,26 @@ html[data-motion='reduced'] .battle-notice.notice-enter,html[data-motion='reduce
 }
 
 /* V1.13 home illustration and real, legible merge previews. */
+/* V1.14: home-only identity, bounded skyline gap and balanced action hierarchy. */
+#menu{padding:40px 20px max(16px,env(safe-area-inset-bottom));background-position:center 56%}
+#menu .home-identity{position:absolute;top:0;left:24%;right:24%;height:32px;display:grid;place-items:center;pointer-events:none;isolation:isolate;background:linear-gradient(180deg,#527597,#122941 9%,#081426 65%,#264a6b 94%,#77b7db);clip-path:polygon(0 0,100% 0,calc(100% - 20px) 100%,20px 100%);box-shadow:inset 0 1px #b3dcf466;color:#e7f6ff;font-size:13px;font-weight:800;letter-spacing:7px;text-indent:7px;text-shadow:0 0 8px #57cbff77}
+#menu .home-identity:before{content:'';position:absolute;inset:2px 3px 3px;z-index:-1;background:linear-gradient(180deg,#14243c,#081426 70%,#152e49);clip-path:polygon(0 0,100% 0,calc(100% - 18px) 100%,18px 100%)}
+#menu .title-lockup{width:96%;aspect-ratio:1200/416;margin:10px auto 0}
+#menu .menu-art{flex:1 1 auto;min-height:116px;margin:0 -15px}
+#menu .menu-content>#learn-home{flex:0 0 auto;width:48%;height:auto;min-height:36px;max-height:none;aspect-ratio:800/204;margin-top:5px;border:0!important;background-image:url('assets/ui-raster-button-small.webp');background-size:100% 100%;font-size:12px;gap:7px;padding:4px 16px}
+#menu #learn-home:before{content:'';width:17px;height:15px;background:currentColor;clip-path:polygon(0 0,44% 8%,44% 90%,0 82%,0 0,56% 8%,100% 0,100% 82%,56% 90%,56% 8%);flex:0 0 auto}
+#menu .menu-foot{margin-top:5px;min-height:14px;font-size:9px;color:#bed3e6}
+@media(min-height:740px){
+ #menu{padding-bottom:max(clamp(26px,4.7vh,46px),env(safe-area-inset-bottom))}
+}
+@media(max-height:700px){
+ #menu{padding:35px 18px max(12px,env(safe-area-inset-bottom))}
+ #menu .home-identity{height:29px;font-size:11px}
+ #menu .title-lockup{width:96%;margin-top:5px}
+ #menu .menu-content>#learn-home{min-height:31px;font-size:10px;margin-top:4px}
+ #menu #learn-home:before{width:14px;height:13px}
+ #menu .menu-foot{font-size:8px;margin-top:4px}
+}
 #menu .home-merge{flex:0 0 auto;aspect-ratio:1100/344;min-height:0;max-height:none;margin:7px 4px 13px;padding:19px 15px 9px;gap:8px;background:none}
 #menu .home-merge:after{background-image:url('assets/ui-raster-home-merge.webp');background-size:contain}
 #menu .home-merge:before{top:0;height:19%;font-size:9px;letter-spacing:2px}
@@ -574,6 +594,7 @@ html[data-motion='reduced'] .battle-notice.notice-enter,html[data-motion='reduce
       <div class="toast" id="toast" role="status"></div>
       <div class="drag-caption hidden" id="drag-caption"><b id="drag-title"></b><span id="drag-detail">移入战斗区，松手自爆</span><small>战斗速度 50% · 移回防线取消</small></div>
       <div class="screen-overlay" id="menu">
+        <div class="home-identity" aria-label="当前页面：首页"><span>首页</span></div>
         <div class="menu-content">
           <span class="eyebrow">霓虹机械防线</span>
           <div class="title-lockup" role="img" aria-label="霓虹防线 · 二合成塔，一线守城"><span>霓虹</span><strong>防线</strong><i></i></div>
@@ -584,7 +605,7 @@ html[data-motion='reduced'] .battle-notice.notice-enter,html[data-motion='reduce
           <button class="primary" id="start">开始战斗 <span>↗</span></button>
           <button class="text-button" id="learn-home">操作教学</button><p class="menu-foot" id="best-record">六种武器 · 九格防线 · 三阶段 Boss</p>
         </div>
-        <span class="build-label">V1.13.0 · 霓虹机械防线</span>
+        <span class="build-label">V1.14.0 · 霓虹机械防线</span>
       </div>
       <div class="screen-overlay hidden" id="pause-screen">
         <div class="dialog"><span class="eyebrow">TIME OUT</span><h1>战斗暂停</h1><p>一口气，再继续。</p><button id="resume" class="primary">继续战斗 <span>↗</span></button><button id="restart-pause" class="secondary">重新开始</button><button id="guide" class="text-button">查看六种武器</button><button id="learn-pause" class="text-button">重看操作教学</button><p class="subtle">切换窗口时会自动暂停</p></div>
