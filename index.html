@@ -532,6 +532,23 @@ html[data-motion='reduced'] .battle-notice.notice-enter,html[data-motion='reduce
  .battle-notice:is([data-kind='boss'],[data-kind='phase'],[data-kind='phase-warning']) .boss-identity{font-size:9px}
  .boss-identity em{font-size:7px}
 }
+
+/* V1.13 home illustration and real, legible merge previews. */
+#menu .home-merge{flex:0 0 auto;aspect-ratio:1100/344;min-height:0;max-height:none;margin:7px 4px 13px;padding:19px 15px 9px;gap:8px;background:none}
+#menu .home-merge:after{background-image:url('assets/ui-raster-home-merge.webp');background-size:contain}
+#menu .home-merge:before{top:0;height:19%;font-size:9px;letter-spacing:2px}
+#menu .home-merge canvas{width:47px;height:47px;filter:none}
+#menu .home-merge>div:not(:last-child) canvas{background:url('assets/ui-raster-icon-frame.webp') center/contain no-repeat;padding:5px}
+#menu .home-merge>div:last-child canvas{width:54px;height:47px}
+#menu .home-merge small{font-size:9px;line-height:1.1}
+#menu #start{background-image:url('assets/ui-raster-button-primary.webp')}
+@media(max-height:700px){
+ #menu .home-merge{margin-top:5px;margin-bottom:10px;padding:16px 12px 7px;gap:6px}
+ #menu .home-merge canvas{width:32px;height:32px}
+ #menu .home-merge>div:last-child canvas{width:39px;height:32px}
+ #menu .home-merge:before{font-size:8px}
+ #menu .home-merge small{font-size:7.5px}
+}
 </style>
 </head>
 <body>
@@ -567,7 +584,7 @@ html[data-motion='reduced'] .battle-notice.notice-enter,html[data-motion='reduce
           <button class="primary" id="start">开始战斗 <span>↗</span></button>
           <button class="text-button" id="learn-home">操作教学</button><p class="menu-foot" id="best-record">六种武器 · 九格防线 · 三阶段 Boss</p>
         </div>
-        <span class="build-label">V1.12.0 · 霓虹机械防线</span>
+        <span class="build-label">V1.13.0 · 霓虹机械防线</span>
       </div>
       <div class="screen-overlay hidden" id="pause-screen">
         <div class="dialog"><span class="eyebrow">TIME OUT</span><h1>战斗暂停</h1><p>一口气，再继续。</p><button id="resume" class="primary">继续战斗 <span>↗</span></button><button id="restart-pause" class="secondary">重新开始</button><button id="guide" class="text-button">查看六种武器</button><button id="learn-pause" class="text-button">重看操作教学</button><p class="subtle">切换窗口时会自动暂停</p></div>
@@ -1899,7 +1916,7 @@ html[data-motion='reduced'] .battle-notice.notice-enter,html[data-motion='reduce
 
 /* Independently generated production raster assets; presentation has no simulation writes. */
 (function(root){
- 'use strict';const TD=root.TD,images={},keys=['home-scene','title-logo','button-primary','button-danger','panel-frame','merge-frame','button-small','panel-heading','icon-frame','defense-base','component-card','victory-badge','defeat-badge','alert-frame','boss-arrival','boss-phase2','boss-phase3','alert-banner','panel-frame-slim','button-clean'];
+ 'use strict';const TD=root.TD,images={},keys=['home-scene','title-logo','button-primary','button-danger','panel-frame','merge-frame','button-small','panel-heading','icon-frame','defense-base','component-card','victory-badge','defeat-badge','alert-frame','boss-arrival','boss-phase2','boss-phase3','alert-banner','panel-frame-slim','button-clean','home-foreground','home-merge'];
  let count=0;
  for(const key of keys){const img=images[key]=new Image();img.onload=()=>{if(++count===keys.length){root.dispatchEvent(new Event('raster-art-ready'));root.dispatchEvent(new Event('neon-art-ready'));}};img.src='assets/ui-raster-'+key+'.webp';}
  function nine(c,img,x,y,w,h,slices=[.18,.12,.18,.12],border=16){
@@ -1931,14 +1948,21 @@ html[data-motion='reduced'] .battle-notice.notice-enter,html[data-motion='reduce
  function homeScene(){
   const canvas=document.getElementById('home-art');if(!canvas||!TD.NeonArt.ready||!R.ready)return;
   const w=canvas.clientWidth,h=canvas.clientHeight;if(!w||!h)return;canvas.width=w*2;canvas.height=h*2;const c=canvas.getContext('2d');c.scale(2,2);
-  const deck=h-w*.10;for(const x of [.115,.305,.5,.695,.885])R.base(c,w*x,deck,w*.19);
-  // Separate silhouettes, keep the center launcher largest and seat every gun on its own deck.
-  const lineup=[['gun',3,.115,.205],['laser',5,.885,.205],['lightning',5,.305,.205],['ice',4,.695,.195],['missile',4,.5,.235]];
-  for(const [kind,level,x,size] of lineup){
-   const tile=document.createElement('canvas');tile.width=tile.height=256;const tc=tile.getContext('2d',{willReadFrequently:true});TD.NeonArt.weapon(tc,kind,level,128,128,256);
-   const pixels=tc.getImageData(0,0,256,256).data;let left=256,right=0,top=256,bottom=0;
-   for(let yy=0;yy<256;yy++)for(let xx=0;xx<256;xx++)if(pixels[(yy*256+xx)*4+3]>10){left=Math.min(left,xx);right=Math.max(right,xx);top=Math.min(top,yy);bottom=Math.max(bottom,yy);}
-   if(right>left&&bottom>top){const tw=w*size,th=tw*(bottom-top+1)/(right-left+1);c.drawImage(tile,left,top,right-left+1,bottom-top+1,w*x-tw/2,deck+7-th,tw,th);}
+  // Home-only illustration: one coherent perspective, contain the full silhouette.
+  const image=R.images['home-foreground'],scale=Math.min(w/image.naturalWidth,h/image.naturalHeight),dw=image.naturalWidth*scale,dh=image.naturalHeight*scale;
+  c.drawImage(image,(w-dw)/2,h-dh,dw,dh);
+  homeMerge();
+ }
+ let mergeReady=false;
+ function homeMerge(){
+  if(mergeReady||!TD.NeonArt.weaponsReady)return;mergeReady=true;
+  for(const cv of document.querySelectorAll('.home-merge canvas')){
+   cv.width=cv.height=160;const c=cv.getContext('2d');
+   const tile=document.createElement('canvas');tile.width=tile.height=256;const tc=tile.getContext('2d',{willReadFrequently:true});
+   if(cv.dataset.neon==='component')TD.NeonArt.moduleSprite(tc,'gun',128,128,256);else TD.NeonArt.weapon(tc,'gun',1,128,128,256);
+   const pixels=tc.getImageData(0,0,256,256).data;let l=256,r=0,t=256,b=0;
+   for(let y=0;y<256;y++)for(let x=0;x<256;x++)if(pixels[(y*256+x)*4+3]>10){l=Math.min(l,x);r=Math.max(r,x);t=Math.min(t,y);b=Math.max(b,y);}
+   if(r>l&&b>t){const s=Math.min(148/(r-l+1),148/(b-t+1)),iw=(r-l+1)*s,ih=(b-t+1)*s;c.drawImage(tile,l,t,r-l+1,b-t+1,(160-iw)/2,(160-ih)/2,iw,ih);}
   }
  }
  root.addEventListener('neon-art-ready',homeScene);root.addEventListener('raster-art-ready',homeScene);root.addEventListener('resize',homeScene);new ResizeObserver(homeScene).observe(document.getElementById('home-art'));
