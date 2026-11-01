@@ -648,6 +648,108 @@ html[data-motion='reduced'] .battle-notice.notice-enter,html[data-motion='reduce
  #result-screen #retry{flex-basis:46px;height:46px;min-height:44px;font-size:17px}
  #result-screen #home{flex-basis:33px;min-height:33px;margin-top:5px;font-size:11px}
 }
+
+/* V1.16 reference layout: real weapon previews and three teaching cards. */
+#guide-screen.screen-overlay{padding:12px;background:linear-gradient(#020a19bb,#020919ed),url('assets/ui-raster-home-scene.webp') center/cover;backdrop-filter:none;-webkit-backdrop-filter:none}
+#guide-screen .guide-dialog{width:100%;max-width:408px;height:100%;max-height:100%;display:flex;flex-direction:column;overflow:hidden;border:12px solid transparent;border-image:url('assets/ui-raster-panel-frame-slim.webp') 85 fill stretch;border-image-width:12px;padding:0 7px 7px}
+#guide-screen .panel-heading{position:static;flex:0 0 44px;height:44px;min-height:44px;padding:0 4px;margin:-1px -9px 3px;display:flex;align-items:center;justify-content:center;background:url('assets/ui-raster-button-small.webp') center/100% 100% no-repeat;border:0}
+#guide-screen .panel-heading h1{font-size:24px;letter-spacing:3px;margin:0;line-height:1}
+#guide-screen .codex-caption{font-size:10px;color:#a6c9df;line-height:1.5;margin:2px 0 6px;text-align:center;flex:0 0 auto}
+.codex-tabs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:3px;flex:0 0 auto}
+.codex-tab{min-width:0;min-height:56px;padding:4px 1px 5px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:#cce7f5;border:1px solid #376283;background:#061629;font-size:10px;line-height:1.2}
+.codex-tab canvas{width:31px;height:31px;pointer-events:none}
+.codex-tab[aria-selected='true']{border-color:var(--weapon-color);color:#fff;box-shadow:inset 0 0 10px #238dba44,0 0 5px var(--weapon-color);background:#102e49}
+.codex-tab:focus-visible,.codex-level:focus-visible{outline:2px solid #d6faff;outline-offset:1px}
+.codex-nav{flex:0 0 28px;display:flex;align-items:center;justify-content:space-between;color:#97bed7;font-size:10px;margin-top:4px}
+.codex-nav button{width:36px;height:28px;border:0;background:none;color:#7ceeff;font-size:30px;line-height:1}
+#guide-screen #weapon-guide{display:block;flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;margin:0 0 5px;padding:0 2px;scrollbar-width:thin;scrollbar-color:#315e7e #061427}
+#guide-screen .guide-row{display:flex;flex-direction:column;gap:10px;border:0;padding:0;background:none;min-width:0}
+#guide-screen .guide-row[hidden]{display:none!important}
+.codex-feature{display:grid;grid-template-columns:45% minmax(0,1fr);align-items:center;gap:10px;padding:9px 6px 11px;background:linear-gradient(140deg,#142e4655,#061428dd);border-bottom:1px solid #315c80;min-height:208px}
+.codex-turret{position:relative;min-width:0;height:183px;display:flex;align-items:center;justify-content:center;background:url('assets/ui-raster-defense-base.webp') center bottom/100% 40% no-repeat;padding:0 2px 28px}
+.codex-turret canvas{width:100%;height:auto;aspect-ratio:1;object-fit:contain;filter:drop-shadow(0 0 6px #24cfff55)}
+.codex-level-badge{position:absolute;bottom:2px;left:50%;transform:translateX(-50%);padding:3px 11px;background:#041222e8;border:1px solid var(--weapon-color);color:#e8faff!important;font-size:12px!important;font-weight:800;white-space:nowrap}
+.codex-copy{min-width:0;text-align:left}
+#guide-screen .codex-copy>b{display:block;font-size:21px;line-height:1.2;margin-bottom:9px;text-shadow:0 0 8px #000}
+#guide-screen .codex-copy>b small{font-size:10px;line-height:1.4;margin-top:5px;color:#b7d3e4;font-weight:500;display:block}
+#guide-screen .codex-copy>p{font-size:11px;line-height:1.65;color:#d3e4f0;margin:0 0 9px}
+.codex-stats{margin:0;display:flex;flex-direction:column;gap:6px}
+.codex-stats>div{display:flex;justify-content:space-between;align-items:center;gap:3px;padding:5px 0;border-top:1px solid #264763}
+.codex-stats dt{font-size:9px;color:#abc8dc}.codex-stats dd{font-size:13px;font-weight:750;font-variant-numeric:tabular-nums;color:#e1f9ff;margin:0;white-space:nowrap}
+#guide-screen .codex-copy .codex-note{font-size:8px;color:#7fa3bd;margin:7px 0 0;line-height:1.5}
+.codex-evolution,.codex-skill{background:#041226e8;border:1px solid #31597c;padding:10px 8px;text-align:left}
+.codex-evolution h2,.codex-skill h2{font-size:14px;margin:0 0 7px;color:#e7f8ff;letter-spacing:1px}
+.codex-evolution h2 small{float:right;font-size:10px;color:#8daec6;letter-spacing:0}
+#guide-screen .guide-levels{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;margin:0!important}
+#guide-screen .guide-levels>div{width:auto;min-width:0;background:none;padding:0}
+.codex-level{width:100%;padding:5px 1px 3px;border:1px solid #365775;background:#061629;display:flex;align-items:center;flex-direction:column;gap:4px;color:#a9c5d8}
+.codex-level canvas{width:100%;aspect-ratio:1;height:auto}
+#guide-screen .codex-level span{font-size:10px;line-height:1.3;color:inherit}
+.codex-level[aria-pressed='true']{border-color:var(--weapon-color);color:#fff;box-shadow:inset 0 -3px var(--weapon-color);background:#14304a}
+#guide-screen .codex-skill>span{display:block;font-size:12px;line-height:1.7;color:#cce1f0}
+#guide-screen #guide-back{position:static;flex:0 0 45px;height:45px;min-height:45px;margin:3px 0 0;background-image:url('assets/ui-raster-button-primary.webp');background-size:100% 100%;font-size:16px}
+#training-overview.screen-overlay{padding:16px;background:#010813d9;backdrop-filter:blur(1px);-webkit-backdrop-filter:blur(1px)}
+#training-overview .training-dialog{display:flex;flex-direction:column;max-width:398px;max-height:100%;overflow:hidden;border:14px solid transparent;border-image:url('assets/ui-raster-panel-frame-slim.webp') 85 fill stretch;border-image-width:14px;padding:3px 8px 8px;background:none}
+.training-heading{flex:0 0 auto;text-align:center;margin:0 -8px 10px}
+.training-heading>span{display:block;font-size:9px;color:#78def5;letter-spacing:3px}
+.training-heading h1{font-size:28px;letter-spacing:2px;margin:5px 0 4px;color:#effaff;font-style:italic;font-weight:900;text-shadow:0 2px #216a9a,0 0 9px #32cfff77}
+.training-heading p{font-size:11px;color:#bbd3e6;margin:0;line-height:1.5}
+.training-cards{flex:1 1 auto;min-height:0;overflow-y:auto;display:flex;flex-direction:column;gap:9px;padding:1px;scrollbar-width:thin}
+.training-step{flex:0 0 auto;position:relative;background:linear-gradient(120deg,#0d2942e8,#041025f5);border:1px solid #38729a;padding:8px 9px 9px;box-shadow:inset 0 0 12px #06121c}
+.training-step h2{font-size:15px;line-height:1.3;display:flex;align-items:center;gap:7px;color:#e7faff;margin:0 0 6px;text-shadow:0 1px #135b85}
+.training-step h2 em{font-size:18px;line-height:1;font-style:italic;flex:0 0 32px;height:30px;display:grid;place-items:center;color:#92edff;background:url('assets/ui-raster-icon-frame.webp') center/contain no-repeat}
+.training-step-body{display:grid;grid-template-columns:1fr 1.35fr;align-items:center;gap:9px;min-height:72px}
+.training-step-body>p{font-size:11px;line-height:1.65;color:#bfd7e9;margin:0;text-align:left}
+.training-merge,.training-drag{display:flex;justify-content:center;align-items:center;gap:4px;min-width:0}
+.training-merge canvas{width:29%;height:auto;aspect-ratio:1;min-width:0}
+.training-merge b{font-size:16px;color:#83eaff;flex:0 0 10px}
+.training-drag canvas{width:43%;height:auto;aspect-ratio:1}
+.training-arrow{font-size:35px;color:#ff7bc8;text-shadow:0 0 7px #ed3e9a;line-height:1}
+.training-target{width:49px;height:49px;flex:0 0 49px;display:grid;place-items:center;border:1px solid #ff4fba;border-radius:50%;background:radial-gradient(#ff5fa944,#250e2e);box-shadow:0 0 9px #e2397f55;position:relative;color:#ffd8ec;font-size:10px}
+.training-target i{position:absolute;inset:6px;border:1px solid #ff77bf99;border-radius:50%}.training-target b{z-index:1;font-size:10px}
+.training-nine{min-width:0}.training-nine canvas{width:100%;height:auto;aspect-ratio:6}.training-nine span{display:block;color:#88cfe9;font-size:9px;text-align:center;white-space:nowrap}
+.training-actions{display:flex;flex:0 0 auto;align-items:center;gap:8px;margin-top:11px}
+#training-overview #training-launch{flex:1;height:48px;min-height:46px;font-size:18px;margin:0;background-image:url('assets/ui-raster-button-primary.webp');background-size:100% 100%}
+#training-overview #training-back{flex:0 0 57px;height:42px;margin:0;padding:4px;font-size:12px;border:1px solid #437399;color:#cce5f2}
+@media(max-height:700px){
+ #guide-screen.screen-overlay{padding:9px}
+ #guide-screen .guide-dialog{border-width:10px;border-image-width:10px;padding:0 5px 5px}
+ #guide-screen .panel-heading{height:36px;min-height:36px;flex-basis:36px;margin-inline:-6px}
+ #guide-screen .panel-heading h1{font-size:20px}
+ #guide-screen .codex-caption{font-size:8px;margin-bottom:4px}
+ .codex-tab{min-height:48px;font-size:9px;padding:3px 0}.codex-tab canvas{width:25px;height:25px}
+ .codex-nav{flex-basis:25px}
+ .codex-feature{min-height:161px;padding:5px 4px 8px;gap:7px}
+ .codex-turret{height:145px;padding-bottom:21px}
+ #guide-screen .codex-copy>b{font-size:18px;margin-bottom:6px}
+ #guide-screen .codex-copy>p{font-size:10px;margin-bottom:5px}
+ .codex-stats dt{font-size:8px}.codex-stats dd{font-size:11px}
+ .codex-stats>div{padding:4px 0}.codex-stats{gap:3px}
+ .codex-evolution,.codex-skill{padding:8px 6px}
+ #guide-screen .codex-skill>span{font-size:11px}
+ #guide-screen #guide-back{height:41px;min-height:41px;flex-basis:41px;font-size:14px}
+ #training-overview.screen-overlay{padding:10px}
+ #training-overview .training-dialog{border-width:11px;border-image-width:11px;padding:2px 6px 6px}
+ .training-heading{margin-bottom:7px}.training-heading h1{font-size:23px;margin-top:3px}.training-heading p{font-size:10px}
+ .training-cards{gap:7px}.training-step{padding:6px 7px}
+ .training-step h2{font-size:12px;gap:5px;margin-bottom:4px}.training-step h2 em{flex-basis:27px;height:26px;font-size:16px}
+ .training-step-body{gap:7px;min-height:63px}.training-step-body>p{font-size:9.5px;line-height:1.65}
+ .training-arrow{font-size:29px}.training-target{width:40px;height:40px;flex-basis:40px;font-size:9px}
+ .training-actions{margin-top:8px;gap:6px}
+ #training-overview #training-launch{height:43px;min-height:43px;font-size:16px}
+ #training-overview #training-back{height:38px;flex-basis:48px;font-size:11px}
+}
+
+#training-overview .training-heading .panel-heading{height:auto;min-height:0;padding:0;margin:0;background:none;border:0}
+#training-overview .training-heading .panel-heading h1{font-size:28px;line-height:1.2;letter-spacing:2px;margin:5px 0 4px}
+#guide-screen #guide-back{background-color:transparent!important;box-shadow:none!important}
+@media(max-height:700px){#training-overview .training-heading .panel-heading h1{font-size:23px;margin-top:3px}}
+
+#guide-screen .guide-row{align-items:stretch}
+.training-step:last-child .training-step-body{grid-template-columns:minmax(0,1fr);gap:5px}
+.training-step:last-child .training-step-body>p{font-size:10px;line-height:1.55}
+.training-step:last-child .training-nine{width:100%;padding:0 5px}
+.training-step:last-child .training-nine canvas{max-height:55px;object-fit:contain}
 </style>
 </head>
 <body>
@@ -684,7 +786,18 @@ html[data-motion='reduced'] .battle-notice.notice-enter,html[data-motion='reduce
           <button class="primary" id="start">开始战斗 <span>↗</span></button>
           <button class="text-button" id="learn-home">操作教学</button><p class="menu-foot" id="best-record">六种武器 · 九格防线 · 三阶段 Boss</p>
         </div>
-        <span class="build-label">V1.15.0 · 霓虹机械防线</span>
+        <span class="build-label">V1.16.0 · 霓虹机械防线</span>
+      </div>
+      <div class="screen-overlay hidden" id="training-overview">
+        <div class="dialog training-dialog" role="dialog" aria-modal="true" aria-labelledby="training-title">
+          <div class="training-heading"><span>操作教学</span><h1 id="training-title">战斗教学</h1><p>掌握三个关键操作，再亲手练习</p></div>
+          <div class="training-cards">
+            <section class="training-step"><h2><em>01</em>点击零件，自动二合</h2><div class="training-step-body"><p>取出两件同类同级零件，自动合成更高一级的武器。</p><div class="training-merge" aria-hidden="true"><canvas data-learning-kind="gun" data-component="true"></canvas><b>＋</b><canvas data-learning-kind="gun" data-component="true"></canvas><b>→</b><canvas data-learning-kind="gun" data-level="1"></canvas></div></div></section>
+            <section class="training-step"><h2><em>02</em>长按武器，拖动自爆</h2><div class="training-step-body"><p>长按完整武器，拖入战场松手。移回防线可取消。</p><div class="training-drag" aria-hidden="true"><canvas data-learning-kind="laser" data-level="3"></canvas><span class="training-arrow">↗</span><span class="training-target"><i></i><b>自爆</b></span></div></div></section>
+            <section class="training-step"><h2><em>03</em>守住九格防线</h2><div class="training-step-body"><p>九个底座合计防线生命。武器自动攻击，击败 Boss 获胜。</p><div class="training-nine" aria-label="九个防线底座示意"><canvas id="training-defense" width="720" height="120"></canvas><span>9 格防线 · 自动攻击</span></div></div></section>
+          </div>
+          <div class="training-actions"><button id="training-launch" class="primary">开始练习</button><button id="training-back" class="text-button">返回</button></div>
+        </div>
       </div>
       <div class="screen-overlay hidden" id="pause-screen">
         <div class="dialog"><span class="eyebrow">TIME OUT</span><h1>战斗暂停</h1><p>一口气，再继续。</p><button id="resume" class="primary">继续战斗 <span>↗</span></button><button id="restart-pause" class="secondary">重新开始</button><button id="guide" class="text-button">查看六种武器</button><button id="learn-pause" class="text-button">重看操作教学</button><p class="subtle">切换窗口时会自动暂停</p></div>
@@ -2357,6 +2470,70 @@ html[data-motion='reduced'] .battle-notice.notice-enter,html[data-motion='reduce
   [...box.children].forEach(row=>{const icon=document.createElement('i');icon.className='summary-symbol';icon.innerHTML=symbol(row.dataset.metric==='time'?'clock':'shield');icon.setAttribute('aria-hidden','true');row.prepend(icon);});
  }
  document.addEventListener('keydown',e=>{const modal=!confirm.classList.contains('hidden')?confirm:!settings.classList.contains('hidden')?settings:null;if(!modal)return;if(e.key==='Escape'){e.stopImmediatePropagation();e.preventDefault();close(modal);}if(e.key==='Tab'){const nodes=[...modal.querySelectorAll('button,input')],first=nodes[0],last=nodes[nodes.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}}},true);
+})(globalThis);
+
+
+/* Reference-led codex and training presentation; no battle-state writes. */
+(function(root){
+ 'use strict';
+ const TD=root.TD,$=id=>document.getElementById(id),weapons=TD.CONFIG.weapons;
+ const rows=[...document.querySelectorAll('.guide-row')],guide=$('guide-screen'),body=$('weapon-guide');
+ let selected=0,level=1;
+ const colors=TD.NeonArt.colors,order=['gun','missile','laser','ice','lightning','fire'].map(id=>weapons.findIndex(w=>w.id===id));
+ const title=guide.querySelector('h1');title.textContent='武器图鉴';
+ const tabs=document.createElement('div');tabs.className='codex-tabs';tabs.setAttribute('role','tablist');tabs.setAttribute('aria-label','六类武器');
+ const caption=document.createElement('p');caption.className='codex-caption';caption.textContent='选择武器，查看五级外观与基础参数';
+ guide.querySelector('.panel-heading').after(caption,tabs);
+ const previewCache=new Map();
+ function canvas(){const c=document.createElement('canvas');c.width=c.height=256;return c;}
+ function paint(c,kind,lv,component=false){
+  if(!TD.NeonArt.ready||!TD.NeonArt.weaponsReady)return;
+  const key=kind+':'+lv+':'+component,existing=previewCache.get(key);
+  if(existing){c.width=c.height=256;c.getContext('2d').drawImage(existing,0,0);return;}
+  const tile=document.createElement('canvas');tile.width=tile.height=256;const tc=tile.getContext('2d',{willReadFrequently:true});
+  if(component)TD.NeonArt.moduleSprite(tc,kind,128,128,240);else TD.NeonArt.weapon(tc,kind,lv,128,128,240);
+  const a=tc.getImageData(0,0,256,256).data;let l=256,t=256,r=0,b=0;
+  for(let y=0;y<256;y++)for(let x=0;x<256;x++)if(a[(y*256+x)*4+3]>10){l=Math.min(l,x);t=Math.min(t,y);r=Math.max(r,x);b=Math.max(b,y);}
+  c.width=c.height=256;const ctx=c.getContext('2d');if(r<=l||b<=t)return;
+  const scale=Math.min(232/(r-l+1),232/(b-t+1)),w=(r-l+1)*scale,h=(b-t+1)*scale;
+  ctx.drawImage(tile,l,t,r-l+1,b-t+1,(256-w)/2,(256-h)/2,w,h);
+  const cached=document.createElement('canvas');cached.width=cached.height=256;cached.getContext('2d').drawImage(c,0,0);previewCache.set(key,cached);
+ }
+ rows.forEach((row,i)=>{
+  const w=weapons[i],symbol=row.querySelector('.guide-symbol'),old=row.lastElementChild,name=old.querySelector('b'),desc=old.querySelector('p'),blast=old.querySelector('span');
+  symbol.className='codex-turret';row.id='codex-panel-'+w.id;row.setAttribute('role','tabpanel');row.setAttribute('aria-labelledby','codex-tab-'+w.id);row.style.setProperty('--weapon-color',colors[w.id]);
+  symbol.textContent='';symbol.append(canvas());
+  const feature=document.createElement('div');feature.className='codex-feature';const copy=document.createElement('div');copy.className='codex-copy';
+  name.style.color=colors[w.id];copy.append(name,desc);const stats=document.createElement('dl');stats.className='codex-stats';stats.innerHTML='<div><dt>基础单次伤害</dt><dd data-value="damage"></dd></div><div><dt>基础攻击间隔</dt><dd data-value="interval"></dd></div>';copy.append(stats);
+  const note=document.createElement('p');note.className='codex-note';note.textContent='实际伤害受护甲与技能影响';copy.append(note);feature.append(symbol,copy);
+  const badge=document.createElement('span');badge.className='codex-level-badge';symbol.append(badge);
+  let strip=old.querySelector('.guide-levels');if(!strip){strip=document.createElement('div');strip.className='guide-levels';for(let n=1;n<=5;n++){const cell=document.createElement('div');cell.append(canvas());strip.append(cell);}}
+  [...strip.children].forEach((cell,n)=>{let cv=cell.querySelector('canvas')||canvas();const btn=document.createElement('button');btn.type='button';btn.className='codex-level';btn.dataset.level=n+1;btn.setAttribute('aria-label',w.name+' Lv'+(n+1));const label=document.createElement('span');label.textContent='Lv'+(n+1);btn.append(cv,label);cell.replaceChildren(btn);btn.onclick=()=>choose(selected,n+1);});
+  const evolution=document.createElement('section');evolution.className='codex-evolution';evolution.innerHTML='<h2>进化路径 <small>Lv1 → Lv5</small></h2>';evolution.append(strip);
+  const skill=document.createElement('section');skill.className='codex-skill';skill.innerHTML='<h2>主动自爆</h2>';blast.textContent=blast.textContent.replace(/^自爆[：:]\s*/,'');skill.append(blast);
+  row.replaceChildren(feature,evolution,skill);
+  const tab=document.createElement('button');tab.type='button';tab.className='codex-tab';tab.dataset.weaponIndex=i;tab.id='codex-tab-'+w.id;tab.setAttribute('role','tab');tab.setAttribute('aria-controls',row.id);tab.style.setProperty('--weapon-color',colors[w.id]);const cv=canvas();cv.dataset.weapon=w.id;const label=document.createElement('span');label.textContent=w.short;tab.append(cv,label);tab.onclick=()=>choose(i,1);tab.onkeydown=e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();const pos=order.indexOf(i),next=e.key==='Home'?0:e.key==='End'?5:(pos+(e.key==='ArrowLeft'?-1:1)+6)%6;choose(order[next],1);tabs.children[next].focus();}};tabs.append(tab);
+ });
+ order.forEach(i=>tabs.appendChild($('codex-tab-'+weapons[i].id)));
+ const nav=document.createElement('div');nav.className='codex-nav';nav.innerHTML='<button id="codex-prev" aria-label="上一种武器">‹</button><span id="codex-position"></span><button id="codex-next" aria-label="下一种武器">›</button>';body.before(nav);
+ $('codex-prev').onclick=()=>choose(order[(order.indexOf(selected)+5)%6],1);$('codex-next').onclick=()=>choose(order[(order.indexOf(selected)+1)%6],1);
+ function choose(i,lv){selected=i;level=lv;rows.forEach((row,n)=>{row.hidden=n!==i;row.querySelector('.codex-level-badge').textContent='Lv'+lv;[...row.querySelectorAll('.codex-level')].forEach((b,k)=>b.setAttribute('aria-pressed',String(k+1===lv)));const w=weapons[n];row.querySelector('[data-value="damage"]').textContent=w.damage*TD.mul(lv);row.querySelector('[data-value="interval"]').textContent=w.interval+' 秒';});[...tabs.children].forEach((tab,n)=>{const active=Number(tab.dataset.weaponIndex)===i;tab.setAttribute('aria-selected',String(active));tab.tabIndex=active?0:-1;});$('codex-position').textContent=(order.indexOf(i)+1)+' / 6';body.scrollTop=0;repaint();}
+ function repaint(){
+  if(!TD.NeonArt.weaponsReady||!TD.NeonArt.ready)return;
+  rows.forEach((row,i)=>{let c=row.querySelector('.codex-turret canvas');if(!c){c=canvas();row.querySelector('.codex-turret').prepend(c);}paint(c,weapons[i].id,i===selected?level:1);row.querySelectorAll('.guide-levels canvas').forEach((c,k)=>paint(c,weapons[i].id,k+1));});
+  tabs.querySelectorAll('canvas').forEach(c=>paint(c,c.dataset.weapon,1));
+  document.querySelectorAll('[data-learning-kind]').forEach(c=>paint(c,c.dataset.learningKind,Number(c.dataset.level||1),c.dataset.component==='true'));
+  const cv=$('training-defense');if(cv&&TD.RasterArt.ready){const c=cv.getContext('2d');cv.width=720;cv.height=120;for(let i=0;i<9;i++){c.drawImage(TD.RasterArt.images['defense-base'],i*80,54,80,62);TD.NeonArt.weapon(c,weapons[i%6].id,1+i%3,i*80+40,42,70);}}
+ }
+ const overview=$('training-overview');let backTo=null,trigger=null,bypass=false;
+ function closeOverview(){overview.classList.add('hidden');backTo?.classList.remove('hidden');trigger?.focus();}
+ for(const id of['learn-home','learn-pause'])$(id).addEventListener('click',e=>{if(bypass)return;e.preventDefault();e.stopImmediatePropagation();trigger=$(id);backTo=[...document.querySelectorAll('.screen-overlay')].find(n=>n!==overview&&!n.classList.contains('hidden'));backTo?.classList.add('hidden');overview.classList.remove('hidden');repaint();$('training-launch').focus();},true);
+ $('training-back').onclick=closeOverview;
+ $('pause').addEventListener('click',()=>{if(!overview.classList.contains('hidden')&&backTo?.id==='pause-screen')closeOverview();},true);
+ $('training-launch').onclick=()=>{overview.classList.add('hidden');backTo?.classList.remove('hidden');bypass=true;try{trigger.click();}finally{bypass=false;}};
+ document.addEventListener('keydown',e=>{if(overview.classList.contains('hidden'))return;if(e.key==='Escape'){e.preventDefault();e.stopImmediatePropagation();closeOverview();}else if(e.key==='Tab'){const a=$('training-launch'),b=$('training-back');if(e.shiftKey&&document.activeElement===a){e.preventDefault();b.focus();}else if(!e.shiftKey&&document.activeElement===b){e.preventDefault();a.focus();}}},true);
+ root.addEventListener('neon-art-ready',repaint);root.addEventListener('raster-art-ready',repaint);
+ choose(0,1);
 })(globalThis);
 </script>
 </body>
