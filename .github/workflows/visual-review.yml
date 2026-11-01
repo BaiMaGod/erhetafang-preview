@@ -1,0 +1,93 @@
+name: Review stable UI against reference
+on:
+  push:
+    branches: [main]
+    paths: ['visual-review.json', '.github/workflows/visual-review.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: stable-visual-review
+  cancel-in-progress: false
+jobs:
+  capture:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          path: preview
+      - name: Read immutable review source
+        id: source
+        run: |
+          python3 - <<'PY'
+          import json,os,re
+          d=json.load(open('preview/visual-review.json'))
+          assert re.fullmatch('[0-9a-f]{40}',d['sourceCommit'])
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f: f.write('sha='+d['sourceCommit']+'\n')
+          PY
+      - uses: actions/checkout@v4
+        with:
+          repository: BaiMaGod/erhetafang
+          ref: ${{ steps.source.outputs.sha }}
+          token: ${{ secrets.PREVIEW_SOURCE_SYNC_TOKEN }}
+          persist-credentials: false
+          path: source
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Build and prepare Chrome
+        working-directory: source
+        run: |
+          npm run build
+          npm install --no-save --no-package-lock playwright@1.56.1
+          echo "CHROMIUM_EXECUTABLE=$(command -v google-chrome)" >> "$GITHUB_ENV"
+          python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/review-http.log 2>&1 &
+          for i in $(seq 1 20); do
+            if curl -fsS http://127.0.0.1:8765/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          exit 1
+      - name: Capture real navigation and tutorial
+        working-directory: source
+        run: |
+          if test -f tests/neon-learning.cjs; then
+            node tests/neon-learning.cjs
+          else
+            node tests/neon-p0-visual.cjs
+          fi
+      - name: Emit runtime-only review panels
+        working-directory: source
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          from PIL import Image,ImageDraw
+          import base64,io,hashlib,json
+          r=Path('test-output/learning/final')
+          new=r.exists()
+          if not new: r=Path('test-output/neon-p0/after')
+          names={'home':'01-home','codex':'06-codex','tutorial':'07-tutorial'}
+          for state,old in names.items():
+              sheet=Image.new('RGB',(800,900),'#061323')
+              draw=ImageDraw.Draw(sheet)
+              for i,profile in enumerate(['phone','small']):
+                  p=r/(profile+'-'+(state if new else old)+'.png')
+                  im=Image.open(p).convert('RGB')
+                  im.thumbnail((390,850),Image.Resampling.LANCZOS)
+                  sheet.paste(im,(i*400+5,35))
+                  draw.text((i*400+8,8),profile+' '+state+' / actual browser',fill='#e7f5ff')
+              b=io.BytesIO();sheet.save(b,'WEBP',quality=84,method=6)
+              content=base64.b64encode(b.getvalue()).decode()
+              print('REVIEW_START '+state)
+              for n in range(0,len(content),12000): print('REVIEW_CHUNK '+content[n:n+12000])
+              print('REVIEW_END '+state)
+          print('REVIEW_ENTRY_SHA256 '+hashlib.sha256(Path('index.html').read_bytes()).hexdigest())
+          PY
+      - name: Save all UI screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stable-visual-review-evidence
+          path: source/test-output/
+          if-no-files-found: error
