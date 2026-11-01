@@ -49,6 +49,15 @@ jobs:
         working-directory: source
         run: |
           npm run build
+          python3 - <<'PY'
+          import hashlib,json,pathlib,re
+          expected=json.load(open('../preview/release-source.json')).get('reviewedEntrySHA256')
+          if expected:
+              assert re.fullmatch('[0-9a-f]{64}',expected), 'Expected reviewed entry SHA256'
+              actual=hashlib.sha256(pathlib.Path('index.html').read_bytes()).hexdigest()
+              assert actual==expected, f'Reviewed entry mismatch: {actual} != {expected}'
+              print('Reviewed entry SHA256 verified: '+actual)
+          PY
           sha256sum index.html > /tmp/stable-index.sha256
           test -s index.html
           ! grep -q '{{JS}}\|{{CSS}}' index.html
@@ -167,7 +176,18 @@ jobs:
                 await page.mouse.click(p.x,p.y);await page.waitForTimeout(450);
               }
               assert.equal(await page.evaluate(()=>__TD.game.stats.picks),4);
-              await page.locator('#pause').click();await page.locator('#restart-pause').click();await page.locator('#confirm-ok').click();
+              await page.locator('#pause').click();
+              const live=await page.evaluate(()=>Object.fromEntries(['time','slot-count','health'].map(id=>[id,document.getElementById(id).textContent])));
+              for(const id of ['pause-screen','confirm-screen']){
+                if(id==='confirm-screen')await page.locator('#restart-pause').click();
+                const summary=await page.locator('#'+id+' [data-source]').evaluateAll(nodes=>Object.fromEntries(nodes.map(n=>[n.dataset.source,n.textContent])));
+                assert.deepEqual(summary,live);
+                assert.equal(await page.locator('#'+id+' .summary-meter').count(),2);
+                await page.screenshot({path:'test-output/live-'+id+'-'+width+'.png'});
+              }
+              await page.locator('#confirm-cancel').click();
+              await page.locator('#settings-pause').click();await page.locator('#settings-close').click();
+              await page.locator('#restart-pause').click();await page.locator('#confirm-ok').click();
               assert.equal(await page.locator('#health').textContent(),'100%');
               await page.screenshot({path:'test-output/live-'+width+'.png'});
               assert.deepEqual(errors,[]);devices.push({width,height,errors});await page.close();
