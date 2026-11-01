@@ -569,6 +569,85 @@ html[data-motion='reduced'] .battle-notice.notice-enter,html[data-motion='reduce
  #menu .home-merge:before{font-size:8px}
  #menu .home-merge small{font-size:7.5px}
 }
+
+/* V1.15: live information and existing artwork, separate from home and combat. */
+:is(#pause-screen,#settings-screen,#confirm-screen) .dialog{padding:4px 10px 12px}
+:is(#pause-screen,#settings-screen,#confirm-screen,#result-screen) .primary{background-image:url('assets/ui-raster-button-primary.webp');background-size:100% 100%}
+:is(#pause-screen,#confirm-screen) .secondary{background-image:url('assets/ui-raster-button-danger.webp');filter:none;color:#fff1f6;text-shadow:0 0 6px #ff3578,0 1px #25051a!important}
+#pause-screen .panel-heading{height:auto;aspect-ratio:1000/320;margin:-5px -11px 9px;padding:0;background-size:100% 100%;position:relative}
+#pause-screen .panel-symbol{top:29%;width:14%!important;height:35%!important;display:grid;place-items:center}
+#pause-screen .panel-symbol svg{width:24px!important;height:24px!important;filter:drop-shadow(0 0 4px #19dfff)}
+#pause-screen .panel-symbol path{fill:currentColor;stroke-width:1}
+#pause-screen .panel-heading h1{position:absolute;top:71%;left:0;width:100%;margin:0;font-size:25px;line-height:1;letter-spacing:3px}
+.session-summary{background:#041124e8;border:1px solid #315d86;border-radius:0;clip-path:polygon(8px 0,calc(100% - 8px) 0,100% 8px,100% calc(100% - 8px),calc(100% - 8px) 100%,8px 100%,0 calc(100% - 8px),0 8px);padding:5px 8px;margin-bottom:9px}
+.session-summary>div{gap:6px;padding:5px 0;min-height:26px}
+.session-summary span{font-size:10px;white-space:nowrap;color:#cee5f7}
+.session-summary b{font-size:14px;color:#d6f6ff;min-width:38px;text-align:right;white-space:nowrap}
+.session-summary [data-metric='health'] b{color:#7cf8ed}
+.session-summary>div:last-child b{color:#d6f6ff}
+.summary-symbol{flex-basis:15px}.summary-symbol svg{width:15px;height:15px}
+.summary-meter{flex:1;height:7px;background:#112d48;border:1px solid #295274;min-width:14px;overflow:hidden}
+.summary-meter>i{display:block;height:100%;background:repeating-linear-gradient(90deg,#30dfff 0 5px,#0f6a94 5px 6px);box-shadow:0 0 5px #1edcff77}
+#pause-screen .pause-tools button{background-image:url('assets/ui-raster-button-small.webp');filter:none}
+#pause-screen .pause-tools #quit-pause{background-image:url('assets/ui-raster-button-danger.webp');color:#ffe8f2;text-shadow:0 0 5px #ff3d83}
+#pause-screen .pause-help{margin-top:6px;gap:6px}
+#pause-screen .pause-help button{font-size:10px;padding:4px 0;min-height:29px;color:#b0ccdf}
+#pause-screen .subtle{margin-top:5px;font-size:8px;color:#8daabe}
+:is(#settings-screen,#confirm-screen) .panel-heading{height:47px;margin:-6px -11px 13px;padding:0 8px;background:url('assets/ui-raster-button-small.webp') center/100% 100% no-repeat;display:flex;gap:7px;justify-content:center;align-items:center}
+:is(#settings-screen,#confirm-screen) .panel-symbol{position:static;transform:none;width:22px!important;height:22px!important;background:none!important;flex:0 0 22px}
+:is(#settings-screen,#confirm-screen) .panel-symbol svg{width:21px!important;height:21px!important}
+:is(#settings-screen,#confirm-screen) .panel-heading h1{font-size:21px;letter-spacing:2px;margin:0;line-height:1.1}
+#settings-screen .settings-row{min-height:48px;padding:10px 9px;font-size:12px;margin:8px 0;background:linear-gradient(110deg,#102b44,#061428);border-color:#365875;font-weight:650}
+#settings-screen .settings-note{font-size:10px!important;line-height:1.7;margin:12px 2px;color:#a4bdcf!important;text-align:left}
+#confirm-screen #confirm-message{font-size:12px;line-height:1.75;margin:2px 4px 13px;color:#d6e5f2}
+#confirm-screen .session-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));padding:8px 3px;margin:0 0 10px}
+#confirm-screen .session-summary>div{position:relative;flex-wrap:wrap;justify-content:center;gap:4px 3px;padding:2px 1px;min-width:0}
+#confirm-screen .session-summary>div+div{border-top:0;border-left:1px solid #294861}
+#confirm-screen .session-summary span{font-size:8px}
+#confirm-screen .session-summary b{flex:0 0 100%;text-align:center;font-size:15px;margin:0}
+#confirm-screen .summary-symbol{flex-basis:12px}.summary-symbol svg{vertical-align:middle}
+#confirm-screen .summary-symbol svg{width:12px;height:12px}
+#confirm-screen .summary-meter{display:none}
+#confirm-screen .confirm-actions{gap:7px}
+#confirm-screen .confirm-actions button{height:43px!important;min-height:43px!important;padding-inline:8px;font-size:12px!important}
+/* Results get their own scene and action area; all figures remain real game data. */
+#result-screen.screen-overlay{background:linear-gradient(180deg,#06102033,#06102011 35%,#020817cc),url('assets/ui-raster-home-scene.webp') center/cover;backdrop-filter:none;-webkit-backdrop-filter:none;padding:15px 18px}
+#result-screen:has([data-result='lost']){background-image:linear-gradient(180deg,#26071e44,#1c071a44 45%,#020817ee),url('assets/ui-raster-home-scene.webp')}
+#result-screen .result-dialog{height:100%;max-height:100%;max-width:366px;display:flex;flex-direction:column;border:0;background:none;box-shadow:none;padding:0 6px 3px;overflow:auto}
+#result-screen .result-dialog .result-emblem{flex:0 0 auto;width:100%;height:clamp(106px,19vh,165px);margin:2px auto 4px}
+#result-screen .result-dialog[data-result='lost'] .result-emblem{height:clamp(95px,17vh,145px)}
+#result-screen #result-subtitle{flex:0 0 auto;font-size:12px;color:#e1f0ff;margin:0 0 6px;line-height:1.6;text-shadow:0 2px 3px #000}
+.result-scene{flex:1 1 auto;min-height:48px;margin:0 -18px 7px;background:url('assets/ui-raster-home-foreground.webp') center bottom/contain no-repeat;pointer-events:none}
+[data-result='lost'] .result-scene{background:none;min-height:25px}
+#result-screen .result-stats{flex:0 0 auto;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:#294f74;border:1px solid #3e7da5;border-radius:0;margin:0 0 9px;box-shadow:0 0 10px #00172c88}
+#result-screen .result-stats>div{background:linear-gradient(145deg,#0c243bea,#041023f5);padding:9px 3px;gap:4px}
+#result-screen .result-stats b{font-size:19px;line-height:1.3;font-variant-numeric:tabular-nums;color:#d9f7ff}
+#result-screen .result-stats span{font-size:10px;color:#b7d1e4}
+#result-screen .result-review{flex:0 0 auto;padding:8px 10px;font-size:11px;line-height:1.65;background:#041225e8;border:1px solid #315573;border-left:2px solid #53dfff;border-radius:0;margin-bottom:10px;color:#d3e6f2}
+#result-screen [data-result='lost'] .result-review{border-left-color:#ff5488}
+#result-screen #retry{flex:0 0 52px;height:52px;min-height:48px;margin:0;font-size:19px}
+#result-screen #home{flex:0 0 36px;min-height:36px;width:58%;align-self:center;margin:7px 0 0;padding:4px 12px;font-size:12px;color:#dcefff;background:url('assets/ui-raster-button-small.webp') center/100% 100% no-repeat}
+@media(max-height:700px){
+ :is(#pause-screen,#settings-screen,#confirm-screen) .dialog{padding:3px 9px 9px}
+ #pause-screen .panel-heading{margin-bottom:7px}
+ #pause-screen .panel-symbol svg{width:22px!important;height:22px!important}
+ #pause-screen .panel-heading h1{font-size:22px}
+ .session-summary{padding:3px 7px;margin-bottom:7px}.session-summary>div{padding:4px 0;min-height:23px}.session-summary span{font-size:9px}.session-summary b{font-size:13px}
+ :is(#settings-screen,#confirm-screen) .panel-heading{height:43px;margin-bottom:10px}
+ :is(#settings-screen,#confirm-screen) .panel-heading h1{font-size:19px}
+ #settings-screen .settings-row{min-height:44px;padding:8px;font-size:11px}
+ #settings-screen .settings-note{font-size:9px!important;margin:10px 0}
+ #confirm-screen #confirm-message{font-size:11px;margin-bottom:10px}
+ #confirm-screen .session-summary b{font-size:13px}
+ #result-screen{padding:11px 16px}
+ #result-screen .result-dialog .result-emblem{height:100px}
+ #result-screen .result-dialog[data-result='lost'] .result-emblem{height:88px}
+ #result-screen .result-stats>div{padding:7px 2px;gap:3px}
+ #result-screen .result-stats b{font-size:16px}#result-screen .result-stats span{font-size:9px}
+ #result-screen .result-review{font-size:10px;padding:7px 8px;line-height:1.6;margin-bottom:8px}
+ #result-screen #retry{flex-basis:46px;height:46px;min-height:44px;font-size:17px}
+ #result-screen #home{flex-basis:33px;min-height:33px;margin-top:5px;font-size:11px}
+}
 </style>
 </head>
 <body>
@@ -605,7 +684,7 @@ html[data-motion='reduced'] .battle-notice.notice-enter,html[data-motion='reduce
           <button class="primary" id="start">开始战斗 <span>↗</span></button>
           <button class="text-button" id="learn-home">操作教学</button><p class="menu-foot" id="best-record">六种武器 · 九格防线 · 三阶段 Boss</p>
         </div>
-        <span class="build-label">V1.14.0 · 霓虹机械防线</span>
+        <span class="build-label">V1.15.0 · 霓虹机械防线</span>
       </div>
       <div class="screen-overlay hidden" id="pause-screen">
         <div class="dialog"><span class="eyebrow">TIME OUT</span><h1>战斗暂停</h1><p>一口气，再继续。</p><button id="resume" class="primary">继续战斗 <span>↗</span></button><button id="restart-pause" class="secondary">重新开始</button><button id="guide" class="text-button">查看六种武器</button><button id="learn-pause" class="text-button">重看操作教学</button><p class="subtle">切换窗口时会自动暂停</p></div>
@@ -618,7 +697,7 @@ html[data-motion='reduced'] .battle-notice.notice-enter,html[data-motion='reduce
       </div>
       <div class="screen-overlay hidden" id="tutorial-complete"><div class="dialog"><span class="eyebrow">训练完成</span><h1>准备好守线了</h1><p>取件、二合、自动攻击和自爆已经掌握。完整试炼中还要留意槽位耐久。</p><button id="tutorial-enter" class="primary">进入综合试炼 <span>↗</span></button><button id="tutorial-again" class="text-button">再练一次</button></div></div>
       <div class="screen-overlay hidden" id="result-screen">
-        <div class="dialog result-dialog"><span class="eyebrow" id="result-eyebrow">VICTORY</span><div class="result-emblem" id="result-emblem">✦</div><h1 id="result-title">防线守住了</h1><p id="result-subtitle">攻城巨兽已被击败。</p><div class="result-stats" id="result-stats"></div><p id="result-review" class="result-review"></p><button class="primary" id="retry">再战一次 <span>↗</span></button><button class="text-button" id="home">返回主界面</button></div>
+        <div class="dialog result-dialog"><span class="eyebrow" id="result-eyebrow">VICTORY</span><div class="result-emblem" id="result-emblem">✦</div><h1 id="result-title">防线守住了</h1><p id="result-subtitle">攻城巨兽已被击败。</p><div class="result-scene" aria-hidden="true"></div><div class="result-stats" id="result-stats"></div><p id="result-review" class="result-review"></p><button class="primary" id="retry">再战一次 <span>↗</span></button><button class="text-button" id="home">返回主界面</button></div>
       </div>
     </div>
   </main>
@@ -2264,18 +2343,18 @@ html[data-motion='reduced'] .battle-notice.notice-enter,html[data-motion='reduce
  const actions=document.createElement('div');actions.className='confirm-actions';$('confirm-cancel').before(actions);actions.append($('confirm-cancel'),$('confirm-ok'));
  function summary(id){
   const dialog=$(id).querySelector('.dialog'),box=document.createElement('div');box.className='session-summary';box.setAttribute('aria-label','当前战斗状态');
-  for(const [source,label] of [['time','战斗时间'],['slot-count','存活底座'],['health','防线生命']]){const item=document.createElement('div'),caption=document.createElement('span'),value=document.createElement('b');caption.textContent=label;value.dataset.source=source;item.append(caption,value);box.appendChild(item);}
+  for(const [source,label] of [['health','防线生命'],['slot-count','存活底座'],['time','战斗时间']]){const item=document.createElement('div'),caption=document.createElement('span'),value=document.createElement('b');item.dataset.metric=source;caption.textContent=label;value.dataset.source=source;item.append(caption);if(source!=='time'){const meter=document.createElement('i');meter.className='summary-meter';meter.setAttribute('aria-hidden','true');meter.appendChild(document.createElement('i'));item.append(meter);}item.append(value);box.appendChild(item);}
   dialog.querySelector('p').after(box);
-  function refresh(){if($(id).classList.contains('hidden'))return;box.querySelectorAll('[data-source]').forEach(n=>n.textContent=$(n.dataset.source).textContent);}
+  function refresh(){if($(id).classList.contains('hidden'))return;box.querySelectorAll('[data-source]').forEach(n=>{n.textContent=$(n.dataset.source).textContent;const meter=n.parentElement.querySelector('.summary-meter>i');if(meter){const percent=n.dataset.source==='health'?parseFloat(n.textContent):parseFloat(n.textContent)/9*100;meter.style.width=Math.max(0,Math.min(100,percent))+'%';}});}
   new MutationObserver(refresh).observe($(id),{attributes:true,attributeFilter:['class']});refresh();
  }
  summary('pause-screen');summary('confirm-screen');
  // Consistent icons identify the real actions and live session values.
- for(const [id,kind] of [['resume','play'],['restart-pause','restart'],['settings-pause','settings'],['quit-pause','exit']]){
+ for(const [id,kind] of [['resume','play'],['restart-pause','restart'],['settings-pause','settings'],['quit-pause','exit'],['retry','restart']]){
   const icon=document.createElement('i');icon.className='action-symbol';icon.setAttribute('aria-hidden','true');icon.innerHTML=symbol(kind);$(id).prepend(icon);
  }
  for(const box of document.querySelectorAll('.session-summary')){
-  [...box.children].forEach((row,i)=>{const icon=document.createElement('i');icon.className='summary-symbol';icon.innerHTML=symbol(i===0?'clock':'shield');icon.setAttribute('aria-hidden','true');row.prepend(icon);});
+  [...box.children].forEach(row=>{const icon=document.createElement('i');icon.className='summary-symbol';icon.innerHTML=symbol(row.dataset.metric==='time'?'clock':'shield');icon.setAttribute('aria-hidden','true');row.prepend(icon);});
  }
  document.addEventListener('keydown',e=>{const modal=!confirm.classList.contains('hidden')?confirm:!settings.classList.contains('hidden')?settings:null;if(!modal)return;if(e.key==='Escape'){e.stopImmediatePropagation();e.preventDefault();close(modal);}if(e.key==='Tab'){const nodes=[...modal.querySelectorAll('button,input')],first=nodes[0],last=nodes[nodes.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}}},true);
 })(globalThis);
