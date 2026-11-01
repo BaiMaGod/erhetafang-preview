@@ -9,7 +9,7 @@ permissions:
   pages: write
 concurrency:
   group: stable-quality-release
-  cancel-in-progress: false
+  cancel-in-progress: true
 jobs:
   build-test-publish:
     runs-on: ubuntu-24.04
@@ -123,6 +123,11 @@ jobs:
           SOURCE_SHA: ${{ steps.source.outputs.sha }}
         run: |
           git -C preview pull --rebase origin main
+          python3 - <<'PY'
+          import json,os
+          configured=json.load(open('preview/release-source.json'))
+          assert configured['sourceCommit']==os.environ['SOURCE_SHA'], 'Release superseded; refusing stale publish'
+          PY
           cp source/dist/index.html preview/index.html
           mkdir -p preview/assets
           cp source/dist/assets/* preview/assets/

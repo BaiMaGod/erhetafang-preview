@@ -1,4 +1,5 @@
 {
-  "sourceCommit": "b47d87985aba73c8410ed365c0b2d892325393a4",
-  "label": "V1.16 all-viewports review with category art consistency checks"
+  "sourceCommit": "ca9af66cd2cae2c5612eee2913acab5e7f77bddb",
+  "label": "V1.16 all-viewports review with category art consistency checks",
+  "note": "Review toolbar-resume regression with unchanged reference layouts"
 }
