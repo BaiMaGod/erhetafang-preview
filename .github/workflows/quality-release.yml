@@ -42,6 +42,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Install Chinese screenshot font
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y fonts-noto-cjk
+          fc-match "Noto Sans CJK SC"
       - name: Rules, clocks, tutorial and pacing regression
         working-directory: source
         run: npm test
