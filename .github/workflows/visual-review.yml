@@ -75,20 +75,23 @@ jobs:
           new=r.exists()
           if not new: r=Path('test-output/neon-p0/after')
           names={'home':'01-home','codex':'06-codex','tutorial':'07-tutorial'}
-          for state,old in names.items():
+          groups=[('home',['phone','small']),('codex',['phone','small']),('tutorial',['phone','small']),('codex-wide',['tall','desktop']),('tutorial-wide',['tall','desktop'])]
+          for key,profiles in groups:
+              state=key.split('-')[0];old=names[state]
               sheet=Image.new('RGB',(800,900),'#061323')
               draw=ImageDraw.Draw(sheet)
-              for i,profile in enumerate(['phone','small']):
+              for i,profile in enumerate(profiles):
                   p=r/(profile+'-'+(state if new else old)+'.png')
                   im=Image.open(p).convert('RGB')
+                  if profile=='desktop': im=im.crop((820,50,1740,1550))
                   im.thumbnail((390,850),Image.Resampling.LANCZOS)
                   sheet.paste(im,(i*400+5,35))
                   draw.text((i*400+8,8),profile+' '+state+' / actual browser',fill='#e7f5ff')
               b=io.BytesIO();sheet.save(b,'WEBP',quality=84,method=6)
               content=base64.b64encode(b.getvalue()).decode()
-              print('REVIEW_START '+state)
+              print('REVIEW_START '+key)
               for n in range(0,len(content),12000): print('REVIEW_CHUNK '+content[n:n+12000])
-              print('REVIEW_END '+state)
+              print('REVIEW_END '+key)
           print('REVIEW_ENTRY_SHA256 '+hashlib.sha256(Path('index.html').read_bytes()).hexdigest())
           PY
       - name: Save all UI screenshots
